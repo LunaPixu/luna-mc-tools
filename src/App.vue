@@ -1,30 +1,53 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+import TradeReader from './components/TradeReader.vue';
 </script>
 
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+  <div class="title">
+    <div style="position: relative">
+      <img
+        class="lunapixu"
+        src="/src/assets/lunapixu.png"
+        alt="Luna Pixu's icon"
+      />
+      <span class="social">
+        <a href="https://twitter.com/luna_pixu"
+          ><img src="/twitter.svg" class="icon"
+        /></a>
+        <a href="https://github.com/lunapixu/"
+          ><img src="/github.svg" class="icon"
+        /></a>
+      </span>
+    </div>
+    <h1 style="margin-bottom: 0.5em">Luna's Minecraft Tools</h1>
   </div>
-  <HelloWorld msg="Vite + Vue" />
+  <TradeReader />
 </template>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+.title {
+  box-shadow: 0px 0px 5px black;
+  background: #0b0632;
+  padding-top: 0.5em;
+  padding-left: 1em;
+  padding-right: 1em;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2em;
+  position: sticky;
+  position: -webkit-sticky;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+.social {
+  text-align: right;
+  position: absolute;
+  inset-inline: calc(65%) 0;
 }
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+.lunapixu {
+  box-shadow: 0px 0px 5px black;
+  margin-bottom: -1.5em;
+}
+.icon {
+  height: 32px;
+  margin-left: 0.5em;
 }
 </style>
