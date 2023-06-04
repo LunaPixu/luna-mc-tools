@@ -65,10 +65,15 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+.notice {
+  color: #888686;
+}
+
 .box {
   box-shadow: 0px 0px 5px black;
   background: #0b0632;
   padding: 0.5em;
+  border-radius: 10px;
 }
 
 #app {
@@ -88,5 +93,12 @@ button:focus-visible {
   }
   button {
     background-color: #f9f9f9;
+  }
+  .notice {
+    color: #4a6485;
+  }
+  .box {
+    box-shadow: 0px 0px 5px #7e71db;
+    background: #a094f5;
   }
 }

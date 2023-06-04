@@ -43,6 +43,8 @@ function parseTradeItem(item) {
   return `${item.Count} ${itemName}`;
 }
 
+const output = ref('');
+
 function parseVillagerTrades(data) {
   errorText.value = '';
   if (!data) {
@@ -86,13 +88,23 @@ const NBTData = ref('');
 
 <template>
   <h2>Villager Trade Reader</h2>
-  <p>AGGA</p>
+  <p>
+    This tool takes a villager's NBT data, reads it, and produces a
+    human-readable list of the villager's trades.
+  </p>
+  <p class="notice">
+    <i
+      >(Note: The reader *is* functional, however any successful output is
+      currently dumped into the browser console. Sorry, non-computer users...
+      😢)</i
+    >
+  </p>
   <div class="box">
     <form>
-      <label for="NBTBox">Enter vendor NBT data:</label><br />
+      <label for="NBTEntry">Enter vendor NBT data:</label><br />
       <textarea
-        name="NBTBox"
-        id="NBTBox"
+        name="NBTEntry"
+        id="NBTEntry"
         cols="50"
         rows="10"
         placeholder="{Offers:{Recipes:[{...}]}}"
@@ -113,7 +125,7 @@ const NBTData = ref('');
 </template>
 
 <style scoped>
-#NBTBox {
+#NBTEntry {
   resize: vertical;
   margin: 0.5em;
 }

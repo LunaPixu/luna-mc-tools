@@ -3,7 +3,7 @@ import TradeReader from './components/TradeReader.vue';
 </script>
 
 <template>
-  <div class="title">
+  <div id="title" class="box">
     <div style="position: relative">
       <img
         class="lunapixu"
@@ -19,21 +19,17 @@ import TradeReader from './components/TradeReader.vue';
         /></a>
       </span>
     </div>
-    <h1 style="margin-bottom: 0.5em">Luna's Minecraft Tools</h1>
+    <h1 style="margin-bottom: 0.2em">Luna's Minecraft Tools</h1>
   </div>
   <TradeReader />
 </template>
 
 <style scoped>
-.title {
-  box-shadow: 0px 0px 5px black;
-  background: #0b0632;
-  padding-top: 0.5em;
+#title {
   padding-left: 1em;
   padding-right: 1em;
   display: flex;
   flex-direction: column;
-  margin-bottom: 2em;
   position: sticky;
   position: -webkit-sticky;
 }
