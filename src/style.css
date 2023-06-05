@@ -65,6 +65,23 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+table {
+  width: 90%;
+  margin: 0 auto;
+  border: 2px solid;
+  border-collapse: collapse;
+  border-color: #0b0616;
+}
+th {
+  background-color: #0b0616;
+}
+tr:hover {
+  background-color: #1e165e;
+}
+td {
+  padding: 0.5em;
+}
+
 .notice {
   color: #888686;
 }
@@ -74,6 +91,10 @@ button:focus-visible {
   background: #0b0632;
   padding: 0.5em;
   border-radius: 10px;
+}
+
+.errortext {
+  color: red;
 }
 
 #app {
@@ -100,5 +121,17 @@ button:focus-visible {
   .box {
     box-shadow: 0px 0px 5px #7e71db;
     background: #a094f5;
+  }
+  .errortext {
+    color: rgb(184, 0, 0);
+  }
+  tr:hover {
+    background-color: #8679e7;
+  }
+  th {
+    background-color: #cdc6ff;
+  }
+  table {
+    border-color: #cdc6ff;
   }
 }
