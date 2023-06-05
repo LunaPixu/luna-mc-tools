@@ -5,13 +5,16 @@ import { reactive } from 'vue';
 const errorText = ref('');
 
 function sanitiseNBT(data) {
-  let sanitised = data.replace(/(:\d+)[bslf]/gm, '$1');
+  let sanitised = data.replace(/(:\d+)[bslf]/gm, '$1'); // Strip number/boolean definitions
+  // TODO: convert boolean values instead
   sanitised = sanitised.replace(
     /(?<=[\{,\[])(?<!")([^\{\}\[\]"',]+):/gm,
     `"$1":`
-  );
-  sanitised = sanitised.replace(/'(?=[\{\[])|(?<=[\}\]])'/gm, '');
-  sanitised = sanitised.replace(/'/gm, `"`);
+  ); // Format property names
+  sanitised = sanitised.replace(/'(?=[\{\[])|(?<=[\}\]])'/gm, ''); //Strip random ' characters surrounding objs/arrays
+  sanitised = sanitised.replace(/(?<!\\)'/gm, `"`); //Make strings uniform (but preserve ' characters in text)
+  sanitised = sanitised.replace(/\\(?=\\["']|'|\\n)/gm, ''); //Strip unnecessary escape characters
+  console.log(sanitised);
   return sanitised;
 }
 
