@@ -4,18 +4,38 @@ import { reactive } from 'vue';
 
 const errorText = ref('');
 
-function sanitiseNBT(data) {
-  let sanitised = data.replace(/(:\d+)[bslf]/gm, '$1'); // Strip number/boolean definitions
-  // TODO: convert boolean values instead
+function convertNBTIntoObj(nbt) {
+  // Strip number/boolean definitions
+  let sanitised = nbt.replace(/(:\d+)[bslf]/gm, '$1');
+  // Format property names
   sanitised = sanitised.replace(
     /(?<=[\{,\[])(?<!")([^\{\}\[\]"',]+):/gm,
     `"$1":`
-  ); // Format property names
-  sanitised = sanitised.replace(/'(?=[\{\[])|(?<=[\}\]])'/gm, ''); //Strip random ' characters surrounding objs/arrays
-  sanitised = sanitised.replace(/(?<!\\)'/gm, `"`); //Make strings uniform (but preserve ' characters in text)
-  sanitised = sanitised.replace(/\\(?=\\["']|'|\\n)/gm, ''); //Strip unnecessary escape characters
+  );
+  //Strip ' characters surrounding objs/arrays
+  sanitised = sanitised.replace(
+    /(?<=[:\[,])['"](?=[\{\[].*")|(?<=.*".*[\}\]])['"]/gm,
+    ''
+  );
+  //Make strings uniform (but preserve ' characters in text)
+  sanitised = sanitised.replace(/(?<=:)'([^:]*:[^:]*)'(?=[,\]}])/gm, `"$1"`);
+  //Strip unnecessary escape characters, this is incredibly dirty and will likely break
+  sanitised = sanitised.replace(/(?<!\\)\\/gm, '');
+
+  /*
   console.log(sanitised);
-  return sanitised;
+  console.log('-------------');
+  */
+
+  let NBTObj;
+  try {
+    NBTObj = JSON.parse(sanitised);
+  } catch {
+    throw new Error(
+      'NBT data is either malformed or was not properly sanitised when parsing.'
+    );
+  }
+  return NBTObj;
 }
 
 function capitalisePhrase(phrase) {
@@ -32,26 +52,35 @@ function capitalisePhrase(phrase) {
 
 function parseTradeItem(item) {
   let itemName = '';
+  let id = item.id;
+  id = id.match(/(?<=:).*/gi)[0];
+  id = capitalisePhrase(id);
+
   if (item.tag) {
     if (item.tag.display) {
       if (item.tag.display.Name) {
-        itemName = item.tag.display.Name.text;
+        itemName = `${item.tag.display.Name.text} (${id})`;
       }
     }
   }
   if (itemName === '') {
-    itemName = item.id;
-    itemName = itemName.match(/(?<=:).*/gi)[0];
-    itemName = capitalisePhrase(itemName);
+    itemName = id;
   }
+
   return `${item.Count} ${itemName}`;
 }
 
 function nameEggs(name) {
   let newName = name;
   let lunaNames = ['LunaPixu', 'Luna Pixu', 'Luna_Pixu', 'Luna-Pixu'];
-  let basedNames = ['Shanoa', 'Yan Vismok', 'Samus'];
-  let lovelyNames = ['Amaryllis', 'Trista', 'Trista Lundin', 'Lala Hagoromo'];
+  let basedNames = ['Shanoa', 'Samus'];
+  let lovelyNames = [
+    'Amaryllis',
+    'Yan Vismok',
+    'Trista',
+    'Trista Lundin',
+    'Lala Hagoromo',
+  ];
   if (lunaNames.some((el) => el == name)) newName += ' (Awww... Thanks!)';
   if (basedNames.some((el) => el == name)) newName += ' (Based!)';
   if (lovelyNames.some((el) => el == name)) newName += ' (❤)';
@@ -74,19 +103,13 @@ function parseVillagerTrades(data) {
       "Invalid NBT data provided. NBT data must be contained within braces '{ }'.";
     return;
   }
-  let vendorNBT = data;
-  vendorNBT = sanitiseNBT(vendorNBT);
-  //console.log(vendorNBT);
 
   let vendor;
   try {
-    vendor = JSON.parse(vendorNBT);
+    vendor = convertNBTIntoObj(data);
   } catch {
     errorText.value =
       'NBT data is either invalid or malformed, or an unexpected error occured during parsing. Please check your NBT data. If it continues to fail, please contact Luna Pixu.';
-    console.log(
-      'NBT data is either malformed or was not properly sanitised when parsing.'
-    );
     return;
   }
 
@@ -95,14 +118,15 @@ function parseVillagerTrades(data) {
 
   //console.log(`${vendorName}:`);
 
-  if (!vendor.Offers) {
-    console.log('Villager has no trades.');
-    errorText.value = `This villager${
-      tradeDisplay.name ? ', ' + tradeDisplay.name + ',' : ''
-    } either has no trades or is not a villager.`;
-    return;
-  }
-  if (!vendor.Offers.Recipes) {
+  try {
+    if (!vendor.Offers.Recipes) {
+      console.log('Villager has no trades.');
+      errorText.value = `This villager${
+        tradeDisplay.name ? ', ' + tradeDisplay.name + ',' : ''
+      } either has no trades or is not a villager.`;
+      return;
+    }
+  } catch {
     console.log('Villager has no trades.');
     errorText.value = `This villager${
       tradeDisplay.name ? ', ' + tradeDisplay.name + ',' : ''
