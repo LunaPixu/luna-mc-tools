@@ -11,7 +11,7 @@ function capitalisePhrase(phrase) {
     .map((word) => {
       return word
         .split('')
-        .map((l, i) => (i == 0 ? l.toUpperCase() : l.toLowerCase()))
+        .map((l, i) => (i === 0 ? l.toUpperCase() : l.toLowerCase()))
         .join('');
     })
     .join(' ');
@@ -49,9 +49,9 @@ function nameEggs(name) {
     'Trista Lundin',
     'Lala Hagoromo',
   ];
-  if (lunaNames.some((el) => el == name)) newName += ' (Awww... Thanks!)';
-  if (basedNames.some((el) => el == name)) newName += ' (Based!)';
-  if (lovelyNames.some((el) => el == name)) newName += ' (❤)';
+  if (lunaNames.some((el) => el === name)) newName += ' (Awww... Thanks!)';
+  if (basedNames.some((el) => el === name)) newName += ' (Based!)';
+  if (lovelyNames.some((el) => el === name)) newName += ' (❤)';
   return newName;
 }
 
@@ -87,7 +87,7 @@ function parseVillagerTrades(data) {
   //console.log(`${vendorName}:`);
 
   try {
-    if (!vendor.Offers.Recipes) {
+    if (!vendor.Offers.Recipes || vendor.Offers.Recipes.length === 0) {
       console.log('Villager has no trades.');
       errorText.value = `This villager${
         tradeDisplay.name ? ', ' + tradeDisplay.name + ',' : ''
@@ -135,9 +135,16 @@ const NBTData = ref('');
     This tool takes a villager's NBT data, reads it, and produces a
     human-readable list of the villager's trades.
   </p>
+  <p class="notice">
+    <i
+      >Note: Trade Reader was made with Minecraft Java&nbspEdition 1.18.2 in
+      mind. I cannot guarantee this tool will properly function with older or
+      newer versions, nor do I know if it will work for Bedrock.</i
+    >
+  </p>
   <div class="box">
     <form>
-      <label for="NBTEntry">Enter vendor NBT data:</label><br />
+      <label for="NBTEntry">Enter villager NBT data:</label><br />
       <textarea
         name="NBTEntry"
         id="NBTEntry"
