@@ -1,42 +1,9 @@
 <script setup>
 import { ref } from 'vue';
 import { reactive } from 'vue';
+import { parse } from 'nbt-ts';
 
 const errorText = ref('');
-
-function convertNBTIntoObj(nbt) {
-  // Strip number/boolean definitions
-  let sanitised = nbt.replace(/(:\d+)[bslf]/gm, '$1');
-  // Format property names
-  sanitised = sanitised.replace(
-    /(?<=[\{,\[])(?<!")([^\{\}\[\]"',]+):/gm,
-    `"$1":`
-  );
-  //Strip ' characters surrounding objs/arrays
-  sanitised = sanitised.replace(
-    /(?<=[:\[,])['"](?=[\{\[].*")|(?<=.*".*[\}\]])['"]/gm,
-    ''
-  );
-  //Make strings uniform (but preserve ' characters in text)
-  sanitised = sanitised.replace(/(?<=:)'([^:]*:[^:]*)'(?=[,\]}])/gm, `"$1"`);
-  //Strip unnecessary escape characters, this is incredibly dirty and will likely break
-  sanitised = sanitised.replace(/(?<!\\)\\/gm, '');
-
-  /*
-  console.log(sanitised);
-  console.log('-------------');
-  */
-
-  let NBTObj;
-  try {
-    NBTObj = JSON.parse(sanitised);
-  } catch {
-    throw new Error(
-      'NBT data is either malformed or was not properly sanitised when parsing.'
-    );
-  }
-  return NBTObj;
-}
 
 function capitalisePhrase(phrase) {
   return phrase
@@ -59,15 +26,16 @@ function parseTradeItem(item) {
   if (item.tag) {
     if (item.tag.display) {
       if (item.tag.display.Name) {
-        itemName = `${item.tag.display.Name.text} (${id})`;
+        itemName = `${JSON.parse(item.tag.display.Name).text} (${id})`;
+        return item.Count.value === 1
+          ? itemName
+          : `${item.Count.value} ${itemName}`;
       }
     }
   }
-  if (itemName === '') {
-    itemName = id;
-  }
 
-  return `${item.Count} ${itemName}`;
+  itemName = id;
+  return `${item.Count.value} ${itemName}`;
 }
 
 function nameEggs(name) {
@@ -106,14 +74,14 @@ function parseVillagerTrades(data) {
 
   let vendor;
   try {
-    vendor = convertNBTIntoObj(data);
+    vendor = parse(data);
   } catch {
     errorText.value =
       'NBT data is either invalid or malformed, or an unexpected error occured during parsing. Please check your NBT data. If it continues to fail, please contact Luna Pixu.';
     return;
   }
 
-  let vendorName = vendor.CustomName ? vendor.CustomName.text : '';
+  let vendorName = vendor.CustomName ? JSON.parse(vendor.CustomName).text : '';
   tradeDisplay.name = nameEggs(vendorName);
 
   //console.log(`${vendorName}:`);
