@@ -1,5 +1,5 @@
 <script setup>
-import TradeReader from './components/TradeReader.vue';
+import { ref, computed } from 'vue';
 </script>
 
 <template>
@@ -21,7 +21,18 @@ import TradeReader from './components/TradeReader.vue';
     </div>
     <h1 style="margin-bottom: 0.2em">Luna's Minecraft Tools</h1>
   </div>
-  <TradeReader />
+
+  <!-- Replace this! -->
+  <div id="nav" class="box">
+    <span
+      ><router-link to="/"><button>Home</button></router-link>
+      <router-link to="/tradereader"><button>Trade Reader</button></router-link
+      ><router-link to="/trimgenerator"
+        ><button>Trim Generator</button></router-link
+      ></span
+    >
+  </div>
+  <router-view></router-view>
 </template>
 
 <style scoped>
@@ -32,6 +43,16 @@ import TradeReader from './components/TradeReader.vue';
   flex-direction: column;
   position: sticky;
   position: -webkit-sticky;
+  max-width: 800px;
+  margin: 0 auto;
+  margin-bottom: 0.5em;
+}
+#nav {
+  padding-left: 1em;
+  padding-right: 1em;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .social {
   text-align: right;

@@ -130,18 +130,6 @@ const NBTData = ref('');
 </script>
 
 <template>
-  <h2>Villager Trade Reader</h2>
-  <p>
-    This tool takes a villager's NBT data, reads it, and produces a
-    human-readable list of the villager's trades.
-  </p>
-  <p class="notice">
-    <i
-      >Note: Trade Reader was made with Minecraft Java&nbspEdition 1.18.2 in
-      mind. I cannot guarantee this tool will properly function with older or
-      newer versions, nor do I know if it will work for Bedrock.</i
-    >
-  </p>
   <div class="box">
     <form>
       <label for="NBTEntry">Enter villager NBT data:</label><br />

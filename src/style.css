@@ -56,6 +56,7 @@ button {
   background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
+  margin: 0.5em 0.5em;
 }
 button:hover {
   border-color: #646cff;
@@ -91,6 +92,7 @@ td {
   background: #0b0632;
   padding: 0.5em;
   border-radius: 10px;
+  margin: 0.5em;
 }
 
 .errortext {
