@@ -130,7 +130,7 @@ const NBTData = ref('');
 </script>
 
 <template>
-  <div class="box">
+  <div class="box" id="tradebox">
     <form>
       <label for="NBTEntry">Enter villager NBT data:</label><br />
       <textarea
@@ -178,5 +178,9 @@ const NBTData = ref('');
 #NBTEntry {
   resize: vertical;
   margin: 0.5em;
+}
+#tradebox {
+  margin: 0.5em auto;
+  max-width: 1000px;
 }
 </style>
