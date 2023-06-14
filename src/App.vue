@@ -65,9 +65,11 @@ import navigation from "./components/navigation.vue"
   #page {
     margin-left: 0;
     width: auto;
+    padding: 0;
   }
   #title {
     padding: 1em;
+    padding-bottom: 0.5em;
     width: auto;
     max-width: 800px;
     min-width: 300px;

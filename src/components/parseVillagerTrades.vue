@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { reactive } from 'vue';
 import { parse } from 'nbt-ts';
 
@@ -127,6 +127,11 @@ function parseVillagerTrades(data) {
 }
 
 const NBTData = ref('');
+
+onMounted(() => {
+  let NBTEntryBox = document.getElementById("NBTEntry");
+  NBTEntryBox.setAttribute("cols", Math.min(50,window.innerWidth/12));
+})
 </script>
 
 <template>
@@ -178,6 +183,7 @@ const NBTData = ref('');
 #NBTEntry {
   resize: vertical;
   margin: 0.5em;
+  width: auto;
 }
 #tradebox {
   margin: 0.5em auto;
