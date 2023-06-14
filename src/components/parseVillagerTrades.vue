@@ -130,7 +130,7 @@ const NBTData = ref('');
 
 onMounted(() => {
   let NBTEntryBox = document.getElementById("NBTEntry");
-  NBTEntryBox.setAttribute("cols", Math.min(50,window.innerWidth/12));
+  NBTEntryBox.setAttribute("cols", Math.min(50,(window.innerWidth/12)-1));
 })
 </script>
 
