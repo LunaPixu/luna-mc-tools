@@ -7,11 +7,11 @@ import navigation from "./components/navigation.vue"
   <div id="title" class="box">
     <div style="position: relative">
       <img
-      class="lunapixu"
+      id="lunapixu"
       src="/src/assets/lunapixu.png"
       alt="Luna Pixu's icon"
       />
-      <span class="social">
+      <span id="social">
         <a
         href="https://twitter.com/luna_pixu"
         target="_blank"
@@ -24,7 +24,7 @@ import navigation from "./components/navigation.vue"
         /></a>
       </span>
     </div>
-    <h1 style="margin-bottom: 0.2em">Luna's Minecraft Tools</h1>
+    <h1 style="margin: 0.2em 0">Luna's Minecraft Tools</h1>
   </div>
   <navigation />
   <div id="page">
@@ -48,14 +48,13 @@ import navigation from "./components/navigation.vue"
   width: calc(100vw - var(--sidebar-width) - 80px);
   border-radius: 0px;
 }
-.social {
+#social {
   text-align: right;
   position: absolute;
-  inset-inline: calc(65%) 0;
+  inset-inline: 65% 0;
 }
-.lunapixu {
+#lunapixu {
   box-shadow: 0px 0px 5px black;
-  margin-bottom: -1.5em;
 }
 .icon {
   height: 32px;

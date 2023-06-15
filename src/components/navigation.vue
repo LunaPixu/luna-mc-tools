@@ -9,6 +9,7 @@
     >
   </div>
 </template>
+
 <style scoped>
 #nav {
   width: var(--sidebar-width);
