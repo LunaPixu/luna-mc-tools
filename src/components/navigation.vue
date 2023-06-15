@@ -11,7 +11,7 @@
 </template>
 <style scoped>
 #nav {
-  width: 176px;
+  width: var(--sidebar-width);
   height: 100vh;
   margin: 0;
   overflow-y: auto;

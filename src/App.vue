@@ -34,17 +34,18 @@ import navigation from "./components/navigation.vue"
 
 <style scoped>
 #page {
-  margin-left: 192px;
-  /* I have no clue why the width is this figure! Why 256 specifically?! */
-  width: calc(100vw - 256px);
+  margin-left: calc(var(--sidebar-width) + 16px);
+  /** 80px comes from the padding of the sidebar and page content. (8+8+32+32) */
+  width: calc(100vw - var(--sidebar-width) - 80px);
   padding: 0 2rem;
 }
 #title {
-  margin-left: 192px;
+  margin-left: calc(var(--sidebar-width) + 16px);
   margin-right: 0px;
   margin-top: 0px;
   padding: 1em 2em;
-  width: calc(100vw - 256px);
+  /** 80px comes from the padding of the sidebar and title. (8+8+32+32) */
+  width: calc(100vw - var(--sidebar-width) - 80px);
   border-radius: 0px;
 }
 .social {
