@@ -25,6 +25,7 @@ import navigation from "./components/navigation.vue"
       </span>
     </div>
     <h1 style="margin: 0.2em 0">Luna's Minecraft Tools</h1>
+    <p style="margin: 0.2em 0"><i>Miscellaneous Tools for Miscellaneous Minecraft Needs</i></p>
   </div>
   <navigation />
   <div id="page">
