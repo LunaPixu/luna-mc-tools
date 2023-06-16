@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue';
 import navigation from "./components/navigation.vue"
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 </script>
 
 <template>
@@ -15,12 +16,16 @@ import navigation from "./components/navigation.vue"
         <a
         href="https://twitter.com/luna_pixu"
         target="_blank"
-        ><img src="/twitter.svg" class="icon"
+        ><font-awesome-icon
+        :icon="['fab', 'twitter']"
+        class="icon"
         /></a>
         <a
         href="https://github.com/lunapixu/"
         target="_blank"
-        ><img src="/github.svg" class="icon"
+        ><font-awesome-icon
+        :icon="['fab', 'github']"
+        class="icon"
         /></a>
       </span>
     </div>
@@ -58,8 +63,9 @@ import navigation from "./components/navigation.vue"
   box-shadow: 0px 0px 5px black;
 }
 .icon {
-  height: 32px;
+  height: 40px;
   margin-left: 0.5em;
+  color: #ffffff;
 }
 
 @media only screen and (max-width: 750px) {
