@@ -150,7 +150,6 @@ onMounted(() => {
       <button
         type="button"
         @click="parseVillagerTrades(NBTData)"
-        style="margin-bottom: 0.5em"
       >
         Submit
       </button>
