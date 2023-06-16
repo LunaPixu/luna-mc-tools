@@ -1,13 +1,13 @@
 <template>
   <div id="nav" class="box">
     <router-link to="/"><button class="nav-button"
-      ><font-awesome-icon icon="house" /> Home</button
+      ><div class="nav-icon"><font-awesome-icon icon="house" /></div>Home</button
     ></router-link>
     <router-link to="/tradereader"><button class="nav-button"
-      ><font-awesome-icon icon="comments-dollar"/> Trade Reader</button
+      ><div class="nav-icon"><font-awesome-icon icon="comments-dollar"/></div>Trade Reader</button
     ></router-link
     ><router-link to="/trimgenerator"><button class="nav-button"
-      ><font-awesome-icon icon="shield-halved"/> Trim Generator</button
+      ><div class="nav-icon"><font-awesome-icon icon="shield-halved"/></div>Trim Generator</button
     ></router-link>
   </div>
 </template>
@@ -16,6 +16,7 @@
 .nav-button {
   width: 95%;
   margin: 0.5em auto;
+  padding: 0.4em 0.3em;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -41,9 +42,6 @@
     width: auto;
     margin-bottom: 0.5em;
     border-radius: 10px;
-  }
-  .nav-button {
-    padding: 0.4em 1.2em;
   }
 }
 </style>
