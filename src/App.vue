@@ -39,6 +39,8 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
   color: #ffffff;
 }
 #title {
+  transition: width 0.5s, margin 0.5s;
+
   margin-left: calc(var(--sidebar-width) + 16px);
   margin-right: 0px;
   margin-top: 0px;
@@ -57,6 +59,8 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 }
 
 #page {
+  transition: width 0.5s, margin 0.5s;
+
   margin-left: calc(var(--sidebar-width) + 16px);
   /** 80px comes from the padding of the sidebar and page content. (8+8+32+32) */
   width: calc(100vw - var(--sidebar-width) - 80px);

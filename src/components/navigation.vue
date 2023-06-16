@@ -1,26 +1,60 @@
+<script setup>
+import { ref } from "vue";
+
+const rootStyle = document.querySelector(":root");
+const baseSidebarWidth = getComputedStyle(rootStyle).getPropertyValue("--sidebar-width");
+
+const navCollapsed = ref(false);
+function collapseNav() {
+  if (navCollapsed.value) {
+    rootStyle.style.setProperty("--sidebar-width", baseSidebarWidth);
+    setTimeout(() => {
+      navCollapsed.value = false
+    }, isMobileSize() ? 0 : 300);
+    return;
+  }
+  navCollapsed.value = true;
+  setTimeout(() => {
+    rootStyle.style.setProperty("--sidebar-width", "3.5em")
+  }, isMobileSize() ? 0 : 300);
+}
+
+const isMobileSize = () => window.innerWidth <= 750;
+</script>
+
 <template>
   <div id="nav" class="box">
-    <router-link to="/"
+    <button id="nav-collapse" @click= collapseNav()><font-awesome-icon icon="bars"/></button>
+    <Transition><router-link to="/" v-if="!navCollapsed || !isMobileSize()"
       ><button class="nav-button">
         <div class="nav-icon"><font-awesome-icon icon="house" /></div>
-        Home
+        <Transition><span v-if="!navCollapsed">Home</span></Transition>
       </button></router-link
-    >
-    <router-link to="/tradereader"
+    ></Transition>
+    <Transition><router-link to="/tradereader" v-if="!navCollapsed || !isMobileSize()"
       ><button class="nav-button">
         <div class="nav-icon"><font-awesome-icon icon="comments-dollar" /></div>
-        Trade Reader
+        <Transition><span v-if="!navCollapsed">Trade Reader</span></Transition>
       </button></router-link
-    ><router-link to="/trimgenerator"
+    ></Transition>
+    <Transition><router-link to="/trimgenerator" v-if="!navCollapsed || !isMobileSize()"
       ><button class="nav-button">
         <div class="nav-icon"><font-awesome-icon icon="shield-halved" /></div>
-        Trim Generator
+        <Transition><span v-if="!navCollapsed">Trim Generator</span></Transition>
       </button></router-link
-    >
+    ></Transition>
   </div>
 </template>
 
 <style scoped>
+.v-enter-active, .v-leave-active {
+  transition: all 0.3s ease-out;
+}
+.v-enter-from, .v-leave-to {
+  transform: translateY(-8px);
+  opacity: 0;
+}
+
 .nav-button {
   width: 95%;
   margin: 0.5em auto;
@@ -34,12 +68,19 @@
   overflow-y: auto;
   left: 0px;
   top: 0px;
+  transition: width 0.5s;
 
   position: fixed;
   width: var(--sidebar-width);
   height: 100vh;
   margin: 0;
   border-radius: 0px;
+}
+#nav-collapse {
+  background: none;
+  margin: 0;
+
+  width: 95%;
 }
 
 @media only screen and (max-width: 750px) {
@@ -52,6 +93,9 @@
     margin: 0 auto;
     margin-bottom: 0.5em;
     border-radius: 10px;
+  }
+  #nav-collapse {
+    width: auto;
   }
 }
 </style>
