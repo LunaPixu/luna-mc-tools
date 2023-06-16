@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed } from 'vue';
-import navigation from "./components/navigation.vue"
+import navigation from './components/navigation.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 </script>
 
@@ -8,29 +8,23 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
   <div id="title" class="box">
     <div style="position: relative">
       <img
-      id="lunapixu"
-      src="/src/assets/lunapixu.png"
-      alt="Luna Pixu's icon"
+        id="lunapixu"
+        src="/src/assets/lunapixu.png"
+        alt="Luna Pixu's icon"
       />
       <span id="social">
-        <a
-        href="https://twitter.com/luna_pixu"
-        target="_blank"
-        ><font-awesome-icon
-        :icon="['fab', 'twitter']"
-        class="icon"
+        <a href="https://twitter.com/luna_pixu" target="_blank"
+          ><font-awesome-icon :icon="['fab', 'twitter']" class="icon"
         /></a>
-        <a
-        href="https://github.com/lunapixu/"
-        target="_blank"
-        ><font-awesome-icon
-        :icon="['fab', 'github']"
-        class="icon"
+        <a href="https://github.com/lunapixu/" target="_blank"
+          ><font-awesome-icon :icon="['fab', 'github']" class="icon"
         /></a>
       </span>
     </div>
     <h1 style="margin: 0.2em 0">Luna's Minecraft Tools</h1>
-    <p style="margin: 0.2em 0"><i>Miscellaneous Tools for Miscellaneous Minecraft Needs</i></p>
+    <p style="margin: 0.2em 0">
+      <i>Miscellaneous Tools for Miscellaneous Minecraft Needs</i>
+    </p>
   </div>
   <navigation />
   <div id="page">
@@ -80,7 +74,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
     min-width: 300px;
     border-radius: 10px;
   }
-  
+
   #page {
     margin-left: 0;
     width: auto;

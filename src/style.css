@@ -58,7 +58,7 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
   margin: 0.5em 0.5em;
-  
+
   background-color: #1a1a1a;
 }
 button:hover {
@@ -106,11 +106,11 @@ td {
 
 #app {
   text-align: center;
+  width: 100%;
 
   margin: 0;
   padding: 0;
   padding-bottom: 2rem;
-  width: 100%;
 }
 
 @media only screen and (max-width: 750px) {
@@ -119,8 +119,7 @@ td {
   }
   #app {
     margin: 0 auto;
-    padding: 2rem;
-    width: auto;
+    padding: 1.5rem;
   }
 }
 

@@ -1,14 +1,22 @@
 <template>
   <div id="nav" class="box">
-    <router-link to="/"><button class="nav-button"
-      ><div class="nav-icon"><font-awesome-icon icon="house" /></div>Home</button
-    ></router-link>
-    <router-link to="/tradereader"><button class="nav-button"
-      ><div class="nav-icon"><font-awesome-icon icon="comments-dollar"/></div>Trade Reader</button
-    ></router-link
-    ><router-link to="/trimgenerator"><button class="nav-button"
-      ><div class="nav-icon"><font-awesome-icon icon="shield-halved"/></div>Trim Generator</button
-    ></router-link>
+    <router-link to="/"
+      ><button class="nav-button">
+        <div class="nav-icon"><font-awesome-icon icon="house" /></div>
+        Home
+      </button></router-link
+    >
+    <router-link to="/tradereader"
+      ><button class="nav-button">
+        <div class="nav-icon"><font-awesome-icon icon="comments-dollar" /></div>
+        Trade Reader
+      </button></router-link
+    ><router-link to="/trimgenerator"
+      ><button class="nav-button">
+        <div class="nav-icon"><font-awesome-icon icon="shield-halved" /></div>
+        Trim Generator
+      </button></router-link
+    >
   </div>
 </template>
 
@@ -26,7 +34,7 @@
   overflow-y: auto;
   left: 0px;
   top: 0px;
-  
+
   position: fixed;
   width: var(--sidebar-width);
   height: 100vh;

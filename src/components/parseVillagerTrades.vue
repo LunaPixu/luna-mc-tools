@@ -129,9 +129,9 @@ function parseVillagerTrades(data) {
 const NBTData = ref('');
 
 onMounted(() => {
-  let NBTEntryBox = document.getElementById("NBTEntry");
-  NBTEntryBox.setAttribute("cols", Math.min(50,(window.innerWidth/12)-1));
-})
+  let NBTEntryBox = document.getElementById('NBTEntry');
+  NBTEntryBox.setAttribute('cols', Math.min(50, window.innerWidth / 12 - 1));
+});
 </script>
 
 <template>
