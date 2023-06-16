@@ -39,11 +39,10 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 </template>
 
 <style scoped>
-#page {
-  margin-left: calc(var(--sidebar-width) + 16px);
-  /** 80px comes from the padding of the sidebar and page content. (8+8+32+32) */
-  width: calc(100vw - var(--sidebar-width) - 80px);
-  padding: 0 2rem;
+.icon {
+  height: 40px;
+  margin-left: 0.5em;
+  color: #ffffff;
 }
 #title {
   margin-left: calc(var(--sidebar-width) + 16px);
@@ -62,27 +61,30 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 #lunapixu {
   box-shadow: 0px 0px 5px black;
 }
-.icon {
-  height: 40px;
-  margin-left: 0.5em;
-  color: #ffffff;
+
+#page {
+  margin-left: calc(var(--sidebar-width) + 16px);
+  /** 80px comes from the padding of the sidebar and page content. (8+8+32+32) */
+  width: calc(100vw - var(--sidebar-width) - 80px);
+  padding: 0 2rem;
 }
 
 @media only screen and (max-width: 750px) {
-  #page {
-    margin-left: 0;
-    width: auto;
-    padding: 0;
-  }
   #title {
+    margin: 0 auto;
+    margin-bottom: 0.5em;
     padding: 1em;
     padding-bottom: 0.5em;
     width: auto;
     max-width: 800px;
     min-width: 300px;
-    margin: 0 auto;
-    margin-bottom: 0.5em;
     border-radius: 10px;
+  }
+  
+  #page {
+    margin-left: 0;
+    width: auto;
+    padding: 0;
   }
 }
 </style>

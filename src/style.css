@@ -42,9 +42,10 @@ body {
 }
 
 h1 {
-  font-size: 3.2em;
   line-height: 1.1;
   text-align: center;
+
+  font-size: 3.2em;
 }
 
 button {
@@ -54,10 +55,11 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
   margin: 0.5em 0.5em;
+  
+  background-color: #1a1a1a;
 }
 button:hover {
   border-color: #646cff;
@@ -72,6 +74,7 @@ table {
   margin: 0 auto;
   border: 2px solid;
   border-collapse: collapse;
+
   border-color: #0b0616;
 }
 th {
@@ -89,11 +92,12 @@ td {
 }
 
 .box {
-  box-shadow: 0px 0px 5px black;
-  background: #0b0632;
   padding: 0.5em;
   border-radius: 10px;
   margin: 0.5em;
+
+  box-shadow: 0px 0px 5px black;
+  background: #0b0632;
 }
 
 .errortext {
@@ -101,10 +105,11 @@ td {
 }
 
 #app {
+  text-align: center;
+
   margin: 0;
   padding: 0;
   padding-bottom: 2rem;
-  text-align: center;
   width: 100%;
 }
 
@@ -113,8 +118,8 @@ td {
     font-size: 2.6em;
   }
   #app {
-    padding: 2rem;
     margin: 0 auto;
+    padding: 2rem;
     width: auto;
   }
 }
@@ -130,6 +135,15 @@ td {
   button {
     background-color: #f9f9f9;
   }
+  table {
+    border-color: #cdc6ff;
+  }
+  th {
+    background-color: #cdc6ff;
+  }
+  tr:hover {
+    background-color: #8679e7;
+  }
   .notice {
     color: #6e6e6e;
   }
@@ -139,14 +153,5 @@ td {
   }
   .errortext {
     color: rgb(184, 0, 0);
-  }
-  tr:hover {
-    background-color: #8679e7;
-  }
-  th {
-    background-color: #cdc6ff;
-  }
-  table {
-    border-color: #cdc6ff;
   }
 }
