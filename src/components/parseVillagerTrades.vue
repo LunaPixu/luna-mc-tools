@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 import { reactive } from 'vue';
 import { parse } from 'nbt-ts';
 
@@ -40,9 +40,9 @@ function parseTradeItem(item) {
 
 function nameEggs(name) {
   let newName = name;
-  let lunaNames = ['LunaPixu', 'Luna Pixu', 'Luna_Pixu', 'Luna-Pixu'];
-  let basedNames = ['Shanoa', 'Samus'];
-  let lovelyNames = [
+  const lunaNames = ['LunaPixu', 'Luna Pixu', 'Luna_Pixu', 'Luna-Pixu'];
+  const basedNames = ['Shanoa', 'Samus'];
+  const lovelyNames = [
     'Amaryllis',
     'Yan Vismok',
     'Trista',
@@ -128,9 +128,22 @@ function parseVillagerTrades(data) {
 
 const NBTData = ref('');
 
+let resizeTimer = null;
+function resizeEntryBox() {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    document.getElementById('NBTEntry')
+      .setAttribute('cols', Math.min(50, window.innerWidth / 11 - 1))
+  }, 200);
+}
+
 onMounted(() => {
-  let NBTEntryBox = document.getElementById('NBTEntry');
-  NBTEntryBox.setAttribute('cols', Math.min(50, window.innerWidth / 12 - 1));
+  resizeEntryBox();
+  window.addEventListener("resize", resizeEntryBox);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("resize",resizeEntryBox);
 });
 </script>
 

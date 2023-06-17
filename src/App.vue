@@ -75,7 +75,6 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
     padding-bottom: 0.5em;
     width: auto;
     max-width: 800px;
-    min-width: 300px;
     border-radius: 10px;
   }
 
