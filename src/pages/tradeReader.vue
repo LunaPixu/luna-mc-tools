@@ -9,11 +9,9 @@ import parseVillagerTrades from '../components/parseVillagerTrades.vue';
     human-readable list of the villager's trades.
   </p>
   <p class="notice">
-    <i
-      >Note: Trade Reader was made with Minecraft Java&nbspEdition 1.18.2 in
-      mind. I cannot guarantee this tool will properly function with other
-      versions, nor am I certain if it will work for Bedrock.</i
-    >
+    Note: Trade Reader was made with Minecraft Java&nbspEdition 1.18.2 in
+    mind. I cannot guarantee this tool will properly function with other
+    versions, nor am I certain if it will work for Bedrock.
   </p>
   <parseVillagerTrades />
 </template>

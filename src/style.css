@@ -88,6 +88,8 @@ td {
 }
 
 .notice {
+  font-style: italic;
+
   color: #888686;
 }
 
