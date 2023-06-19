@@ -1,44 +1,60 @@
-<script setup>
+<script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue';
 import { reactive } from 'vue';
 import { parse } from 'nbt-ts';
 
 const errorText = ref('');
 
-function capitalisePhrase(phrase) {
-  return phrase
-    .match(/[a-z0-9]+/gi)
-    .map((word) => {
-      return word
-        .split('')
-        .map((l, i) => (i === 0 ? l.toUpperCase() : l.toLowerCase()))
-        .join('');
-    })
-    .join(' ');
-}
+//This is sloppy and will need to be revised. Likely when I implement my own (proper) NBT parser.
+type Item = {
+  id: string
+  Count?: {
+    value: number
+  }
+  tag?: {
+    [key: string]: any
+  }
+};
 
-function parseTradeItem(item) {
+function capitalisePhrase(phrase: string): string {
+  let words = phrase.match(/[a-z0-9]+/gi);
+  if (words === null) throw new Error("Invalid phrase passed.");
+  return words.map((word) => {
+    return word
+      .split('')
+      .map((l, i) => (i === 0 ? l.toUpperCase() : l.toLowerCase()))
+      .join('');
+  }).join(' ');
+};
+
+function parseTradeItem(item: Item): string {
   let itemName = '';
   let id = item.id;
-  id = id.match(/(?<=:).*/gi)[0];
+  let strippedID = id.match(/(?<=:).*/gi);
+  if (strippedID === null) {
+    throw new Error("Invalid item passed. Please check that item ID is valid. If this error persists, please contact Luna Pixu.");
+  }
+  id = strippedID[0];
   id = capitalisePhrase(id);
+
+  let stack = item.Count ? item.Count.value : 1;
 
   if (item.tag) {
     if (item.tag.display) {
       if (item.tag.display.Name) {
         itemName = `${JSON.parse(item.tag.display.Name).text} (${id})`;
-        return item.Count.value === 1
+        return stack === 1
           ? itemName
-          : `${item.Count.value} ${itemName}`;
+          : `${stack} ${itemName}`;
       }
     }
   }
 
   itemName = id;
-  return `${item.Count.value} ${itemName}`;
-}
+  return `${stack} ${itemName}`;
+};
 
-function nameEggs(name) {
+function nameEggs(name: string): string {
   let newName = name;
   const lunaNames = ['LunaPixu', 'Luna Pixu', 'Luna_Pixu', 'Luna-Pixu'];
   const basedNames = ['Shanoa', 'Samus'];
@@ -48,16 +64,36 @@ function nameEggs(name) {
     'Trista',
     'Trista Lundin',
     'Lala Hagoromo',
+    "Amu Hinamori",
   ];
   if (lunaNames.some((el) => el === name)) newName += ' (Awww... Thanks!)';
   if (basedNames.some((el) => el === name)) newName += ' (Based!)';
   if (lovelyNames.some((el) => el === name)) newName += ' (❤)';
   return newName;
-}
+};
 
-const tradeDisplay = reactive({ name: '', trades: [] });
+type Trade = {
+  buy?: Item
+  buyB?: Item
+  sell?: Item
+};
+type LiteralTrade = {
+  id: number
+  buy1: string
+  buy2: string
+  sell: string
+};
+interface TradeDisplay {
+  name: string
+  trades: LiteralTrade[]
+};
 
-function parseVillagerTrades(data) {
+const tradeDisplay: TradeDisplay = reactive({
+  name: '',
+  trades: [],
+});
+
+function parseVillagerTrades(data: string): void {
   tradeDisplay.name = '';
   tradeDisplay.trades = [];
   errorText.value = '';
@@ -66,7 +102,7 @@ function parseVillagerTrades(data) {
     errorText.value = 'No NBT data provided...';
     return;
   }
-  if (data[0] != '{' || data.at(-1) != '}') {
+  if (data[0] != '{' || data.charAt(data.length - 1) != '}') {
     errorText.value =
       "Invalid NBT data provided. NBT data must be contained within braces '{ }'.";
     return;
@@ -81,30 +117,28 @@ function parseVillagerTrades(data) {
     return;
   }
 
-  let vendorName = vendor.CustomName ? JSON.parse(vendor.CustomName).text : '';
+  let vendorName: string = vendor.CustomName ? JSON.parse(vendor.CustomName).text : '';
   tradeDisplay.name = nameEggs(vendorName);
 
   //console.log(`${vendorName}:`);
 
+  const noTradeError = `This villager${tradeDisplay.name ? ', ' + tradeDisplay.name + ',' : ''
+    } either has no trades or is not a villager.`;
   try {
     if (!vendor.Offers.Recipes || vendor.Offers.Recipes.length === 0) {
       console.log('Villager has no trades.');
-      errorText.value = `This villager${
-        tradeDisplay.name ? ', ' + tradeDisplay.name + ',' : ''
-      } either has no trades or is not a villager.`;
+      errorText.value = noTradeError;
       return;
     }
   } catch {
     console.log('Villager has no trades.');
-    errorText.value = `This villager${
-      tradeDisplay.name ? ', ' + tradeDisplay.name + ',' : ''
-    } either has no trades or is not a villager.`;
+    errorText.value = noTradeError;
     return;
   }
 
   if (!tradeDisplay.name) tradeDisplay.name = 'Vendor';
 
-  vendor.Offers.Recipes.forEach((trade, i) => {
+  vendor.Offers.Recipes.forEach((trade: Trade, i: number) => {
     let firstTrade = trade.buy ? parseTradeItem(trade.buy) : '';
     let secondTrade = trade.buyB ? parseTradeItem(trade.buyB) : '';
     let ware = trade.sell ? parseTradeItem(trade.sell) : '';
@@ -128,12 +162,13 @@ function parseVillagerTrades(data) {
 
 const NBTData = ref('');
 
-let resizeTimer = null;
-function resizeEntryBox() {
+let resizeTimer = 0;
+function resizeEntryBox(): void {
   clearTimeout(resizeTimer);
   resizeTimer = setTimeout(() => {
-    document.getElementById('NBTEntry')
-      .setAttribute('cols', Math.min(50, window.innerWidth / 11 - 1))
+    let NBTBox = document.getElementById('NBTEntry');
+    if (NBTBox === null) return;
+    NBTBox.setAttribute('cols', Math.min(50, window.innerWidth / 11 - 1).toString())
   }, 200);
 }
 
@@ -143,7 +178,7 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-  window.removeEventListener("resize",resizeEntryBox);
+  window.removeEventListener("resize", resizeEntryBox);
 });
 </script>
 
@@ -151,19 +186,9 @@ onUnmounted(() => {
   <div class="box" id="tradebox">
     <form>
       <label for="NBTEntry">Enter villager NBT data:</label><br />
-      <textarea
-        name="NBTEntry"
-        id="NBTEntry"
-        cols="50"
-        rows="10"
-        placeholder="{Offers:{Recipes:[{...}]}}"
-        v-model="NBTData"
-      ></textarea
-      ><br />
-      <button
-        type="button"
-        @click="parseVillagerTrades(NBTData)"
-      >
+      <textarea name="NBTEntry" id="NBTEntry" cols="50" rows="10" placeholder="{Offers:{Recipes:[{...}]}}"
+        v-model="NBTData"></textarea><br />
+      <button type="button" @click="parseVillagerTrades(NBTData)">
         Submit
       </button>
     </form>

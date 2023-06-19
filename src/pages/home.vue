@@ -9,9 +9,7 @@
   <p>
     If there's something that you feel like we should provide, drop a suggestion
     on
-    <a href="https://github.com/lunapixu/minecraft-tools" target="_blank"
-      >the Github repo</a
-    >
+    <a href="https://github.com/lunapixu/minecraft-tools" target="_blank">the Github repo</a>
     or contact
     <a href="https://twitter.com/luna_pixu" target="_blank">Luna&nbsp;Pixu</a>
     on Twitter

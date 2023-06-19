@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import parseVillagerTrades from '../components/parseVillagerTrades.vue';
 </script>
 
