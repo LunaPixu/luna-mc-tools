@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 <template>
   <div id="title" class="box">
     <div style="position: relative">
-      <img id="lunapixu" src="/src/assets/lunapixu.png" alt="Luna Pixu's icon" />
+      <img id="lunapixu" src="/src/lunapixu.png" alt="Luna Pixu's icon" />
       <span id="social">
         <a href="https://twitter.com/luna_pixu" target="_blank"><font-awesome-icon :icon="['fab', 'twitter']"
             class="icon" /></a>
