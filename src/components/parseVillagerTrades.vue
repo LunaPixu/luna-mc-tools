@@ -6,7 +6,7 @@ import * as nbt from 'nbt-ts';
 const errorText = ref('');
 
 //Still not fond of this... This is going as soon as it can.
-interface Item extends nbt.TagObject {
+interface Item {
   id: string
   Count?: nbt.Byte
   tag?: nbt.TagObject
