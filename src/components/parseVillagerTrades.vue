@@ -1,24 +1,21 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue';
 import { reactive } from 'vue';
-import { parse } from 'nbt-ts';
+import * as nbt from 'nbt-ts';
 
 const errorText = ref('');
 
-//This is sloppy and will need to be revised. Likely when I implement my own (proper) NBT parser.
-type Item = {
+//Still not fond of this... This is going as soon as it can.
+interface Item extends nbt.TagObject {
   id: string
-  Count?: {
-    value: number
-  }
-  tag?: {
-    [key: string]: any
-  }
+  Count?: nbt.Byte
+  tag?: nbt.TagObject
 };
 
 function capitalisePhrase(phrase: string): string {
+  if (!phrase) return "";
   let words = phrase.match(/[a-z0-9]+/gi);
-  if (words === null) throw new Error("Invalid phrase passed.");
+  if (words === null) return "";
   return words.map((word) => {
     return word
       .split('')
@@ -28,26 +25,25 @@ function capitalisePhrase(phrase: string): string {
 };
 
 function parseTradeItem(item: Item): string {
+  if (!item.id) {
+    return "";
+  }
   let itemName = '';
   let id = item.id;
   let strippedID = id.match(/(?<=:).*/gi);
   if (strippedID === null) {
-    throw new Error("Invalid item passed. Please check that item ID is valid. If this error persists, please contact Luna Pixu.");
+    return "Invalid Item";
   }
   id = strippedID[0];
   id = capitalisePhrase(id);
 
   let stack = item.Count ? item.Count.value : 1;
 
-  if (item.tag) {
-    if (item.tag.display) {
-      if (item.tag.display.Name) {
-        itemName = `${JSON.parse(item.tag.display.Name).text} (${id})`;
-        return stack === 1
-          ? itemName
-          : `${stack} ${itemName}`;
-      }
-    }
+  if (item.tag && item.tag.display && item.tag.display.Name) {
+    itemName = `${JSON.parse(item.tag.display.Name).text} (${id})`;
+    return stack === 1
+      ? itemName
+      : `${stack} ${itemName}`;
   }
 
   itemName = id;
@@ -72,12 +68,12 @@ function nameEggs(name: string): string {
   return newName;
 };
 
-type Trade = {
+interface Trade {
   buy?: Item
   buyB?: Item
   sell?: Item
 };
-type LiteralTrade = {
+interface LiteralTrade {
   id: number
   buy1: string
   buy2: string
@@ -108,9 +104,9 @@ function parseVillagerTrades(data: string): void {
     return;
   }
 
-  let vendor;
+  let vendor: nbt.TagObject;
   try {
-    vendor = parse(data);
+    vendor = nbt.parse(data);
   } catch {
     errorText.value =
       'NBT data is either invalid or malformed, or an unexpected error occured during parsing. Please check your NBT data. If it continues to fail, please contact Luna Pixu.';
@@ -124,13 +120,8 @@ function parseVillagerTrades(data: string): void {
 
   const noTradeError = `This villager${tradeDisplay.name ? ', ' + tradeDisplay.name + ',' : ''
     } either has no trades or is not a villager.`;
-  try {
-    if (!vendor.Offers.Recipes || vendor.Offers.Recipes.length === 0) {
-      console.log('Villager has no trades.');
-      errorText.value = noTradeError;
-      return;
-    }
-  } catch {
+
+  if (!vendor.Offers || !vendor.Offers.Recipes || vendor.Offers.Recipes.length === 0) {
     console.log('Villager has no trades.');
     errorText.value = noTradeError;
     return;
