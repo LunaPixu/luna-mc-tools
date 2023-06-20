@@ -5,6 +5,7 @@ import error404 from './pages/error404.vue';
 
 const routes = [
   { path: '/', name: 'Home', component: home },
+  { path: "/home", redirect: "/" },
   { path: '/tradereader', name: 'Trade Reader', component: () => import("./pages/tradeReader.vue") },
   { path: '/trimgenerator', name: 'Trim Generator', component: () => import("./pages/trimGenerator.vue") },
   { path: '/:pathMatch(.*)*', name: 'Error 404', component: error404 },
