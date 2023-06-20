@@ -1,5 +1,27 @@
 <script setup lang="ts">
 import parseVillagerTrades from '../components/parseVillagerTrades.vue';
+import { useHeadSafe } from "@unhead/vue";
+import { onMounted } from "vue";
+
+onMounted(() => {
+  useHeadSafe({
+    title: "Trade Reader / Luna's Minecraft Tools",
+    meta: [
+      {
+        property: "og:title",
+        content: "Trade Reader / Luna's Minecraft Tools",
+      },
+      {
+        property: "og:description",
+        content: "A tool that takes a Minecraft villager's NBT data and produces a human-readable list of its trades.",
+      },
+      {
+        property: "og:url",
+        content: "https://luna-minecraft-tools.vercel.app/tradereader"
+      },
+    ]
+  })
+});
 </script>
 
 <template>
