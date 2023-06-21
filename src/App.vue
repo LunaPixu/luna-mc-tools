@@ -1,6 +1,15 @@
 <script setup lang="ts">
 import navigation from './components/navigation.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { useHeadSafe } from "@unhead/vue";
+import { useRoute } from "vue-router";
+
+const route = useRoute();
+
+useHeadSafe({
+  titleTemplate: (title) => title ? `${title} / Luna's Minecraft Tools` : "Luna's Minecraft Tools",
+  title: () => route.name !== "Home" ? route.name as string : "",
+});
 </script>
 
 <template>
