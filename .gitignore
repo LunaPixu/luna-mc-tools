@@ -8,9 +8,13 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
+.output
 dist
-dist-ssr
+.cache
 *.local
+.nitro
+.env
+.nuxt
 
 # Editor directories and files
 .vscode/*
@@ -23,5 +27,4 @@ dist-ssr
 *.sln
 *.sw?
 
-# Local Netlify folder
-.netlify
+.vercel

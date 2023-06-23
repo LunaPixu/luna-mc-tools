@@ -5,34 +5,38 @@ import * as nbt from 'nbt-ts';
 
 const errorText = ref('');
 
-//Still not fond of this... This is going as soon as it can.
+//This is just so bad... So so bad...
 interface Item {
-  id: string
-  Count?: nbt.Byte
-  tag?: nbt.TagObject
-};
+  id: string;
+  Count?: nbt.Byte;
+  tag?: {
+    [key: string]: any
+  };
+}
 
 function capitalisePhrase(phrase: string): string {
-  if (!phrase) return "";
+  if (!phrase) return '';
   let words = phrase.match(/[a-z0-9]+/gi);
-  if (words === null) return "";
-  return words.map((word) => {
-    return word
-      .split('')
-      .map((l, i) => (i === 0 ? l.toUpperCase() : l.toLowerCase()))
-      .join('');
-  }).join(' ');
-};
+  if (words === null) return '';
+  return words
+    .map((word) => {
+      return word
+        .split('')
+        .map((l, i) => (i === 0 ? l.toUpperCase() : l.toLowerCase()))
+        .join('');
+    })
+    .join(' ');
+}
 
 function parseTradeItem(item: Item): string {
   if (!item.id) {
-    return "";
+    return '';
   }
   let itemName = '';
   let id = item.id;
   let strippedID = id.match(/(?<=:).*/gi);
   if (strippedID === null) {
-    return "Invalid Item";
+    return 'Invalid Item';
   }
   id = strippedID[0];
   id = capitalisePhrase(id);
@@ -41,14 +45,12 @@ function parseTradeItem(item: Item): string {
 
   if (item.tag && item.tag.display && item.tag.display.Name) {
     itemName = `${JSON.parse(item.tag.display.Name).text} (${id})`;
-    return stack === 1
-      ? itemName
-      : `${stack} ${itemName}`;
+    return stack === 1 ? itemName : `${stack} ${itemName}`;
   }
 
   itemName = id;
   return `${stack} ${itemName}`;
-};
+}
 
 function nameEggs(name: string): string {
   let newName = name;
@@ -60,29 +62,29 @@ function nameEggs(name: string): string {
     'Trista',
     'Trista Lundin',
     'Lala Hagoromo',
-    "Amu Hinamori",
+    'Amu Hinamori',
   ];
   if (lunaNames.some((el) => el === name)) newName += ' (Awww... Thanks!)';
   if (basedNames.some((el) => el === name)) newName += ' (Based!)';
   if (lovelyNames.some((el) => el === name)) newName += ' (❤)';
   return newName;
-};
+}
 
 interface Trade {
-  buy?: Item
-  buyB?: Item
-  sell?: Item
-};
+  buy?: Item;
+  buyB?: Item;
+  sell?: Item;
+}
 interface LiteralTrade {
-  id: number
-  buy1: string
-  buy2: string
-  sell: string
-};
+  id: number;
+  buy1: string;
+  buy2: string;
+  sell: string;
+}
 interface TradeDisplay {
-  name: string
-  trades: LiteralTrade[]
-};
+  name: string;
+  trades: LiteralTrade[];
+}
 
 const tradeDisplay: TradeDisplay = reactive({
   name: '',
@@ -104,7 +106,8 @@ function parseVillagerTrades(data: string): void {
     return;
   }
 
-  let vendor: nbt.TagObject;
+  // I hate that I have to do this if node types are installed
+  let vendor: any;
   try {
     vendor = nbt.parse(data);
   } catch {
@@ -113,7 +116,9 @@ function parseVillagerTrades(data: string): void {
     return;
   }
 
-  let vendorName: string = vendor.CustomName ? JSON.parse(vendor.CustomName).text : '';
+  let vendorName: string = vendor.CustomName
+    ? JSON.parse(vendor.CustomName).text
+    : '';
   tradeDisplay.name = nameEggs(vendorName);
 
   //console.log(`${vendorName}:`);
@@ -121,7 +126,11 @@ function parseVillagerTrades(data: string): void {
   const noTradeError = `This villager${tradeDisplay.name ? ', ' + tradeDisplay.name + ',' : ''
     } either has no trades or is not a villager.`;
 
-  if (!vendor.Offers || !vendor.Offers.Recipes || vendor.Offers.Recipes.length === 0) {
+  if (
+    !vendor.Offers ||
+    !vendor.Offers.Recipes ||
+    vendor.Offers.Recipes.length === 0
+  ) {
     console.log('Villager has no trades.');
     errorText.value = noTradeError;
     return;
@@ -156,20 +165,23 @@ const NBTData = ref('');
 let resizeTimer = 0;
 function resizeEntryBox(): void {
   clearTimeout(resizeTimer);
-  resizeTimer = setTimeout(() => {
+  resizeTimer = window.setTimeout(() => {
     let NBTBox = document.getElementById('NBTEntry');
     if (NBTBox === null) return;
-    NBTBox.setAttribute('cols', Math.min(50, window.innerWidth / 11 - 1).toString())
+    NBTBox.setAttribute(
+      'cols',
+      Math.min(50, window.innerWidth / 11 - 1).toString()
+    );
   }, 200);
 }
 
 onMounted(() => {
   resizeEntryBox();
-  window.addEventListener("resize", resizeEntryBox);
+  window.addEventListener('resize', resizeEntryBox);
 });
 
 onUnmounted(() => {
-  window.removeEventListener("resize", resizeEntryBox);
+  window.removeEventListener('resize', resizeEntryBox);
 });
 </script>
 

@@ -1,14 +1,53 @@
 <script setup lang="ts">
 import navigation from './components/navigation.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { useHeadSafe } from "@unhead/vue";
-import { useRoute } from "vue-router";
+import routeData from "./content/routeData.json";
 
 const route = useRoute();
+const routeList = routeData.routes;
+const siteName = "Luna's Minecraft Tools";
 
 useHeadSafe({
-  titleTemplate: (title) => title ? `${title} / Luna's Minecraft Tools` : "Luna's Minecraft Tools",
-  title: () => route.name !== "Home" ? route.name as string : "",
+  templateParams: {
+    site: {
+      name: siteName,
+      url: "https://luna-minecraft-tools.vercel.app",
+      description: "A collection of miscellaneous Minecraft tools for various Minecraft needs.",
+    },
+    seperator: "/"
+  },
+  titleTemplate: (title?: string) => title ? `${title} / ${siteName}` : `${siteName}`,
+  title: () => {
+    const page = routeList.find(el => el.slug === route.name);
+    if (!page) return "";
+    return page.name !== 'Home' ? page.name : '';
+  },
+  meta: [
+    {
+      property: "description",
+      content: "%site.description",
+    },
+    {
+      property: "og:title",
+      content: "%site.name",
+    },
+    {
+      property: "og:type",
+      content: "website",
+    },
+    {
+      property: "og:description",
+      content: "%site.description",
+    },
+    {
+      property: "og:url",
+      content: "%site.url",
+    },
+    {
+      property: "og:image",
+      content: "%site.url/lunapixu-large.jpg"
+    }
+  ],
 });
 </script>
 
@@ -17,9 +56,9 @@ useHeadSafe({
     <div style="position: relative">
       <img id="lunapixu" src="/lunapixu.png" alt="Luna Pixu's icon" />
       <span id="social">
-        <a href="https://twitter.com/luna_pixu" target="_blank"><font-awesome-icon :icon="['fab', 'twitter']"
+        <a href="https://twitter.com/luna_pixu" target="_blank"><font-awesome-icon icon="fa-brands fa-twitter"
             class="icon" /></a>
-        <a href="https://github.com/lunapixu/" target="_blank"><font-awesome-icon :icon="['fab', 'github']"
+        <a href="https://github.com/lunapixu/" target="_blank"><font-awesome-icon icon="fa-brands fa-github"
             class="icon" /></a>
       </span>
     </div>
@@ -28,9 +67,11 @@ useHeadSafe({
       <i>Miscellaneous Tools for Miscellaneous Minecraft Needs</i>
     </p>
   </div>
-  <navigation />
+  <ClientOnly>
+    <navigation />
+  </ClientOnly>
   <div id="page">
-    <router-view></router-view>
+    <NuxtPage />
   </div>
 </template>
 
