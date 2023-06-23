@@ -27,5 +27,4 @@ dist
 *.sln
 *.sw?
 
-# Local Netlify folder
-.netlify
+.vercel

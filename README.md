@@ -1,7 +1,7 @@
 # Luna's Minecraft Tools
 Luna's Minecraft Tools (LMT) is a simple web app developed by Luna Pixu to provide a variety of miscellaneous external tools and functions for Minecraft.
 
-Currently located at: https://luna-minecraft-tools.netlify.app/
+Currently located at: https://luna-minecraft-tools.vercel.app/
 
 ## Contributing / Running Locally
 LMT is created using [Nuxt](https://nuxt.com/) in [TypeScript](https://www.typescriptlang.org/). When contributing, ensure you have [node](https://nodejs.org/) and npm installed, and follow these instructions:
