@@ -168,7 +168,7 @@ function resizeEntryBox(): void {
   if (NBTBox === null) return;
   NBTBox.setAttribute(
     'cols',
-    Math.min(50, window.innerWidth / 11 - 1).toString()
+    Math.min(50, Math.floor(window.innerWidth / 11) - 1).toString()
   );
 }
 function debouncedResize(): void {
