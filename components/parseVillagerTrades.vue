@@ -164,24 +164,25 @@ const NBTData = ref('');
 
 let resizeTimer = 0;
 function resizeEntryBox(): void {
+  let NBTBox = document.getElementById('NBTEntry');
+  if (NBTBox === null) return;
+  NBTBox.setAttribute(
+    'cols',
+    Math.min(50, window.innerWidth / 11 - 1).toString()
+  );
+}
+function debouncedResize(): void {
   clearTimeout(resizeTimer);
-  resizeTimer = window.setTimeout(() => {
-    let NBTBox = document.getElementById('NBTEntry');
-    if (NBTBox === null) return;
-    NBTBox.setAttribute(
-      'cols',
-      Math.min(50, window.innerWidth / 11 - 1).toString()
-    );
-  }, 200);
+  resizeTimer = window.setTimeout(resizeEntryBox, 200);
 }
 
 onMounted(() => {
   resizeEntryBox();
-  window.addEventListener('resize', resizeEntryBox);
+  window.addEventListener('resize', debouncedResize);
 });
 
 onUnmounted(() => {
-  window.removeEventListener('resize', resizeEntryBox);
+  window.removeEventListener('resize', debouncedResize);
 });
 </script>
 
