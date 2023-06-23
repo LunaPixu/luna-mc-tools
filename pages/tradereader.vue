@@ -6,7 +6,7 @@ const desc = "A tool that takes a Minecraft villager's NBT data and produces a h
 useHeadSafe({
   meta: [
     {
-      property: "description",
+      name: "description",
       content: desc,
     },
     {

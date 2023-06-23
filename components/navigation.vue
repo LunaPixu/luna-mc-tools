@@ -46,7 +46,7 @@ const routes = reactive(routeData.routes);
 
 <template>
   <div id="nav" class="box">
-    <button id="nav-collapse" @click="collapseNav()">
+    <button id="nav-collapse" @click="collapseNav()" aria-label="Collapse/Expand Navigation">
       <font-awesome-icon icon="fa-solid fa-bars" />
     </button>
     <div v-for="route in routes" :key="route.id">

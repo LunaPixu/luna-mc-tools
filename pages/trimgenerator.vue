@@ -4,7 +4,7 @@ const desc = "Not yet implemented..."
 useHeadSafe({
   meta: [
     {
-      property: "description",
+      name: "description",
       content: desc,
     },
     {

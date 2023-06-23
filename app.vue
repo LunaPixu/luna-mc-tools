@@ -8,6 +8,9 @@ const routeList = routeData.routes;
 const siteName = "Luna's Minecraft Tools";
 
 useHeadSafe({
+  htmlAttrs: {
+    lang: 'en',
+  },
   templateParams: {
     site: {
       name: siteName,
@@ -24,7 +27,7 @@ useHeadSafe({
   },
   meta: [
     {
-      property: "description",
+      name: "description",
       content: "%site.description",
     },
     {
@@ -54,11 +57,11 @@ useHeadSafe({
 <template>
   <div id="title" class="box">
     <div style="position: relative">
-      <img id="lunapixu" src="/lunapixu.png" alt="Luna Pixu's icon" />
+      <img id="lunapixu" src="/lunapixu.png" alt="Luna Pixu's icon" height="64px" width="64px"/>
       <span id="social">
-        <a href="https://twitter.com/luna_pixu" target="_blank"><font-awesome-icon icon="fa-brands fa-twitter"
+        <a href="https://twitter.com/luna_pixu" target="_blank" aria-label="Luna Pixu's Twitter"><font-awesome-icon icon="fa-brands fa-twitter"
             class="icon" /></a>
-        <a href="https://github.com/lunapixu/" target="_blank"><font-awesome-icon icon="fa-brands fa-github"
+        <a href="https://github.com/lunapixu/" target="_blank" aria-label="Luna Pixu's Github"><font-awesome-icon icon="fa-brands fa-github"
             class="icon" /></a>
       </span>
     </div>
