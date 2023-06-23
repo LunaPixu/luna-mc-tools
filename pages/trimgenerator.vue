@@ -1,4 +1,26 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const desc = "Not yet implemented..."
+
+useHeadSafe({
+  meta: [
+    {
+      property: "description",
+      content: desc,
+    },
+    {
+      property: "og:title",
+      content: "Trim Generator %seperator %site.name",
+    },
+    {
+      property: "og:description",
+      content: desc,
+    },
+    {
+      property: "og:url",
+      content: "%site.url/trimgenerator"
+    },
+  ]
+});</script>
 
 <template>
   <div>

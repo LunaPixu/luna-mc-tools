@@ -5,15 +5,50 @@ import routeData from "./content/routeData.json";
 
 const route = useRoute();
 const routeList = routeData.routes;
+const siteName = "Luna's Minecraft Tools";
 
 useHeadSafe({
+  templateParams: {
+    site: {
+      name: siteName,
+      url: "https://luna-minecraft-tools.vercel.app",
+      description: "A collection of miscellaneous Minecraft tools for various Minecraft needs.",
+    },
+    seperator: "/"
+  },
   titleTemplate: (title: any) =>
-    title ? `${title} / Luna's Minecraft Tools` : "Luna's Minecraft Tools",
+    title ? `${title} / ${siteName}` : `${siteName}`,
   title: () => {
     const page = routeList.find(el => el.slug === route.name);
     if (!page) return "";
     return page.name !== 'Home' ? page.name : '';
   },
+  meta: [
+    {
+      property: "description",
+      content: "%site.description",
+    },
+    {
+      property: "og:title",
+      content: "%site.name",
+    },
+    {
+      property: "og:type",
+      content: "website",
+    },
+    {
+      property: "og:description",
+      content: "%site.description",
+    },
+    {
+      property: "og:url",
+      content: "%site.url",
+    },
+    {
+      property: "og:image",
+      content: "%site.url/lunapixu-large.jpg"
+    }
+  ],
 });
 </script>
 
@@ -47,6 +82,7 @@ useHeadSafe({
   margin-left: 0.5em;
   color: #ffffff;
 }
+
 #title {
   transition: width 0.5s, margin 0.5s;
 
@@ -58,11 +94,13 @@ useHeadSafe({
   width: calc(100vw - var(--sidebar-width) - 80px);
   border-radius: 0px;
 }
+
 #social {
   text-align: right;
   position: absolute;
   inset-inline: 65% 0;
 }
+
 #lunapixu {
   box-shadow: 0px 0px 5px black;
 }
@@ -92,5 +130,4 @@ useHeadSafe({
     width: auto;
     padding: 0;
   }
-}
-</style>
+}</style>
