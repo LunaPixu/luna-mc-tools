@@ -18,6 +18,9 @@ export default defineNuxtConfig({
   ],
   pwa: {
     registerType: 'autoUpdate',
+    workbox: {
+      globPatterns: ['**/*.{js,css,html,ico,png,svg}']
+    },
     manifest: {
       name: "Luna's Minecraft Tools",
       short_name: "LMT",
@@ -27,6 +30,30 @@ export default defineNuxtConfig({
       lang: "en-US",
       display: "standalone",
       orientation: "any",
+      icons: [
+        {
+          src: 'pwa-64x64.png',
+          sizes: '64x64',
+          type: 'image/png'
+        },
+        {
+          src: 'pwa-192x192.png',
+          sizes: '192x192',
+          type: 'image/png'
+        },
+        {
+          src: 'pwa-512x512.png',
+          sizes: '512x512',
+          type: 'image/png',
+          purpose: 'any'  
+        },
+        {
+          src: 'maskable-icon-512x512.png',
+          sizes: '512x512',
+          type: 'image/png',
+          purpose: 'maskable'
+        }
+      ]
     },
     client: {
       installPrompt: true,

@@ -48,8 +48,28 @@ useHeadSafe({
     },
     {
       property: "og:image",
-      content: "%site.url/lunapixu-large.jpg"
-    }
+      content: "%site.url/lunapixu-large.png",
+    },
+    {
+      name: "theme-color",
+      content: "#3366ff",
+    },
+  ],
+  link: [
+    {
+      rel: "apple-touch-icon",
+      href: "/apple-touch-icon-180x180.png",
+    },
+    {
+      rel: "icon",
+      href: "/favicon.ico",
+      sizes: "any",
+    },
+    {
+      rel: "icon",
+      href: "/favicon.svg",
+      type: "image/svg+xml"
+    },
   ],
 });
 </script>
