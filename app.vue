@@ -55,6 +55,8 @@ useHeadSafe({
 </script>
 
 <template>
+  <VitePwaManifest />
+  <NuxtLoadingIndicator />
   <div id="title" class="box">
     <div style="position: relative">
       <img id="lunapixu" src="/lunapixu.png" alt="Luna Pixu's icon" height="64px" width="64px"/>
