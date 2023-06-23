@@ -48,13 +48,35 @@ useHeadSafe({
     },
     {
       property: "og:image",
-      content: "%site.url/lunapixu-large.jpg"
-    }
+      content: "%site.url/lunapixu.png",
+    },
+    {
+      name: "theme-color",
+      content: "#3366ff",
+    },
+  ],
+  link: [
+    {
+      rel: "apple-touch-icon",
+      href: "/apple-touch-icon-180x180.png",
+    },
+    {
+      rel: "icon",
+      href: "/favicon.ico",
+      sizes: "any",
+    },
+    {
+      rel: "icon",
+      href: "/favicon.svg",
+      type: "image/svg+xml"
+    },
   ],
 });
 </script>
 
 <template>
+  <VitePwaManifest />
+  <NuxtLoadingIndicator />
   <div id="title" class="box">
     <div style="position: relative">
       <img id="lunapixu" src="/lunapixu.png" alt="Luna Pixu's icon" height="64px" width="64px"/>
