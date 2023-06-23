@@ -48,7 +48,7 @@ useHeadSafe({
     },
     {
       property: "og:image",
-      content: "%site.url/lunapixu-large.png",
+      content: "%site.url/lunapixu.png",
     },
     {
       name: "theme-color",
