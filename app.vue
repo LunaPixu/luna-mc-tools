@@ -16,8 +16,7 @@ useHeadSafe({
     },
     seperator: "/"
   },
-  titleTemplate: (title: any) =>
-    title ? `${title} / ${siteName}` : `${siteName}`,
+  titleTemplate: (title?: string) => title ? `${title} / ${siteName}` : `${siteName}`,
   title: () => {
     const page = routeList.find(el => el.slug === route.name);
     if (!page) return "";
@@ -82,7 +81,6 @@ useHeadSafe({
   margin-left: 0.5em;
   color: #ffffff;
 }
-
 #title {
   transition: width 0.5s, margin 0.5s;
 
@@ -94,13 +92,11 @@ useHeadSafe({
   width: calc(100vw - var(--sidebar-width) - 80px);
   border-radius: 0px;
 }
-
 #social {
   text-align: right;
   position: absolute;
   inset-inline: 65% 0;
 }
-
 #lunapixu {
   box-shadow: 0px 0px 5px black;
 }
@@ -130,4 +126,5 @@ useHeadSafe({
     width: auto;
     padding: 0;
   }
-}</style>
+}
+</style>
