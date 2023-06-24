@@ -180,7 +180,7 @@ onUnmounted((): void => {
   <div class="box" id="tradebox">
     <form>
       <label for="NBTEntry">Enter villager NBT data:</label><br />
-      <textarea name="NBTEntry" id="NBTEntry" :cols="NBTBoxCols" rows="10" placeholder="{Offers:{Recipes:[{...}]}}"
+      <textarea name="NBTEntry" id="NBTEntry" :cols="NBTBoxCols" rows="15" placeholder="{Offers:{Recipes:[{...}]}}"
         v-model="NBTData"></textarea><br />
       <button type="button" @click="parseVillagerTrades(NBTData)">
         Submit
