@@ -37,7 +37,15 @@ useHeadSafe({
       mind. I cannot guarantee this tool will properly function with other
       versions, nor am I certain if it will work for Bedrock.
     </p>
-    <parseVillagerTrades />
+    <!--
+      I have no clue why the parser suddenly became client-only.
+      Heck, I have no clue what can and can't be used in SSR...
+      All I know is "If it suddenly gives a 500 error, maybe move it to client-only."
+      For anyone reading this, this error has something to do with trades being undefined. Good luck.
+    -->
+    <ClientOnly>
+      <parseVillagerTrades />
+    </ClientOnly>
   </div>
 </template>
 

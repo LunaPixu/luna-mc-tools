@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue';
-import { reactive } from 'vue';
 import * as nbt from 'nbt-ts';
 
 const errorText = ref('');
@@ -63,6 +61,8 @@ function nameEggs(name: string): string {
     'Trista Lundin',
     'Lala Hagoromo',
     'Amu Hinamori',
+    "Usagi Tsukino",
+    "Ami Mizuno",
   ];
   if (lunaNames.some((el) => el === name)) newName += ' (Awww... Thanks!)';
   if (basedNames.some((el) => el === name)) newName += ' (Based!)';
@@ -121,8 +121,6 @@ function parseVillagerTrades(data: string): void {
     : '';
   tradeDisplay.name = nameEggs(vendorName);
 
-  //console.log(`${vendorName}:`);
-
   const noTradeError = `This villager${tradeDisplay.name ? ', ' + tradeDisplay.name + ',' : ''
     } either has no trades or is not a villager.`;
 
@@ -143,14 +141,6 @@ function parseVillagerTrades(data: string): void {
     let secondTrade = trade.buyB ? parseTradeItem(trade.buyB) : '';
     let ware = trade.sell ? parseTradeItem(trade.sell) : '';
 
-    //console.log(trade);
-    /*console.log(
-      (firstTrade ? firstTrade : '') +
-        (firstTrade && secondTrade ? ' and ' : '') +
-        (secondTrade ? secondTrade : '') +
-        ` for ${ware}`
-    );*/
-
     tradeDisplay.trades.push({
       id: i + 1,
       buy1: firstTrade,
@@ -162,35 +152,35 @@ function parseVillagerTrades(data: string): void {
 
 const NBTData = ref('');
 
+function getCols(): string {
+  const tradeBox = document.getElementById("tradebox");
+  if (!tradeBox) return "1"; // This is definitely gonna break something, I can just feel it
+  return (Math.floor(tradeBox.getBoundingClientRect().width / 10) - 1).toString()
+};
+
+const NBTBoxCols = ref(getCols());
 let resizeTimer = 0;
 function resizeEntryBox(): void {
-  let NBTBox = document.getElementById('NBTEntry');
-  if (NBTBox === null) return;
-  NBTBox.setAttribute(
-    'cols',
-    Math.min(50, Math.floor(window.innerWidth / 11) - 1).toString()
-  );
-}
-function debouncedResize(): void {
   clearTimeout(resizeTimer);
-  resizeTimer = window.setTimeout(resizeEntryBox, 200);
+  resizeTimer = window.setTimeout((): void => {
+    NBTBoxCols.value = getCols();
+  }, 300);
 }
 
-onMounted(() => {
-  resizeEntryBox();
-  window.addEventListener('resize', debouncedResize);
+onMounted((): void => {
+  NBTBoxCols.value = getCols();
+  window.addEventListener("resize", resizeEntryBox);
 });
-
-onUnmounted(() => {
-  window.removeEventListener('resize', debouncedResize);
-});
+onUnmounted((): void => {
+  window.removeEventListener("resize", resizeEntryBox);
+})
 </script>
 
 <template>
   <div class="box" id="tradebox">
     <form>
       <label for="NBTEntry">Enter villager NBT data:</label><br />
-      <textarea name="NBTEntry" id="NBTEntry" cols="50" rows="10" placeholder="{Offers:{Recipes:[{...}]}}"
+      <textarea name="NBTEntry" id="NBTEntry" :cols="NBTBoxCols" rows="10" placeholder="{Offers:{Recipes:[{...}]}}"
         v-model="NBTData"></textarea><br />
       <button type="button" @click="parseVillagerTrades(NBTData)">
         Submit
