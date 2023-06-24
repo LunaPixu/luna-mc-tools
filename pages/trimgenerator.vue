@@ -1,25 +1,11 @@
 <script setup lang="ts">
 const desc = "Not yet implemented..."
 
-useHeadSafe({
-  meta: [
-    {
-      name: "description",
-      content: desc,
-    },
-    {
-      property: "og:title",
-      content: "Trim Generator %seperator %site.name",
-    },
-    {
-      property: "og:description",
-      content: desc,
-    },
-    {
-      property: "og:url",
-      content: "%site.url/trimgenerator"
-    },
-  ]
+useSeoMeta({
+  description: desc,
+  ogTitle: "Trim Generator %seperator %site.name",
+  ogDescription: desc,
+  ogUrl: "%site.url/trimgenerator",
 });</script>
 
 <template>

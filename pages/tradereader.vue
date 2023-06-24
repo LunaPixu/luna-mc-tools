@@ -1,27 +1,11 @@
 <script setup lang="ts">
-import parseVillagerTrades from '../components/parseVillagerTrades.vue';
-
 const desc = "A tool that takes a Minecraft villager's NBT data and produces a human-readable list of its trades."
 
-useHeadSafe({
-  meta: [
-    {
-      name: "description",
-      content: desc,
-    },
-    {
-      property: "og:title",
-      content: "Trade Reader %seperator %site.name",
-    },
-    {
-      property: "og:description",
-      content: desc,
-    },
-    {
-      property: "og:url",
-      content: "%site.url/tradereader"
-    },
-  ]
+useSeoMeta({
+  description: desc,
+  ogTitle: "Trade Reader %seperator %site.name",
+  ogDescription: desc,
+  ogUrl: "%site.url/tradereader",
 });
 </script>
 

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref, reactive } from 'vue';
 import routeData from '../content/routeData.json';
 
 const rootStyle = document.querySelector(':root') as HTMLElement;

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import navigation from './components/navigation.vue';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import routeData from "./content/routeData.json";
 
 const route = useRoute();
@@ -25,36 +23,6 @@ useHeadSafe({
     if (!page) return "";
     return page.name !== 'Home' ? page.name : '';
   },
-  meta: [
-    {
-      name: "description",
-      content: "%site.description",
-    },
-    {
-      property: "og:title",
-      content: "%site.name",
-    },
-    {
-      property: "og:type",
-      content: "website",
-    },
-    {
-      property: "og:description",
-      content: "%site.description",
-    },
-    {
-      property: "og:url",
-      content: "%site.url",
-    },
-    {
-      property: "og:image",
-      content: "%site.url/lunapixu.png",
-    },
-    {
-      name: "theme-color",
-      content: "#3366ff",
-    },
-  ],
   link: [
     {
       rel: "apple-touch-icon",
@@ -71,6 +39,15 @@ useHeadSafe({
       type: "image/svg+xml"
     },
   ],
+});
+useSeoMeta({
+  description: "%site.description",
+  ogTitle: "%site.name",
+  ogDescription: "%site.description",
+  ogUrl: "%site.url",
+  ogType: "website",
+  ogImage: "%site.url/lunapixu.png",
+  themeColor: "#3366ff",
 });
 </script>
 
