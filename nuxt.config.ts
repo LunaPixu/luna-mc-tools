@@ -23,7 +23,7 @@ export default defineNuxtConfig({
     },
     manifest: {
       name: "Luna's Minecraft Tools",
-      short_name: "LMT",
+      short_name: "Luna MCT",
       description: "A collection of miscellaneous Minecraft tools for various Minecraft needs.",
       background_color: "#fff",
       theme_color: "#3366ff",
