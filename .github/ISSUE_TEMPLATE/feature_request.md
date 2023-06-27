@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: Suggest an idea for this project
+about: Suggest an idea for Luna MCT
 title: [Suggestion] Insert Title Here
 labels: enhancement
 assignees: LunaPixu
@@ -8,7 +8,7 @@ assignees: LunaPixu
 ---
 
 **Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+A clear description of what the problem is. Examples: I hate having to do [...] in Minecraft; [...] on Luna MCT is a little too cumbersome to use.
 
 **Describe the solution you'd like**
 A clear and concise description of what you want to happen.
