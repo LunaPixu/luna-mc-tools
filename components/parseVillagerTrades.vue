@@ -41,7 +41,7 @@ function parseTradeItem(item: Item): string {
 
   let stack = item.Count ? item.Count.value : 1;
 
-  if (item.tag && item.tag.display && item.tag.display.Name) {
+  if (item.tag?.display?.Name) {
     itemName = `${JSON.parse(item.tag.display.Name).text} (${id})`;
     return stack === 1 ? itemName : `${stack} ${itemName}`;
   }
@@ -124,11 +124,7 @@ function parseVillagerTrades(data: string): void {
   const noTradeError = `This villager${tradeDisplay.name ? ', ' + tradeDisplay.name + ',' : ''
     } either has no trades or is not a villager.`;
 
-  if (
-    !vendor.Offers ||
-    !vendor.Offers.Recipes ||
-    vendor.Offers.Recipes.length === 0
-  ) {
+  if (!vendor.Offers?.Recipes || vendor.Offers.Recipes.length === 0) {
     console.log('Villager has no trades.');
     errorText.value = noTradeError;
     return;
