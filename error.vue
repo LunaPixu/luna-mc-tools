@@ -1,6 +1,6 @@
 <template>
   <h2>An Error Has Occured</h2>
-  <p>{{ error.statusCode }} - {{ error.statusMessage }}</p>
+  <p>Error {{ error.statusCode }} {{ error.statusMessage ? `- ${error.statusMessage}` : "" }}</p>
   <button @click="handleError">Return to website</button>
 </template>
 
