@@ -41,13 +41,12 @@ function parseTradeItem(item: Item): string {
 
   let stack = item.Count ? item.Count.value : 1;
 
+  let uniqueName = { text: "" };
   if (item.tag?.display?.Name) {
-    itemName = `${JSON.parse(item.tag.display.Name).text} (${id})`;
-    return stack === 1 ? itemName : `${stack} ${itemName}`;
+    uniqueName = JSON.parse(item.tag.display.Name);
   }
-
-  itemName = id;
-  return `${stack} ${itemName}`;
+  itemName = uniqueName.text ? `${uniqueName.text} (${id})` : id;
+  return uniqueName.text && stack === 1 ? itemName : `${stack} ${itemName}`;
 }
 
 function nameEggs(name: string): string {
