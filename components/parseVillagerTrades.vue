@@ -76,7 +76,7 @@ interface Trade {
 }
 interface Villager {
   Offers?: {
-    Recipes: Trade[];
+    Recipes?: Trade[];
   };
   CustomName?: string;
   [key: string]: any;
@@ -128,9 +128,15 @@ function parseVillagerTrades(data: string): void {
 
   const noTradeError = `This villager${tradeDisplay.name ? ', ' + tradeDisplay.name + ',' : ''
     } either has no trades or is not a villager.`;
+  const invalidTradeListError = `This villager${tradeDisplay.name ? ', ' + tradeDisplay.name + ',' : ''
+    } has an invalid list of trades. Please check your NBT data. If this error persists, please contact Luna Pixu.`;
 
   if (!vendor.Offers?.Recipes || vendor.Offers.Recipes.length === 0) {
     errorText.value = noTradeError;
+    return;
+  }
+  if (!Array.isArray(vendor.Offers.Recipes)) {
+    errorText.value = invalidTradeListError;
     return;
   }
 
