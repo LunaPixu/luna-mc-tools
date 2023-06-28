@@ -75,6 +75,13 @@ interface Trade {
   buyB?: Item;
   sell?: Item;
 }
+interface Villager {
+  Offers?: {
+    Recipes: Trade[];
+  };
+  CustomName?: string;
+  [key: string]: any;
+}
 interface LiteralTrade {
   id: number;
   buy1: string;
@@ -106,10 +113,9 @@ function parseVillagerTrades(data: string): void {
     return;
   }
 
-  // I hate that I have to do this if node types are installed
-  let vendor: any;
+  let vendor: Villager;
   try {
-    vendor = nbt.parse(data);
+    vendor = nbt.parse(data) as Villager;
   } catch {
     errorText.value =
       'NBT data is either invalid or malformed, or an unexpected error occured during parsing. Please check your NBT data. If it continues to fail, please contact Luna Pixu.';
@@ -125,7 +131,6 @@ function parseVillagerTrades(data: string): void {
     } either has no trades or is not a villager.`;
 
   if (!vendor.Offers?.Recipes || vendor.Offers.Recipes.length === 0) {
-    console.log('Villager has no trades.');
     errorText.value = noTradeError;
     return;
   }
