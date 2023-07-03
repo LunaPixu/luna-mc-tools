@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const desc = "Not yet implemented..."
+const desc = "A basic generator to help quickly add custom armor trims into Minecraft."
 
 useSeoMeta({
   description: desc,
@@ -11,7 +11,13 @@ useSeoMeta({
 <template>
   <div>
     <h2>Armor Trim Generator</h2>
-    <p class="notice">Not yet implemented!</p>
+    <p>
+      This tool quickly creates a datapack and resource pack scaffold to quickly add your own custom armor trims into Minecraft.
+    </p>
+    <p class="notice">Note: This tool was made for Minecraft Java Edition version 1.20. This tool will not work for Bedrock.</p>
+    <ClientOnly>
+      <GenerateTrim />
+    </ClientOnly>
   </div>
 </template>
 
