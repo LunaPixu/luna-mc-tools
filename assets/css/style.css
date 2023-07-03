@@ -78,6 +78,10 @@ td {
   padding: 0.5em;
 }
 
+label {
+  text-decoration: underline solid;
+}
+
 .notice {
   font-style: italic;
 
