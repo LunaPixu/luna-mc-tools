@@ -19,7 +19,7 @@ function generateTrim(values: TrimObj) {
 
   if (!values.material) {
     errorText.value = "No material was provided.";
-    return; 
+    return;
   }
 
   test.value = true;
@@ -40,7 +40,8 @@ function downloadDatapack(): void {
       <div class="option">
         <label for="material-box">Trim Material</label>
         <HelpButton id="material"><u>Add the ID of the material of your trim</u><br />
-          The ID of an item can be found by pressing <code>F3+H</code> and looking at the bottom of the item tooltip (or you can just check the wiki).<br />
+          The ID of an item can be found by pressing <code>F3+H</code> and looking at the bottom of the item tooltip (or
+          you can just check the wiki).<br />
           An ID usually looks something like "minecraft:iron_ingot".</HelpButton><br />
         <input id="material-box" type="text" placeholder="namespace:item_name" v-model="trimvalues.material" />
       </div>
@@ -48,7 +49,8 @@ function downloadDatapack(): void {
         <label for="tooltip-color">Color of Armor Tooltip</label>
         <HelpButton id="color"><u>Select a color for the armor trim's tooltip</u><br />
           This is determines the color of text that shows for the trim description.<br />
-          For example, a piece of armor with a redstone trim will have some red text describing what trim it has.</HelpButton><br />
+          For example, a piece of armor with a redstone trim will have some red text describing what trim it has.
+        </HelpButton><br />
         <input id="tooltip-color" type="color" v-model="trimvalues.color" />
       </div>
       <div class="option">

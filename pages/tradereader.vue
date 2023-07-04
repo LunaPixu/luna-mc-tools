@@ -22,7 +22,7 @@ useSeoMeta({
       versions, nor am I certain if it will work for Bedrock.
     </p>
     <ClientOnly>
-      <parseVillagerTrades />
+      <ParseVillagerTrades />
     </ClientOnly>
   </div>
 </template>

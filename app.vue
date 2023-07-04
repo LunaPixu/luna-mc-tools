@@ -70,7 +70,7 @@ useSeoMeta({
     </p>
   </div>
   <ClientOnly>
-    <navigation />
+    <Navigation />
   </ClientOnly>
   <div id="page">
     <NuxtPage />
