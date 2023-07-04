@@ -82,6 +82,25 @@ label {
   text-decoration: underline solid;
 }
 
+code {
+  background-color: #333333;
+}
+
+dialog {
+  width: auto;
+  max-width: min(700px, 100vw - var(--sidebar-width) - 7rem);
+  border-radius: 10px;
+  padding: 6px 1em;
+  border: 1px solid #ffffff;
+  font-style: italic;
+  font-size: 0.9rem;
+  
+  margin: auto;
+  left: calc(var(--sidebar-width) + 16px);
+  background-color: #0b0616;
+  box-shadow: 0px 0px 10px black;
+}
+
 .notice {
   font-style: italic;
 
@@ -101,6 +120,18 @@ label {
   color: red;
 }
 
+.tooltip-button {
+  position: relative;
+  border-radius: 10px;
+  padding: 2px 4px;
+  margin: 0 4px;
+
+  background-color: #1a1a1a;
+}
+.tooltip-button:hover {
+  background-color: #0e0e0e;
+}
+
 #__nuxt {
   text-align: center;
   width: 100%;
@@ -113,6 +144,10 @@ label {
 @media only screen and (max-width: 750px) {
   h1 {
     font-size: 2.6em;
+  }
+  dialog {
+    max-width: calc(100vw - 5rem);
+    left: 0;
   }
   #__nuxt {
     margin: 0 auto;
@@ -143,6 +178,13 @@ label {
   tr:hover {
     background-color: #8679e7;
   }
+  code {
+    background-color: #bbbbbb;
+  }
+  dialog {
+    background-color: #cdc6ff;
+    box-shadow: 0px 0px 10px #7e71db;
+  }
   .notice {
     color: #6e6e6e;
   }
@@ -152,5 +194,11 @@ label {
   }
   .errortext {
     color: rgb(184, 0, 0);
+  }
+  .tooltip-button {
+    background-color: #cdc6ff;
+  }
+  .tooltip-button:hover {
+    background-color: #b9b0f1;
   }
 }
