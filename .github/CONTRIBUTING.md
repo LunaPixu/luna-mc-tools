@@ -16,7 +16,7 @@ When it comes to reporting bugs, please keep these in mind:
 
 ### Contributing tools/features
 When adding features of your own, please consult the [Suggesting section](./README.md/#suggesting-featurestools) of the README before proceeding.  
-*As a reminder, any features from [misode](https://misode.github.io) or [MCStacker](https://mcstacker.net) will be immediately rejected.*
+*As a reminder, any features from [MCStacker](https://mcstacker.net) will be immediately rejected. Features from [misode](https://misode.github.io) have a low chance of being accepted.*
 
 I prefer to be notified before significant progress on a feature has been made. Please reach out to me on my [Twitter](https://twitter.com/luna_pixu/) or post your idea in the Issues section with the Enhancement label.  
 Then, when you're ready to submit your additions, create a Github Pull Request detailing your feature in full. This will help me understand any changes you may have made to pre-existing code/assets and also the full scope of your feature.
