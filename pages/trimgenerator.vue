@@ -13,7 +13,7 @@ useSeoMeta({
   <div>
     <h2>Armor Trim Generator</h2>
     <p>
-      This tool quickly creates a datapack and resource pack scaffold to quickly add your own custom armor trims into
+      This tool quickly creates a data pack and resource pack scaffold to quickly add your own custom armor trims into
       Minecraft.
     </p>
     <p class="notice">(Currently, this tool is not fully functional. Clicking the Generate Button will not actually generate any

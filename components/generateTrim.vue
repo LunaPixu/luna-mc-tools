@@ -70,7 +70,7 @@ function downloadDatapack(): void {
         Download Resource Pack
       </button>
       <button type="button" class="download-button" @click="downloadDatapack()">
-        Download Datapack
+        Download Data Pack
       </button>
     </div>
   </div>
