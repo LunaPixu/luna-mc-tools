@@ -186,10 +186,11 @@ onUnmounted((): void => {
   <div class="box" id="tradebox">
     <form>
       <label for="NBTEntry">Villager NBT Data</label>
-      <HelpButton id="nbt"><u>Enter your villager's NBT data</u><br />
-        If you have cheats enabled in singleplayer or have op (or are an admin) in multiplayer, you can find a villager's NBT data through the <code>/data get entity</code> command.<br />
-        If you summoned your villager with a command block, you may also find their NBT data at the end of the <code>/summon</code> command.
-        </HelpButton><br />
+      <HelpButton id="nbt" header="Enter your villager's NBT data">If you have cheats enabled in singleplayer or have op
+        (or are an admin) in multiplayer, you can find a villager's NBT data through the <code>/data get entity</code>
+        command. If you summoned your villager with a command block, you may also find their NBT data at the end of the
+        <code>/summon</code> command.
+      </HelpButton><br />
       <textarea name="NBTEntry" id="NBTEntry" :cols="NBTBoxCols" rows="15" placeholder="{Offers:{Recipes:[{...}]}}"
         v-model="NBTData"></textarea><br />
       <button type="button" @click="parseVillagerTrades(NBTData)">

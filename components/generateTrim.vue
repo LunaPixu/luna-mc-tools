@@ -39,24 +39,25 @@ function downloadDatapack(): void {
     <div class="flex-options">
       <div class="option">
         <label for="material-box">Trim Material</label>
-        <HelpButton id="material"><u>Add the ID of the material of your trim</u><br />
-          The ID of an item can be found by pressing <code>F3+H</code> and looking at the bottom of the item tooltip (or
-          you can just check the <a href="https://minecraft.fandom.com/" target="_blank">wiki</a>).<br />
+        <HelpButton id="material" header="Add the ID of the material of your trim">The ID of an item can be found by
+          pressing <code>F3+H</code> and looking at the bottom of the item tooltip (or you can just check the <a
+            href="https://minecraft.fandom.com/" target="_blank">wiki</a>).<br />
           An ID usually looks something like <code>minecraft:iron_ingot</code>.</HelpButton><br />
         <input id="material-box" type="text" placeholder="namespace:item_name" v-model="trimvalues.material" />
       </div>
       <div class="option">
         <label for="tooltip-color">Color of Armor Tooltip</label>
-        <HelpButton id="color"><u>Select a color for the armor trim's tooltip</u><br />
-          This is determines the color of text that shows for the trim description.<br />
+        <HelpButton id="color" header="Select a color for the armor trim's tooltip">This is determines the color of text
+          that shows for the trim description.<br />
           For example, a piece of armor with a redstone trim will have some red text describing what trim it has.
         </HelpButton><br />
         <input id="tooltip-color" type="color" v-model="trimvalues.color" />
       </div>
       <div class="option">
         <label for="model-index">Model Index</label>
-        <HelpButton id="index"><u>Enter a value for your trim's model index</u><br />
-          This value allows the game to differentiate your trim from others while rendering. Do note that all 0.1 increments from 0.1 to 1.0 (e.g. 0.2, 0.4, and 0.7) are used by vanilla Minecraft.</HelpButton><br />
+        <HelpButton id="index" header="Enter a value for your trim's model index">This value allows the game to
+          differentiate your trim from others while rendering. Do note that all 0.1 increments from 0.1 to 1.0 (e.g. 0.2,
+          0.4, and 0.7) are used by vanilla Minecraft.</HelpButton><br />
         <input id="model-index" type="number" step="0.05" v-model="trimvalues.index" />
       </div>
     </div>
