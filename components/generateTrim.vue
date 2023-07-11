@@ -9,7 +9,7 @@ interface TrimObj {
 const trimvalues: TrimObj = reactive({
   material: "",
   color: "#000000",
-  index: 0.5,
+  index: 0.55,
 });
 const errorText = ref("");
 const test = ref(false);
@@ -41,8 +41,8 @@ function downloadDatapack(): void {
         <label for="material-box">Trim Material</label>
         <HelpButton id="material"><u>Add the ID of the material of your trim</u><br />
           The ID of an item can be found by pressing <code>F3+H</code> and looking at the bottom of the item tooltip (or
-          you can just check the wiki).<br />
-          An ID usually looks something like "minecraft:iron_ingot".</HelpButton><br />
+          you can just check the <a href="https://minecraft.fandom.com/" target="_blank">wiki</a>).<br />
+          An ID usually looks something like <code>minecraft:iron_ingot</code>.</HelpButton><br />
         <input id="material-box" type="text" placeholder="namespace:item_name" v-model="trimvalues.material" />
       </div>
       <div class="option">
@@ -56,8 +56,8 @@ function downloadDatapack(): void {
       <div class="option">
         <label for="model-index">Model Index</label>
         <HelpButton id="index"><u>Enter a value for your trim's model index</u><br />
-          This value allows the game to differentiate your trim from others while rendering.</HelpButton><br />
-        <input id="model-index" type="number" step="0.1" v-model="trimvalues.index" />
+          This value allows the game to differentiate your trim from others while rendering. Do note that all 0.1 increments from 0.1 to 1.0 (e.g. 0.2, 0.4, and 0.7) are used by vanilla Minecraft.</HelpButton><br />
+        <input id="model-index" type="number" step="0.05" v-model="trimvalues.index" />
       </div>
     </div>
     <button type="button" id="generate-button" @click="generateTrim(trimvalues)">
