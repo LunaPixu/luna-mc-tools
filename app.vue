@@ -3,7 +3,6 @@ import routeData from "./content/routeData.json";
 
 const route = useRoute();
 const routeList = routeData.routes;
-const siteName = "Luna's Minecraft Tools";
 
 useHeadSafe({
   htmlAttrs: {
@@ -11,18 +10,13 @@ useHeadSafe({
   },
   templateParams: {
     site: {
-      name: siteName,
+      name: "Luna's Minecraft Tools",
       url: "https://luna-minecraft-tools.vercel.app",
       description: "A collection of miscellaneous Minecraft tools for various Minecraft needs.",
     },
-    seperator: "/"
+    separator: "/"
   },
-  titleTemplate: (title?: string) => title ? `${title} / ${siteName}` : `${siteName}`,
-  title: () => {
-    const page = routeList.find(el => el.slug === route.name);
-    if (!page) return "";
-    return page.name !== 'Home' ? page.name : '';
-  },
+  titleTemplate: `%s %separator %site.name`,
   link: [
     {
       rel: "apple-touch-icon",

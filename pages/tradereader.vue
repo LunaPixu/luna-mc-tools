@@ -2,8 +2,9 @@
 const desc = "A tool that takes a Minecraft villager's NBT data and produces a human-readable list of its trades."
 
 useSeoMeta({
+  title: "Trade Reader",
   description: desc,
-  ogTitle: "Trade Reader %seperator %site.name",
+  ogTitle: "%s %separator %site.name",
   ogDescription: desc,
   ogUrl: "%site.url/tradereader",
 });

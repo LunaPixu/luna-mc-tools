@@ -2,8 +2,9 @@
 const desc = "A basic generator to help quickly add custom armor trims into Minecraft."
 
 useSeoMeta({
+  title: "Trim Generator",
   description: desc,
-  ogTitle: "Trim Generator %seperator %site.name",
+  ogTitle: "%s %separator %site.name",
   ogDescription: desc,
   ogUrl: "%site.url/trimgenerator",
 });
