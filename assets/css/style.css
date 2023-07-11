@@ -105,6 +105,10 @@ dialog p {
   margin: 0.5em 0;
 }
 
+.tight-header {
+ margin: 0.5em 0;
+}
+
 .notice {
   font-style: italic;
 
@@ -183,7 +187,7 @@ dialog p {
     background-color: #8679e7;
   }
   code {
-    background-color: #bbbbbb;
+    background-color: #dddddd;
   }
   dialog {
     background-color: #cdc6ff;
