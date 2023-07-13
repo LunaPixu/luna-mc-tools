@@ -1,73 +1,10 @@
 <script setup lang="ts">
 import * as nbt from 'nbt-ts';
+import { type Item, ItemParser } from "./itemParser";
 
 const errorText = ref('');
 
-//This is just so bad... So so bad...
-interface Item {
-  id: string;
-  Count?: nbt.Byte;
-  tag?: {
-    [key: string]: any
-  };
-}
-
-function capitalisePhrase(phrase: string): string {
-  if (!phrase) return '';
-  let words = phrase.match(/[a-z0-9]+/gi);
-  if (words === null) return '';
-  return words
-    .map((word) => {
-      return word
-        .split('')
-        .map((l, i) => (i === 0 ? l.toUpperCase() : l.toLowerCase()))
-        .join('');
-    })
-    .join(' ');
-}
-
-function parseTradeItem(item: Item): string {
-  if (!item.id) {
-    return '';
-  }
-  let itemName = '';
-  let id = item.id;
-  let strippedID = id.match(/(?<=:).*/gi);
-  if (strippedID === null) {
-    return 'Invalid Item';
-  }
-  id = strippedID[0];
-  id = capitalisePhrase(id);
-
-  let stack = item.Count ? item.Count.value : 1;
-
-  let uniqueName = { text: "" };
-  if (item.tag?.display?.Name) {
-    uniqueName = JSON.parse(item.tag.display.Name);
-  }
-  itemName = uniqueName.text ? `${uniqueName.text} (${id})` : id;
-  return uniqueName.text && stack === 1 ? itemName : `${stack} ${itemName}`;
-}
-
-function nameEggs(name: string): string {
-  let newName = name;
-  const lunaNames = ['LunaPixu', 'Luna Pixu', 'Luna_Pixu', 'Luna-Pixu'];
-  const basedNames = ['Shanoa', 'Samus'];
-  const lovelyNames = [
-    'Amaryllis',
-    'Yan Vismok',
-    'Trista',
-    'Trista Lundin',
-    'Lala Hagoromo',
-    'Amu Hinamori',
-    "Usagi Tsukino",
-    "Ami Mizuno",
-  ];
-  if (lunaNames.some((el) => el === name)) newName += ' (Awww... Thanks!)';
-  if (basedNames.some((el) => el === name)) newName += ' (Based!)';
-  if (lovelyNames.some((el) => el === name)) newName += ' (❤)';
-  return newName;
-}
+const mcVersion = "1.20.1"; // TODO Make this dynamic in the future.
 
 interface Trade {
   buy?: Item;
@@ -142,10 +79,12 @@ function parseVillagerTrades(data: string): void {
 
   if (!tradeDisplay.name) tradeDisplay.name = 'Vendor';
 
+  const itemParser = new ItemParser(mcVersion);
+
   vendor.Offers.Recipes.forEach((trade: Trade, i: number) => {
-    let firstTrade = trade.buy ? parseTradeItem(trade.buy) : '';
-    let secondTrade = trade.buyB ? parseTradeItem(trade.buyB) : '';
-    let ware = trade.sell ? parseTradeItem(trade.sell) : '';
+    let firstTrade = trade.buy ? itemParser.displayStack(trade.buy) : '';
+    let secondTrade = trade.buyB ? itemParser.displayStack(trade.buyB) : '';
+    let ware = trade.sell ? itemParser.displayStack(trade.sell) : '';
 
     tradeDisplay.trades.push({
       id: i + 1,
@@ -154,6 +93,26 @@ function parseVillagerTrades(data: string): void {
       sell: ware,
     });
   });
+}
+
+function nameEggs(name: string): string {
+  let newName = name;
+  const lunaNames = ["LunaPixu", "Luna Pixu", "Luna_Pixu", "Luna-Pixu"];
+  const basedNames = ["Shanoa", "Samus", "Samus Aran"];
+  const lovelyNames = [
+    "Amaryllis",
+    "Yan Vismok",
+    "Trista",
+    "Trista Lundin",
+    "Lala Hagoromo",
+    "Amu Hinamori",
+    "Usagi Tsukino",
+    "Ami Mizuno",
+  ];
+  if (lunaNames.some((el) => el.toLowerCase() === name.toLowerCase())) newName += " (Awww... Thanks!)";
+  if (basedNames.some((el) => el.toLowerCase() === name.toLowerCase())) newName += " (Based!)";
+  if (lovelyNames.some((el) => el.toLowerCase() === name.toLowerCase())) newName += " (❤)";
+  return newName;
 }
 
 const NBTData = ref('');
