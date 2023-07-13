@@ -117,6 +117,15 @@ function nameEggs(name: string): string {
 
 const NBTData = ref('');
 
+function setTradeEntryClass(entry: string): string {
+  switch (entry) {
+    case "Invalid Item":
+      return "errortext";
+    default:
+      return "trade-entry";
+  }
+}
+
 function getCols(): string {
   const tradeBox = document.getElementById("tradebox");
   if (!tradeBox) return "1"; // This is definitely gonna break something, I can just feel it
@@ -144,13 +153,13 @@ onUnmounted((): void => {
 <template>
   <div class="box" id="tradebox">
     <form>
-      <label for="NBTEntry">Villager NBT Data</label>
+      <label for="nbt-entry">Villager NBT Data</label>
       <HelpButton id="nbt" header="Enter your villager's NBT data">If you have cheats enabled in singleplayer or have op
         (or are an admin) in multiplayer, you can find a villager's NBT data through the <code>/data get entity</code>
         command. If you summoned your villager with a command block, you may also find their NBT data at the end of the
         <code>/summon</code> command.
       </HelpButton><br />
-      <textarea name="NBTEntry" id="NBTEntry" :cols="NBTBoxCols" rows="15" placeholder="{Offers:{Recipes:[{...}]}}"
+      <textarea name="nbtEntry" id="nbt-entry" :cols="NBTBoxCols" rows="15" placeholder="{Offers:{Recipes:[{...}]}}"
         v-model="NBTData"></textarea><br />
       <button type="button" @click="parseVillagerTrades(NBTData)">
         Submit
@@ -170,9 +179,9 @@ onUnmounted((): void => {
         </thead>
         <tbody>
           <tr v-for="trade in tradeDisplay.trades" :key="trade.id">
-            <td>{{ trade.buy1 ? trade.buy1 : 'N/A' }}</td>
-            <td>{{ trade.buy2 ? trade.buy2 : 'N/A' }}</td>
-            <td>{{ trade.sell ? trade.sell : 'Nothing?!' }}</td>
+            <td :class="setTradeEntryClass(trade.buy1)">{{ trade.buy1 ? trade.buy1 : 'N/A' }}</td>
+            <td :class="setTradeEntryClass(trade.buy2)">{{ trade.buy2 ? trade.buy2 : 'N/A' }}</td>
+            <td :class="setTradeEntryClass(trade.sell)">{{ trade.sell ? trade.sell : 'Nothing?!' }}</td>
           </tr>
         </tbody>
       </table>
@@ -181,9 +190,9 @@ onUnmounted((): void => {
 </template>
 
 <style scoped>
-#NBTEntry {
+#nbt-entry {
   resize: vertical;
-  margin: 0.5em;
+  margin: 0.5em 0;
   width: auto;
 }
 #tradebox {
