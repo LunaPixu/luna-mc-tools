@@ -87,7 +87,7 @@ function downloadDatapack(): void {
     </div>
     <hr style="margin: 1em 0" />
 
-    <div v-if="!generatorToggled">
+    <template v-if="!generatorToggled">
       <h3 class="tight-header">Trim Material</h3>
       <div style="margin: 0.5em 0">
         <u>Separate material name from material ingredient?</u>
@@ -153,9 +153,9 @@ function downloadDatapack(): void {
       <button type="button" id="generate-button" @click="generateMaterial(materialValues)">
         Generate
       </button>
-    </div>
+    </template>
 
-    <div v-else>
+    <template v-else>
       <h3 class="tight-header">Trim Pattern</h3>
       <div class="flex-options">
         <div class="option">
@@ -181,7 +181,7 @@ function downloadDatapack(): void {
       <button type="button" id="generate-button" @click="generatePattern(patternValues)">
         Generate
       </button>
-    </div>
+    </template>
 
     <hr v-if="test || errorText" />
     <p v-if="errorText" class="errortext">{{ errorText }}</p>

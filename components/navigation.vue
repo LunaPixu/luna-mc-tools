@@ -48,12 +48,12 @@ const routes = reactive(routeData.routes);
     <button id="nav-collapse" @click="collapseNav()" aria-label="Collapse/Expand Navigation">
       <font-awesome-icon icon="fa-solid fa-bars" />
     </button>
-    <div v-for="route in routes" :key="route.id">
+    <template v-for="route in routes" :key="route.id">
       <Transition><NuxtLink :to="route.slug" v-if="!navCollapsed || !isMobileSize"><button class="nav-button">
             <div class="nav-icon"><font-awesome-icon :icon="route.icon" /></div>
             <Transition><span v-if="!navCollapsed">{{ route.name }}</span></Transition>
           </button></NuxtLink></Transition>
-    </div>
+    </template>
   </div>
 </template>
 

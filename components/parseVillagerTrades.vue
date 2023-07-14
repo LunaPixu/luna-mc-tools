@@ -167,7 +167,7 @@ onUnmounted((): void => {
     </form>
     <hr v-if="tradeDisplay.trades.length > 0 || errorText" />
     <p v-if="errorText" class="errortext">{{ errorText }}</p>
-    <div v-else-if="tradeDisplay.trades.length > 0">
+    <template v-else-if="tradeDisplay.trades.length > 0">
       <h3>{{ tradeDisplay.name }} - Trades:</h3>
       <table>
         <thead>
@@ -185,7 +185,7 @@ onUnmounted((): void => {
           </tr>
         </tbody>
       </table>
-    </div>
+    </template>
   </div>
 </template>
 
