@@ -2,14 +2,12 @@
 import JSZip from "jszip";
 
 interface MaterialValues {
-  material?: string;
   name?: string;
   ingredient?: string;
   color: string;
   index?: number;
 }
 const materialValues: MaterialValues = reactive({
-  material: "",
   name: "",
   ingredient: "",
   color: "#000000",
@@ -38,16 +36,9 @@ function toggleGenerator(dest: boolean): void {
 
 function generateMaterial(values: MaterialValues) {
   errorText.value = "";
+  test.value = false;
 
-  if (!ingredientsSeparated.value && !values.material) {
-    errorText.value = "No material was provided.";
-    return;
-  }
-  if (ingredientsSeparated.value && !values.name) {
-    errorText.value = "Trim material has no name.";
-    return;
-  }
-  if (ingredientsSeparated.value && !values.ingredient) {
+  if (!values.ingredient) {
     errorText.value = "No ingredient was provided.";
     return;
   }
@@ -57,6 +48,7 @@ function generateMaterial(values: MaterialValues) {
 
 function generatePattern(values: PatternValues) {
   errorText.value = "";
+  test.value = false;
 
   if (!values.name) {
     errorText.value = "Trim pattern has no name.";
@@ -101,7 +93,7 @@ function downloadDatapack(): void {
         </HelpButton>
       </div>
       <div class="flex-options">
-        <div class="option" v-if="ingredientsSeparated">
+        <div class="option" v-show="ingredientsSeparated">
           <label for="material-name">Material Name</label>
           <HelpButton id="material-name" header="Add a name to your trim material">
             Add a cool name to your trim material and the tool will automatically generate an ID from it.<br />
@@ -111,24 +103,15 @@ function downloadDatapack(): void {
           </HelpButton><br />
           <input id="material-name" type="text" placeholder="Insert Name Here" v-model="materialValues.name">
         </div>
-        <div class="option" v-else>
-          <label for="material-box">Material Ingredient</label>
-          <HelpButton id="material" header="Add the ID of the trim material's ingredient">
-            The tool will automatically generate a name and material ID for your material from the ingredient ID.<br />
+        <div class="option">
+          <label for="material-ingredient">Material Ingredient</label>
+          <HelpButton id="material-ingredient" header="Add the ID of the trim material's ingredient">
+            <p v-show="!ingredientsSeparated">The tool will automatically generate a name and material ID for your material from the ingredient ID.<br />
             For example, an "Echo Shard" trim material with ID <code>echo_shard</code> will be generated from
-            <code>minecraft:echo_shard</code>.<br />
+            <code>minecraft:echo_shard</code>.</p>
             <p>The ID of an item can be found by pressing <kbd>F3+H</kbd> and looking at the bottom of the item tooltip
               (or you can just check the <a href="https://minecraft.fandom.com/" target="_blank">wiki</a>). An ID usually
               looks something like <code>minecraft:iron_ingot</code>.</p>
-          </HelpButton><br />
-          <input id="material-box" type="text" placeholder="namespace:item_name" v-model="materialValues.material" />
-        </div>
-        <div class="option" v-if="ingredientsSeparated">
-          <label for="material-ingredient">Material Ingredient</label>
-          <HelpButton id="material-ingredient" header="Add the ID of the trim material's ingredient">
-            The ID of an item can be found by pressing <kbd>F3+H</kbd> and looking at the bottom of the item tooltip (or
-            you can just check the <a href="https://minecraft.fandom.com/" target="_blank">wiki</a>). An ID usually looks
-            something like <code>minecraft:iron_ingot</code>.
           </HelpButton><br />
           <input id="material-ingredient" type="text" placeholder="namespace:item_name"
             v-model="materialValues.ingredient" />
