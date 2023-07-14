@@ -1,21 +1,20 @@
 <script setup lang="ts">
-const props = defineProps({
-  id: { type: String, required: true },
+defineProps({
   header: { type: String, required: true },
 });
+
+const dialog = ref<HTMLDialogElement | null>(null);
 function showDialog(): void {
-  const dialog = document.getElementById(`${props.id}-helpdialog`) as HTMLDialogElement;
-  dialog.showModal();
+  dialog.value?.showModal();
 }
 function closeDialog(): void {
-  const dialog = document.getElementById(`${props.id}-helpdialog`) as HTMLDialogElement;
-  dialog.close();
+  dialog.value?.close();
 }
 </script>
 
 <template>
   <button class="tooltip-button" type="button" @click="showDialog()">?</button>
-  <dialog :id="`${id}-helpdialog`">
+  <dialog ref="dialog">
     <button class="tooltip-button" id="close-button" type="button" @click="closeDialog()">X</button>
     <p class="tiny-header">{{ header }}</p>
     <slot />

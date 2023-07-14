@@ -84,7 +84,7 @@ function downloadDatapack(): void {
       <div style="margin: 0.5em 0">
         <u>Separate material name from material ingredient?</u>
         <input type="checkbox" id="separator" v-model="ingredientsSeparated">
-        <HelpButton id="separator" header="Separating name and ingredient">By default, Luna's Minecraft Tools will
+        <HelpButton header="Separating name and ingredient">By default, Luna's Minecraft Tools will
           generate a trim material with the same name as its ingredient. This behaviour is intended for users to quickly
           make simple vanilla-like trim materials where the name <b>is</b> the ingredient such as an "Echo Shard" or a
           "Prismarine" trim.
@@ -95,7 +95,7 @@ function downloadDatapack(): void {
       <div class="flex-options">
         <div class="option" v-show="ingredientsSeparated">
           <label for="material-name">Material Name</label>
-          <HelpButton id="material-name" header="Add a name to your trim material">
+          <HelpButton header="Add a name to your trim material">
             Add a cool name to your trim material and the tool will automatically generate an ID from it.<br />
             For example, a "Fiend's Flames" trim material will get the ID <code>fiends_flames</code>.
             <p class="notice">Note: Only alphabetical characters, dashes "-", and underscores "_" will be preserved in the
@@ -105,7 +105,7 @@ function downloadDatapack(): void {
         </div>
         <div class="option">
           <label for="material-ingredient">Material Ingredient</label>
-          <HelpButton id="material-ingredient" header="Add the ID of the trim material's ingredient">
+          <HelpButton header="Add the ID of the trim material's ingredient">
             <p v-show="!ingredientsSeparated">The tool will automatically generate a name and material ID for your material from the ingredient ID.<br />
             For example, an "Echo Shard" trim material with ID <code>echo_shard</code> will be generated from
             <code>minecraft:echo_shard</code>.</p>
@@ -118,7 +118,7 @@ function downloadDatapack(): void {
         </div>
         <div class="option">
           <label for="tooltip-color">Color of Armor Tooltip</label>
-          <HelpButton id="color" header="Select a color for the armor trim's tooltip">
+          <HelpButton header="Select a color for the armor trim's tooltip">
             This is determines the color of text that shows for the trim description.<br />
             For example, a piece of armor with a redstone trim will have some red text describing what trim it has.
           </HelpButton><br />
@@ -126,7 +126,7 @@ function downloadDatapack(): void {
         </div>
         <div class="option">
           <label for="model-index">Model Index</label>
-          <HelpButton id="index" header="Enter a value for your trim's model index">
+          <HelpButton header="Enter a value for your trim's model index">
             This value allows the game to differentiate your trim material from others while rendering. Do note that all 0.1
             increments from 0.1 to 1.0 (e.g. 0.2, 0.4, and 0.7) are used by vanilla Minecraft.
           </HelpButton><br />
@@ -143,7 +143,7 @@ function downloadDatapack(): void {
       <div class="flex-options">
         <div class="option">
           <label for="pattern-name">Pattern Name</label>
-          <HelpButton id="pattern-name" header="Name your trim pattern">
+          <HelpButton header="Name your trim pattern">
             Add a fancy name to your trim pattern and the tool will automatically generate an ID from it.<br />
             For example, a "Polka Dot" trim pattern will get the ID <code>polka_dot</code>.
             <p class="notice">Note: Only alphabetical characters, dashes "-", and underscores "_" will be preserved in the
@@ -153,7 +153,7 @@ function downloadDatapack(): void {
         </div>
         <div class="option">
           <label for="pattern-ingredient">Pattern Ingredient</label>
-          <HelpButton id="pattern-ingredient" header="Add the ID of the trim pattern's ingredient">
+          <HelpButton header="Add the ID of the trim pattern's ingredient">
             The ID of an item can be found by pressing <code>F3+H</code> and looking at the bottom of the item tooltip (or
             you can just check the <a href="https://minecraft.fandom.com/" target="_blank">wiki</a>). An ID usually looks
             something like <code>minecraft:iron_ingot</code>.

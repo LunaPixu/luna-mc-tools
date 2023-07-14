@@ -126,10 +126,10 @@ function setTradeEntryClass(entry: string): string {
   }
 }
 
+const tradeBox = ref<HTMLTextAreaElement | null>(null);
 function getCols(): string {
-  const tradeBox = document.getElementById("tradebox");
-  if (!tradeBox) return "1"; // This is definitely gonna break something, I can just feel it
-  return (Math.floor(tradeBox.getBoundingClientRect().width / 10) - 1).toString()
+  if (!tradeBox.value) return "1"; // This is definitely gonna break something, I can just feel it
+  return (Math.floor(tradeBox.value.getBoundingClientRect().width / 10) - 1).toString()
 };
 
 const NBTBoxCols = ref(getCols());
@@ -151,10 +151,10 @@ onUnmounted((): void => {
 </script>
 
 <template>
-  <div class="box" id="tradebox">
+  <div class="box" ref="tradeBox">
     <form>
       <label for="nbt-entry">Villager NBT Data</label>
-      <HelpButton id="nbt" header="Enter your villager's NBT data">If you have cheats enabled in singleplayer or have op
+      <HelpButton header="Enter your villager's NBT data">If you have cheats enabled in singleplayer or have op
         (or are an admin) in multiplayer, you can find a villager's NBT data through the <code>/data get entity</code>
         command. If you summoned your villager with a command block, you may also find their NBT data at the end of the
         <code>/summon</code> command.
