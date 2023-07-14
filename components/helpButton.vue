@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const props = defineProps({
   id: { type: String, required: true },
-  header: { type: String },
+  header: { type: String, required: true },
 });
 function showDialog(): void {
   const dialog = document.getElementById(`${props.id}-helpdialog`) as HTMLDialogElement;
@@ -17,10 +17,8 @@ function closeDialog(): void {
   <button class="tooltip-button" type="button" @click="showDialog()">?</button>
   <dialog :id="`${id}-helpdialog`">
     <button class="tooltip-button" id="close-button" type="button" @click="closeDialog()">X</button>
-    <p v-if="header"><u>{{ header }}</u></p>
-    <p>
-      <slot />
-    </p>
+    <p class="tiny-header">{{ header }}</p>
+    <slot />
   </dialog>
 </template>
 

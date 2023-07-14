@@ -117,7 +117,7 @@ function downloadDatapack(): void {
             The tool will automatically generate a name and material ID for your material from the ingredient ID.<br />
             For example, an "Echo Shard" trim material with ID <code>echo_shard</code> will be generated from
             <code>minecraft:echo_shard</code>.<br />
-            <p>The ID of an item can be found by pressing <code>F3+H</code> and looking at the bottom of the item tooltip
+            <p>The ID of an item can be found by pressing <kbd>F3+H</kbd> and looking at the bottom of the item tooltip
               (or you can just check the <a href="https://minecraft.fandom.com/" target="_blank">wiki</a>). An ID usually
               looks something like <code>minecraft:iron_ingot</code>.</p>
           </HelpButton><br />
@@ -126,7 +126,7 @@ function downloadDatapack(): void {
         <div class="option" v-if="ingredientsSeparated">
           <label for="material-ingredient">Material Ingredient</label>
           <HelpButton id="material-ingredient" header="Add the ID of the trim material's ingredient">
-            The ID of an item can be found by pressing <code>F3+H</code> and looking at the bottom of the item tooltip (or
+            The ID of an item can be found by pressing <kbd>F3+H</kbd> and looking at the bottom of the item tooltip (or
             you can just check the <a href="https://minecraft.fandom.com/" target="_blank">wiki</a>). An ID usually looks
             something like <code>minecraft:iron_ingot</code>.
           </HelpButton><br />
