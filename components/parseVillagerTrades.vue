@@ -151,7 +151,7 @@ onUnmounted((): void => {
 </script>
 
 <template>
-  <div class="box" ref="tradeBox">
+  <div class="box" id="tradebox" ref="tradeBox">
     <form>
       <label for="nbt-entry">Villager NBT Data</label>
       <HelpButton header="Enter your villager's NBT data">If you have cheats enabled in singleplayer or have op
