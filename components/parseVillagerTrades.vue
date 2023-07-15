@@ -39,7 +39,7 @@ function parseVillagerTrades(data: string): void {
   tradeDisplay.trades = [];
   errorText.value = '';
 
-  if (!data) {
+  if (!data) { // This will no longer trigger but I'm keeping it in
     errorText.value = 'No NBT data provided...';
     return;
   }
@@ -152,16 +152,23 @@ onUnmounted((): void => {
 
 <template>
   <div class="box" id="tradebox" ref="tradeBox">
-    <form>
+    <form @submit.prevent="parseVillagerTrades(NBTData)">
       <label for="nbt-entry">Villager NBT Data</label>
       <HelpButton header="Enter your villager's NBT data">If you have cheats enabled in singleplayer or have op
         (or are an admin) in multiplayer, you can find a villager's NBT data through the <code>/data get entity</code>
         command. If you summoned your villager with a command block, you may also find their NBT data at the end of the
         <code>/summon</code> command.
       </HelpButton><br />
-      <textarea name="nbtEntry" id="nbt-entry" :cols="NBTBoxCols" rows="15" placeholder="{Offers:{Recipes:[{...}]}}"
-        v-model="NBTData"></textarea><br />
-      <button type="button" @click="parseVillagerTrades(NBTData)">
+      <textarea 
+        name="nbtEntry"
+        id="nbt-entry"
+        :cols="NBTBoxCols"
+        rows="15"
+        placeholder="{Offers:{Recipes:[{...}]}}"
+        v-model="NBTData"
+        required
+      ></textarea><br />
+      <button>
         Submit
       </button>
     </form>

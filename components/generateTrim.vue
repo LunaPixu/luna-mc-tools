@@ -3,9 +3,9 @@ import JSZip from "jszip";
 
 interface MaterialValues {
   name?: string;
-  ingredient?: string;
+  ingredient: string;
   color: string;
-  index?: number;
+  index: number;
 }
 const materialValues: MaterialValues = reactive({
   name: "",
@@ -38,7 +38,7 @@ function generateMaterial(values: MaterialValues) {
   errorText.value = "";
   test.value = false;
 
-  if (!values.ingredient) {
+  if (!values.ingredient) { // This should never trigger but it's staying in
     errorText.value = "No ingredient was provided.";
     return;
   }
@@ -50,7 +50,7 @@ function generatePattern(values: PatternValues) {
   errorText.value = "";
   test.value = false;
 
-  if (!values.name) {
+  if (!values.name) { // This and the block below should never trigger either
     errorText.value = "Trim pattern has no name.";
     return;
   }
@@ -92,78 +92,82 @@ function downloadDatapack(): void {
             materials like, for example, an "Ocean's Essence" trim material made from a Heart of the Sea.</p>
         </HelpButton>
       </div>
-      <div class="flex-options">
-        <div class="option" v-show="ingredientsSeparated">
-          <label for="material-name">Material Name</label>
-          <HelpButton header="Add a name to your trim material">
-            Add a cool name to your trim material and the tool will automatically generate an ID from it.<br />
-            For example, a "Fiend's Flames" trim material will get the ID <code>fiends_flames</code>.
-            <p class="notice">Note: Only alphabetical characters, dashes "-", and underscores "_" will be preserved in the
-              ID. Spaces will be converted to underscores and any other character type will be stripped from the ID.</p>
-          </HelpButton><br />
-          <input id="material-name" type="text" placeholder="Insert Name Here" v-model="materialValues.name">
+      <form @submit.prevent="generateMaterial(materialValues)">
+        <div class="flex-options">
+          <div class="option" v-if="ingredientsSeparated">
+            <label for="material-name">Material Name</label>
+            <HelpButton header="Add a name to your trim material">
+              Add a cool name to your trim material and the tool will automatically generate an ID from it.<br />
+              For example, a "Fiend's Flames" trim material will get the ID <code>fiends_flames</code>.
+              <p class="notice">Note: Only alphabetical characters, dashes "-", and underscores "_" will be preserved in the
+                ID. Spaces will be converted to underscores and any other character type will be stripped from the ID.</p>
+            </HelpButton><br />
+            <input id="material-name" type="text" placeholder="Insert Name Here" v-model="materialValues.name" required />
+          </div>
+          <div class="option">
+            <label for="material-ingredient">Material Ingredient</label>
+            <HelpButton header="Add the ID of the trim material's ingredient">
+              <p v-show="!ingredientsSeparated">The tool will automatically generate a name and material ID for your material from the ingredient ID.<br />
+              For example, an "Echo Shard" trim material with ID <code>echo_shard</code> will be generated from
+              <code>minecraft:echo_shard</code>.</p>
+              <p>The ID of an item can be found by pressing <kbd>F3+H</kbd> and looking at the bottom of the item tooltip
+                (or you can just check the <a href="https://minecraft.fandom.com/" target="_blank">wiki</a>). An ID usually
+                looks something like <code>minecraft:iron_ingot</code>.</p>
+            </HelpButton><br />
+            <input id="material-ingredient" type="text" placeholder="namespace:item_name"
+              v-model="materialValues.ingredient" required />
+          </div>
+          <div class="option">
+            <label for="tooltip-color">Color of Armor Tooltip</label>
+            <HelpButton header="Select a color for the armor trim's tooltip">
+              This is determines the color of text that shows for the trim description.<br />
+              For example, a piece of armor with a redstone trim will have some red text describing what trim it has.
+            </HelpButton><br />
+            <input id="tooltip-color" type="color" v-model="materialValues.color" required />
+          </div>
+          <div class="option">
+            <label for="model-index">Model Index</label>
+            <HelpButton header="Enter a value for your trim's model index">
+              This value allows the game to differentiate your trim material from others while rendering. Do note that all 0.1
+              increments from 0.1 to 1.0 (e.g. 0.2, 0.4, and 0.7) are used by vanilla Minecraft.
+            </HelpButton><br />
+            <input id="model-index" type="number" step="0.05" v-model="materialValues.index" required />
+          </div>
         </div>
-        <div class="option">
-          <label for="material-ingredient">Material Ingredient</label>
-          <HelpButton header="Add the ID of the trim material's ingredient">
-            <p v-show="!ingredientsSeparated">The tool will automatically generate a name and material ID for your material from the ingredient ID.<br />
-            For example, an "Echo Shard" trim material with ID <code>echo_shard</code> will be generated from
-            <code>minecraft:echo_shard</code>.</p>
-            <p>The ID of an item can be found by pressing <kbd>F3+H</kbd> and looking at the bottom of the item tooltip
-              (or you can just check the <a href="https://minecraft.fandom.com/" target="_blank">wiki</a>). An ID usually
-              looks something like <code>minecraft:iron_ingot</code>.</p>
-          </HelpButton><br />
-          <input id="material-ingredient" type="text" placeholder="namespace:item_name"
-            v-model="materialValues.ingredient" />
-        </div>
-        <div class="option">
-          <label for="tooltip-color">Color of Armor Tooltip</label>
-          <HelpButton header="Select a color for the armor trim's tooltip">
-            This is determines the color of text that shows for the trim description.<br />
-            For example, a piece of armor with a redstone trim will have some red text describing what trim it has.
-          </HelpButton><br />
-          <input id="tooltip-color" type="color" v-model="materialValues.color" />
-        </div>
-        <div class="option">
-          <label for="model-index">Model Index</label>
-          <HelpButton header="Enter a value for your trim's model index">
-            This value allows the game to differentiate your trim material from others while rendering. Do note that all 0.1
-            increments from 0.1 to 1.0 (e.g. 0.2, 0.4, and 0.7) are used by vanilla Minecraft.
-          </HelpButton><br />
-          <input id="model-index" type="number" step="0.05" v-model="materialValues.index" />
-        </div>
-      </div>
-      <button type="button" id="generate-button" @click="generateMaterial(materialValues)">
-        Generate
-      </button>
+        <button id="generate-button">
+          Generate
+        </button>
+      </form>
     </template>
 
     <template v-else>
       <h3 class="tight-header">Trim Pattern</h3>
-      <div class="flex-options">
-        <div class="option">
-          <label for="pattern-name">Pattern Name</label>
-          <HelpButton header="Name your trim pattern">
-            Add a fancy name to your trim pattern and the tool will automatically generate an ID from it.<br />
-            For example, a "Polka Dot" trim pattern will get the ID <code>polka_dot</code>.
-            <p class="notice">Note: Only alphabetical characters, dashes "-", and underscores "_" will be preserved in the
-              ID. Spaces will be converted to underscores and any other character type will be stripped from the ID.</p>
-          </HelpButton><br />
-          <input id="pattern-name" type="text" placeholder="namespace:item_name" v-model="patternValues.name">
+      <form @submit.prevent="generatePattern(patternValues)">
+        <div class="flex-options">
+          <div class="option">
+            <label for="pattern-name">Pattern Name</label>
+            <HelpButton header="Name your trim pattern">
+              Add a fancy name to your trim pattern and the tool will automatically generate an ID from it.<br />
+              For example, a "Polka Dot" trim pattern will get the ID <code>polka_dot</code>.
+              <p class="notice">Note: Only alphabetical characters, dashes "-", and underscores "_" will be preserved in the
+                ID. Spaces will be converted to underscores and any other character type will be stripped from the ID.</p>
+            </HelpButton><br />
+            <input id="pattern-name" type="text" placeholder="namespace:item_name" v-model="patternValues.name" required />
+          </div>
+          <div class="option">
+            <label for="pattern-ingredient">Pattern Ingredient</label>
+            <HelpButton header="Add the ID of the trim pattern's ingredient">
+              The ID of an item can be found by pressing <code>F3+H</code> and looking at the bottom of the item tooltip (or
+              you can just check the <a href="https://minecraft.fandom.com/" target="_blank">wiki</a>). An ID usually looks
+              something like <code>minecraft:iron_ingot</code>.
+            </HelpButton><br />
+            <input id="pattern-ingredient" type="text" placeholder="namespace:item_name" v-model="patternValues.ingredient" required />
+          </div>
         </div>
-        <div class="option">
-          <label for="pattern-ingredient">Pattern Ingredient</label>
-          <HelpButton header="Add the ID of the trim pattern's ingredient">
-            The ID of an item can be found by pressing <code>F3+H</code> and looking at the bottom of the item tooltip (or
-            you can just check the <a href="https://minecraft.fandom.com/" target="_blank">wiki</a>). An ID usually looks
-            something like <code>minecraft:iron_ingot</code>.
-          </HelpButton><br />
-          <input id="pattern-ingredient" type="text" placeholder="namespace:item_name" v-model="patternValues.ingredient">
-        </div>
-      </div>
-      <button type="button" id="generate-button" @click="generatePattern(patternValues)">
-        Generate
-      </button>
+        <button class="generate-button">
+          Generate
+        </button>
+      </form>
     </template>
 
     <hr v-if="test || errorText" />
@@ -195,21 +199,22 @@ function downloadDatapack(): void {
 .option {
   margin: 0 1em;
   margin-bottom: 0.5em;
+
   flex: 29%;
+}
+.generate-button {
+  width: auto;
 }
 #trimbox {
   margin: 0.5em auto;
   max-width: 1000px;
-}
-#generate-button {
-  width: auto;
 }
 
 @media only screen and (max-width: 750px) {
   .option {
     flex: 95%;
   }
-  #generate-button {
+  .generate-button {
     width: 95%;
   }
 }
