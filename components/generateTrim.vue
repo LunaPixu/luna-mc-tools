@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import JSZip from "jszip";
+import { saveAs } from "file-saver";
+import { type MaterialValues, generateMaterial } from "./trim/generateMaterial";
+import { type PatternValues, generatePattern } from "./trim/generatePattern";
+import { type Packs, type Pack } from "./trim/pack";
 
-interface MaterialValues {
-  name?: string;
-  ingredient: string;
-  color: string;
-  index: number;
-}
 const materialValues: MaterialValues = reactive({
   name: "",
   ingredient: "",
@@ -14,68 +12,95 @@ const materialValues: MaterialValues = reactive({
   index: 0.55,
 });
 
-interface PatternValues {
-  name: string;
-  ingredient: string;
-}
 const patternValues: PatternValues = reactive({
   name: "",
   ingredient: "",
-})
+});
 
 const errorText = ref("");
 const ingredientsSeparated = ref(false);
 const generatorToggled = ref(false);
-const test = ref(false);
+const packsGenerated = ref(false);
+
+const mcVersion = "1.20.1"; // TODO Make this dynamic
 
 function toggleGenerator(dest: boolean): void {
   errorText.value = "";
-  test.value = false;
+  packsGenerated.value = false;
   generatorToggled.value = dest;
 }
 
-function generateMaterial(values: MaterialValues) {
+let packs: Packs = {
+  dataPack: {
+    name: "",
+    zip: new JSZip(),
+  },
+  resourcePack: {
+    name: "",
+    zip: new JSZip(),
+  },
+};
+
+function generateMaterialPacks(values: MaterialValues): void {
   errorText.value = "";
-  test.value = false;
+  packsGenerated.value = false;
 
-  if (!values.ingredient) { // This should never trigger but it's staying in
-    errorText.value = "No ingredient was provided.";
-    return;
+  const input: MaterialValues = ingredientsSeparated.value ? values :
+    {
+      ingredient: values.ingredient,
+      color: values.color,
+      index: values.index,
+    };
+
+  try {
+    packs = generateMaterial(input, mcVersion);
+  } catch (err) {
+    if (typeof err === "string") {
+      errorText.value = err;
+      return;
+    }
+    throw (err);
   }
-
-  test.value = true;
+  packsGenerated.value = true;
 }
 
-function generatePattern(values: PatternValues) {
+function generatePatternPacks(values: PatternValues): void {
   errorText.value = "";
-  test.value = false;
+  packsGenerated.value = false;
 
-  if (!values.name) { // This and the block below should never trigger either
-    errorText.value = "Trim pattern has no name.";
-    return;
+  try {
+    packs = generatePattern(values, mcVersion);
+  } catch (err) {
+    if (typeof err === "string") {
+      errorText.value = err;
+      return;
+    }
+    throw (err);
   }
-  if (!values.ingredient) {
-    errorText.value = "No ingredient was provided.";
-    return;
-  }
-
-  test.value = true;
+  packsGenerated.value = true;
 }
 
-function downloadResourcePack(): void {
-
+function downloadPack(pack: Pack): void {
+  pack.zip.generateAsync({ type: "blob" })
+    .then(function (blob: Blob) {
+      saveAs(blob, `${pack.name}.zip`);
+    });
 }
 
-function downloadDatapack(): void {
-
+const resourceDialog = ref<HTMLDialogElement | null>(null);
+function showResourceDialog(): void {
+  resourceDialog.value?.showModal();
+}
+function closeResourceDialog(): void {
+  resourceDialog.value?.close();
 }
 </script>
 
 <template>
   <div class="box" id="trimbox">
     <div class="flex-options">
-      <button type="button" class="wide-button" @click="toggleGenerator(false)">Generate Trim Material</button>
-      <button type="button" class="wide-button" @click="toggleGenerator(true)">Generate Trim Pattern</button>
+      <button type="button" class="wide-button" @click="toggleGenerator(false)">Trim Material Generator</button>
+      <button type="button" class="wide-button" @click="toggleGenerator(true)">Trim Pattern Generator</button>
     </div>
     <hr style="margin: 1em 0" />
 
@@ -88,34 +113,47 @@ function downloadDatapack(): void {
           generate a trim material with the same name as its ingredient. This behaviour is intended for users to quickly
           make simple vanilla-like trim materials where the name <b>is</b> the ingredient such as an "Echo Shard" or a
           "Prismarine" trim.
-          <p>Users may instead opt to separate the material name and ingredient. This allows for making fancier trim
-            materials like, for example, an "Ocean's Essence" trim material made from a Heart of the Sea.</p>
+          <p>However, users may instead opt to separate the material name and ingredient. This allows for making fancier
+            trim materials like, for example, an "Ocean's Essence" trim material made from a Heart of the Sea.</p>
         </HelpButton>
       </div>
-      <form @submit.prevent="generateMaterial(materialValues)">
+      <form @submit.prevent="generateMaterialPacks(materialValues)">
         <div class="flex-options">
           <div class="option" v-if="ingredientsSeparated">
             <label for="material-name">Material Name</label>
             <HelpButton header="Add a name to your trim material">
               Add a cool name to your trim material and the tool will automatically generate an ID from it.<br />
               For example, a "Fiend's Flames" trim material will get the ID <code>fiends_flames</code>.
-              <p class="notice">Note: Only alphabetical characters, dashes "-", and underscores "_" will be preserved in the
-                ID. Spaces will be converted to underscores and any other character type will be stripped from the ID.</p>
+              <p class="notice">Note: Only alphabetical characters, dashes "-", and underscores "_" will be preserved in
+                the ID. Spaces will be converted to underscores and any other character type will be stripped from the
+                ID.</p>
             </HelpButton><br />
-            <input id="material-name" type="text" placeholder="Insert Name Here" v-model="materialValues.name" required />
+            <input
+              id="material-name"
+              type="text"
+              placeholder="Insert Name Here"
+              v-model="materialValues.name"
+              required
+            />
           </div>
           <div class="option">
             <label for="material-ingredient">Material Ingredient</label>
             <HelpButton header="Add the ID of the trim material's ingredient">
-              <p v-show="!ingredientsSeparated">The tool will automatically generate a name and material ID for your material from the ingredient ID.<br />
-              For example, an "Echo Shard" trim material with ID <code>echo_shard</code> will be generated from
-              <code>minecraft:echo_shard</code>.</p>
+              <p v-show="!ingredientsSeparated">The tool will automatically generate a name and material ID for your
+                material from the ingredient ID.<br />
+                For example, an "Echo Shard" trim material with ID <code>echo_shard</code> will be generated from
+                <code>minecraft:echo_shard</code>.</p>
               <p>The ID of an item can be found by pressing <kbd>F3+H</kbd> and looking at the bottom of the item tooltip
-                (or you can just check the <a href="https://minecraft.fandom.com/" target="_blank">wiki</a>). An ID usually
-                looks something like <code>minecraft:iron_ingot</code>.</p>
+                (or you can just check the <a href="https://minecraft.fandom.com/" target="_blank">wiki</a>). An ID
+                usually looks something like <code>minecraft:iron_ingot</code>.</p>
             </HelpButton><br />
-            <input id="material-ingredient" type="text" placeholder="namespace:item_name"
-              v-model="materialValues.ingredient" required />
+            <input
+              id="material-ingredient"
+              type="text"
+              placeholder="namespace:item_name"
+              v-model="materialValues.ingredient"
+              required
+            />
           </div>
           <div class="option">
             <label for="tooltip-color">Color of Armor Tooltip</label>
@@ -123,15 +161,25 @@ function downloadDatapack(): void {
               This is determines the color of text that shows for the trim description.<br />
               For example, a piece of armor with a redstone trim will have some red text describing what trim it has.
             </HelpButton><br />
-            <input id="tooltip-color" type="color" v-model="materialValues.color" required />
+            <input
+              id="tooltip-color"
+              type="color"
+              v-model="materialValues.color"
+              required
+            />
           </div>
           <div class="option">
             <label for="model-index">Model Index</label>
             <HelpButton header="Enter a value for your trim's model index">
-              This value allows the game to differentiate your trim material from others while rendering. Do note that all 0.1
-              increments from 0.1 to 1.0 (e.g. 0.2, 0.4, and 0.7) are used by vanilla Minecraft.
+              This value allows the game to differentiate your trim material from others while rendering. Do note that all
+              0.1 increments from 0.1 to 1.0 (e.g. 0.2, 0.4, and 0.7) are used by vanilla Minecraft.
             </HelpButton><br />
-            <input id="model-index" type="number" step="0.05" v-model="materialValues.index" required />
+            <input
+              id="model-index"
+              type="number"
+              step="0.05"
+              v-model="materialValues.index"
+              required />
           </div>
         </div>
         <button id="generate-button">
@@ -142,26 +190,38 @@ function downloadDatapack(): void {
 
     <template v-else>
       <h3 class="tight-header">Trim Pattern</h3>
-      <form @submit.prevent="generatePattern(patternValues)">
+      <form @submit.prevent="generatePatternPacks(patternValues)">
         <div class="flex-options">
           <div class="option">
             <label for="pattern-name">Pattern Name</label>
             <HelpButton header="Name your trim pattern">
               Add a fancy name to your trim pattern and the tool will automatically generate an ID from it.<br />
               For example, a "Polka Dot" trim pattern will get the ID <code>polka_dot</code>.
-              <p class="notice">Note: Only alphabetical characters, dashes "-", and underscores "_" will be preserved in the
-                ID. Spaces will be converted to underscores and any other character type will be stripped from the ID.</p>
+              <p class="notice">Note: Only alphabetical characters, dashes "-", and underscores "_" will be preserved in
+                the ID. Spaces will be converted to underscores and any other character type will be stripped from the ID.
+              </p>
             </HelpButton><br />
-            <input id="pattern-name" type="text" placeholder="namespace:item_name" v-model="patternValues.name" required />
+            <input
+              id="pattern-name"
+              type="text"
+              placeholder="namespace:item_name"
+              v-model="patternValues.name"
+              required />
           </div>
           <div class="option">
             <label for="pattern-ingredient">Pattern Ingredient</label>
             <HelpButton header="Add the ID of the trim pattern's ingredient">
-              The ID of an item can be found by pressing <code>F3+H</code> and looking at the bottom of the item tooltip (or
-              you can just check the <a href="https://minecraft.fandom.com/" target="_blank">wiki</a>). An ID usually looks
-              something like <code>minecraft:iron_ingot</code>.
+              The ID of an item can be found by pressing <code>F3+H</code> and looking at the bottom of the item tooltip
+              (or you can just check the <a href="https://minecraft.fandom.com/" target="_blank">wiki</a>). An ID
+              usually looks something like <code>minecraft:iron_ingot</code>.
             </HelpButton><br />
-            <input id="pattern-ingredient" type="text" placeholder="namespace:item_name" v-model="patternValues.ingredient" required />
+            <input
+              id="pattern-ingredient"
+              type="text"
+              placeholder="namespace:item_name"
+              v-model="patternValues.ingredient"
+              required
+            />
           </div>
         </div>
         <button class="generate-button">
@@ -170,13 +230,24 @@ function downloadDatapack(): void {
       </form>
     </template>
 
-    <hr v-if="test || errorText" />
+    <hr v-if="packsGenerated || errorText" />
     <p v-if="errorText" class="errortext">{{ errorText }}</p>
-    <div v-else-if="test" class="flex-options" id="downloads">
-      <button type="button" class="wide-button" @click="downloadResourcePack()">
+    <div v-else-if="packsGenerated" class="flex-options" id="downloads">
+      <button type="button" class="wide-button" @click="showResourceDialog(); downloadPack(packs.resourcePack)">
         Download Resource Pack
       </button>
-      <button type="button" class="wide-button" @click="downloadDatapack()">
+      <dialog ref="resourceDialog">
+        <button
+          class="tooltip-button"
+          style="float: right;"
+          type="button"
+          @click="closeResourceDialog()"
+        >X</button>
+        <p class="tiny-header">Downloading Resource Pack...</p>
+        Warning: Resource packs provided by this tool are incomplete and require you to provide textures for them.<br />
+        Please check the README inside your resource pack for more information.
+      </dialog>
+      <button type="button" class="wide-button" @click="downloadPack(packs.dataPack)">
         Download Data Pack
       </button>
     </div>
