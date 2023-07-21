@@ -10,11 +10,13 @@ const materialValues: MaterialValues = reactive({
   ingredient: "",
   color: "#000000",
   index: 0.55,
+  overwrite: false,
 });
 
 const patternValues: PatternValues = reactive({
   name: "",
   ingredient: "",
+  overwrite: false,
 });
 
 const errorText = ref("");
@@ -45,11 +47,17 @@ function generateMaterialPacks(values: MaterialValues): void {
   errorText.value = "";
   packsGenerated.value = false;
 
+  if (!materialValues.overwrite && values.index <= 1 && !(values.index * 10 % 1)) {
+    errorText.value = "Index number is already used by the vanilla game. Please select a different index number."
+    return;
+  }
+
   const input: MaterialValues = ingredientsSeparated.value ? values :
     {
       ingredient: values.ingredient,
       color: values.color,
       index: values.index,
+      overwrite: values.overwrite,
     };
 
   try {
@@ -106,16 +114,25 @@ function closeResourceDialog(): void {
 
     <template v-if="!generatorToggled">
       <h3 class="tight-header">Trim Material</h3>
-      <div style="margin: 0.5em 0">
-        <u>Separate material name from material ingredient?</u>
-        <input type="checkbox" id="separator" v-model="ingredientsSeparated">
-        <HelpButton header="Separating name and ingredient">By default, Luna's Minecraft Tools will
-          generate a trim material with the same name as its ingredient. This behaviour is intended for users to quickly
-          make simple vanilla-like trim materials where the name <b>is</b> the ingredient such as an "Echo Shard" or a
-          "Prismarine" trim.
-          <p>However, users may instead opt to separate the material name and ingredient. This allows for making fancier
-            trim materials like, for example, an "Ocean's Essence" trim material made from a Heart of the Sea.</p>
-        </HelpButton>
+      <div class="flex-options" style="justify-content: space-around;">
+        <div class="option"><u>Separate material name from material ingredient?</u>
+          <input type="checkbox" id="separator" v-model="ingredientsSeparated">
+          <HelpButton header="Separating name and ingredient">By default, Luna's Minecraft Tools will
+            generate a trim material with the same name as its ingredient. This behaviour is intended for users to quickly
+            make simple vanilla-like trim materials where the name <b>is</b> the ingredient such as an "Echo Shard" or a
+            "Prismarine" trim.
+            <p>However, users may instead opt to separate the material name and ingredient. This allows for making fancier
+              trim materials like, for example, an "Ocean's Essence" trim material made from a Heart of the Sea.</p>
+          </HelpButton>
+        </div>
+        <div class="option"><u>Overwrite vanilla values?</u>
+          <input type="checkbox" v-model="materialValues.overwrite">
+          <HelpButton header="Overwriting vanilla values">By default, Luna's Minecraft Tools will safeguard against
+            using vanilla values to prevent users from accidentally overwriting them. Users may opt to disable this
+            safeguard and allow them to freely overwrite any value.
+            <p>Caution: this behaviour is not fully tested/implemented and I cannot guarantee it will work as intended.</p>
+          </HelpButton>
+        </div>
       </div>
       <form @submit.prevent="generateMaterialPacks(materialValues)">
         <div class="flex-options">
@@ -190,6 +207,17 @@ function closeResourceDialog(): void {
 
     <template v-else>
       <h3 class="tight-header">Trim Pattern</h3>
+      <div class="flex-options">
+        <div class="option">
+          <u>Overwrite vanilla values?</u>
+          <input type="checkbox" v-model="patternValues.overwrite">
+          <HelpButton header="Overwriting vanilla values">By default, Luna's Minecraft Tools will safeguard against
+            using vanilla values to prevent users from accidentally overwriting them. Users may opt to disable this
+            safeguard and allow them to freely overwrite any value.
+            <p>Caution: this behaviour is not fully tested/implemented and I cannot guarantee it will work as intended.</p>
+          </HelpButton>
+        </div>
+      </div>
       <form @submit.prevent="generatePatternPacks(patternValues)">
         <div class="flex-options">
           <div class="option">
@@ -268,8 +296,7 @@ function closeResourceDialog(): void {
   flex-wrap: wrap;
 }
 .option {
-  margin: 0 1em;
-  margin-bottom: 0.5em;
+  margin: 0.5em 1em;
 
   flex: 29%;
 }

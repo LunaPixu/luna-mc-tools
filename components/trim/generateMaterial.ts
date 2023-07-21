@@ -7,6 +7,7 @@ export interface MaterialValues {
   ingredient: string;
   color: string;
   index: number;
+  overwrite: boolean;
 }
 
 interface MaterialData {
@@ -338,8 +339,10 @@ export function generateMaterial(values: MaterialValues, mcVersion: string): Pac
     throw "No ingredient was provided.";
   }
 
-  if (existingTrimMaterials.some((el) => el === (values.ingredient.toLowerCase()) || strip(el) === (values.ingredient.toLowerCase()))) {
-    throw "Chosen ingredient is already used in vanilla. Please select a different one.";
+  if (!values.overwrite) {
+    if (existingTrimMaterials.some((el) => el === (values.ingredient.toLowerCase()) || strip(el) === (values.ingredient.toLowerCase()))) {
+      throw "Chosen ingredient is already used in the vanilla game. Please select a different one.";
+    }
   }
 
   const itemParser = new ItemParser(mcVersion);

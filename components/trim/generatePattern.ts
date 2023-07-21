@@ -4,6 +4,7 @@ import { PackMCMeta, Packs } from "./pack";
 export interface PatternValues {
   name: string;
   ingredient: string;
+  overwrite: boolean;
 }
 
 interface PatternData {
@@ -19,6 +20,34 @@ function collapse(name: string): string {
   let out = name.replace(/ /gm,"_");
   return out.replace(/[^a-z0-9_-]/gmi,"").toLowerCase();
 }
+
+function strip(id: string): string {
+  if (!id) return "";
+  const namespaceRegex = /(.+:)?(?<name>[^:]+)/g;
+  let idParts = namespaceRegex.exec(id);
+  if (idParts === null || !idParts.groups?.name) return "invalid_item";
+  return idParts.groups.name;
+}
+
+const existingTemplates: string[] = [
+  "minecraft:netherite_upgrade_smithing_template",
+  "minecraft:ward_armor_trim_smithing_template",
+  "minecraft:spire_armor_trim_smithing_template",
+  "minecraft:coast_armor_trim_smithing_template",
+  "minecraft:eye_armor_trim_smithing_template",
+  "minecraft:dune_armor_trim_smithing_template",
+  "minecraft:wild_armor_trim_smithing_template",
+  "minecraft:rib_armor_trim_smithing_template",
+  "minecraft:tide_armor_trim_smithing_template",
+  "minecraft:sentry_armor_trim_smithing_template",
+  "minecraft:vex_armor_trim_smithing_template",
+  "minecraft:snout_armor_trim_smithing_template",
+  "minecraft:wayfinder_armor_trim_smithing_template",
+  "minecraft:shaper_armor_trim_smithing_template",
+  "minecraft:silence_armor_trim_smithing_template",
+  "minecraft:raiser_armor_trim_smithing_template",
+  "minecraft:host_armor_trim_smithing_template",
+];
 
 class TrimAtlas {
   sources: [
@@ -109,11 +138,17 @@ All the relevant .json files have been automatically generated but you still nee
 Please add your textures to assets/lunamct/textures/trims/models/armor/ in this pack.`;
 
 export function generatePattern(values: PatternValues, mcVersion: string): Packs {
-  if (!values.name) { // This and the block below should never trigger either
+  if (!values.name) { // This and the block below should never trigger
     throw "Trim pattern has no name";
   }
   if (!values.ingredient) {
     throw "No ingredient was provided.";
+  }
+
+  if (!values.overwrite) {
+    if (existingTemplates.some((el) => el === (values.ingredient.toLowerCase()) || strip(el) === (values.ingredient.toLowerCase()))) {
+      throw "Chosen ingredient is already used in the vanilla game. Please select a different one.";
+    }
   }
 
   const assetName = collapse(values.name);
