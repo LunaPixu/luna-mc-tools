@@ -174,7 +174,7 @@ class ArmorOverrideModel {
   }
 }
 
-class blockAtlas {
+class BlockAtlas {
   sources: [
     {
       type: "paletted_permutations";
@@ -238,7 +238,7 @@ class blockAtlas {
   }
 };
 
-class trimAtlas {
+class TrimAtlas {
   sources: [
     {
       type: "paletted_permutations";
@@ -384,8 +384,8 @@ export function generateMaterial(values: MaterialValues, mcVersion: string): Pac
   
   resourcePack.file(`assets/lunamct/textures/trims/color_palettes/${materialData.asset_name}.png`, templateTrim, { base64: true });
 
-  resourcePack.file(`assets/minecraft/atlases/armor_trims.json`, JSON.stringify(new trimAtlas(materialData.asset_name), null, "  "));
-  resourcePack.file(`assets/minecraft/atlases/blocks.json`, JSON.stringify(new blockAtlas(materialData.asset_name), null, "  "));
+  resourcePack.file(`assets/minecraft/atlases/armor_trims.json`, JSON.stringify(new TrimAtlas(materialData.asset_name), null, "  "));
+  resourcePack.file(`assets/minecraft/atlases/blocks.json`, JSON.stringify(new BlockAtlas(materialData.asset_name), null, "  "));
 
   armorMaterials.forEach((armMat) => {
     armorPieces.forEach((armPiece) => {
