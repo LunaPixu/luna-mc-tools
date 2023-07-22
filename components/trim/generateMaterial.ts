@@ -331,7 +331,7 @@ const readme =
 
 This resource pack is not a completed resource pack!
 All the relevant .json files have been automatically generated but you still need to provide your own textures.
-A template palette can be found in assets/lunamct/textures/trims/color_palettes/ in this pack.
+An 8x1 pixel template palette can be found in assets/lunamct/textures/trims/color_palettes/ in this pack.
 Feel free to recolour, customise, or replace it as you see fit.`;
 
 export function generateMaterial(values: MaterialValues, mcVersion: string): Packs {
