@@ -66,8 +66,10 @@ useSeoMeta({
   <ClientOnly>
     <Navigation />
   </ClientOnly>
-  <div id="page">
-    <NuxtPage />
+  <div id="page-wrapper">
+    <div id="page">
+      <NuxtPage />
+    </div>
   </div>
 </template>
 
@@ -97,13 +99,17 @@ useSeoMeta({
   box-shadow: 0px 0px 5px black;
 }
 
-#page {
+#page-wrapper {
   transition: width 0.5s, margin 0.5s;
 
   margin-left: calc(var(--sidebar-width) + 16px);
   /** 80px comes from the padding of the sidebar and page content. (8+8+32+32) */
   width: calc(100vw - var(--sidebar-width) - 80px);
   padding: 0 2rem;
+}
+#page {
+  margin: auto;
+  max-width: calc(1000px + 8rem);
 }
 
 @media only screen and (max-width: 750px) {
@@ -117,7 +123,7 @@ useSeoMeta({
     border-radius: 10px;
   }
 
-  #page {
+  #page-wrapper {
     margin-left: 0;
     width: auto;
     padding: 0;
