@@ -114,89 +114,95 @@ function closeResourceDialog(): void {
 
     <template v-if="!generatorToggled">
       <h3 class="tight-header">Trim Material</h3>
-      <div class="flex-options" style="justify-content: space-around;">
-        <div class="option"><u>Separate material name from material ingredient?</u>
-          <input type="checkbox" id="separator" v-model="ingredientsSeparated">
-          <HelpButton header="Separating name and ingredient">By default, Luna's Minecraft Tools will
-            generate a trim material with the same name as its ingredient. This behaviour is intended for users to quickly
-            make simple vanilla-like trim materials where the name <b>is</b> the ingredient such as an "Echo Shard" or a
-            "Prismarine" trim.
-            <p>However, users may instead opt to separate the material name and ingredient. This allows for making fancier
-              trim materials like, for example, an "Ocean's Essence" trim material made from a Heart of the Sea.</p>
-          </HelpButton>
-        </div>
-        <div class="option"><u>Overwrite vanilla values?</u>
-          <input type="checkbox" v-model="materialValues.overwrite">
-          <HelpButton header="Overwriting vanilla values">By default, Luna's Minecraft Tools will safeguard against
-            using vanilla values to prevent users from accidentally overwriting them. Users may opt to disable this
-            safeguard and allow them to freely overwrite any value.
-            <p>Caution: this behaviour is not fully tested/implemented and I cannot guarantee it will work as intended.</p>
-          </HelpButton>
+      <div class="box">
+        <h4 class="tight-header"><u>Options</u></h4>
+        <div class="flex-options" style="justify-content: space-around;">
+          <div class="option"><u>Separate material name from material ingredient?</u>
+            <input type="checkbox" id="separator" v-model="ingredientsSeparated">
+            <HelpButton header="Separating name and ingredient">By default, Luna's Minecraft Tools will
+              generate a trim material with the same name as its ingredient. This behaviour is intended for users to quickly
+              make simple vanilla-like trim materials where the name <b>is</b> the ingredient such as an "Echo Shard" or a
+              "Prismarine" trim.
+              <p>However, users may instead opt to separate the material name and ingredient. This allows for making fancier
+                trim materials like, for example, an "Ocean's Essence" trim material made from a Heart of the Sea.</p>
+            </HelpButton>
+          </div>
+          <div class="option"><u>Overwrite vanilla values?</u>
+            <input type="checkbox" v-model="materialValues.overwrite">
+            <HelpButton header="Overwriting vanilla values">By default, Luna's Minecraft Tools will safeguard against
+              using vanilla values to prevent users from accidentally overwriting them. Users may opt to disable this
+              safeguard and allow them to freely overwrite any value.
+              <p>Caution: this behaviour is not fully tested/implemented and I cannot guarantee it will work as intended.</p>
+            </HelpButton>
+          </div>
         </div>
       </div>
       <form @submit.prevent="generateMaterialPacks(materialValues)">
-        <div class="flex-options">
-          <div class="option" v-if="ingredientsSeparated">
-            <label for="material-name">Material Name</label>
-            <HelpButton header="Add a name to your trim material">
-              Add a cool name to your trim material and the tool will automatically generate an ID from it.<br />
-              For example, a "Fiend's Flames" trim material will get the ID <code>fiends_flames</code>.
-              <p class="notice">Note: Only alphabetical characters, dashes "-", and underscores "_" will be preserved in
-                the ID. Spaces will be converted to underscores and any other character type will be stripped from the
-                ID.</p>
-            </HelpButton><br />
-            <input
-              id="material-name"
-              type="text"
-              placeholder="Insert Name Here"
-              v-model="materialValues.name"
-              required
-            />
-          </div>
-          <div class="option">
-            <label for="material-ingredient">Material Ingredient</label>
-            <HelpButton header="Add the ID of the trim material's ingredient">
-              <p v-show="!ingredientsSeparated">The tool will automatically generate a name and material ID for your
-                material from the ingredient ID.<br />
-                For example, an "Echo Shard" trim material with ID <code>echo_shard</code> will be generated from
-                <code>minecraft:echo_shard</code>.</p>
-              <p>The ID of an item can be found by pressing <kbd>F3+H</kbd> and looking at the bottom of the item tooltip
-                (or you can just check the <a href="https://minecraft.fandom.com/" target="_blank">wiki</a>). An ID
-                usually looks something like <code>minecraft:iron_ingot</code>.</p>
-            </HelpButton><br />
-            <input
-              id="material-ingredient"
-              type="text"
-              placeholder="namespace:item_name"
-              v-model="materialValues.ingredient"
-              required
-            />
-          </div>
-          <div class="option">
-            <label for="tooltip-color">Color of Armor Tooltip</label>
-            <HelpButton header="Select a color for the armor trim's tooltip">
-              This is determines the color of text that shows for the trim description.<br />
-              For example, a piece of armor with a redstone trim will have some red text describing what trim it has.
-            </HelpButton><br />
-            <input
-              id="tooltip-color"
-              type="color"
-              v-model="materialValues.color"
-              required
-            />
-          </div>
-          <div class="option">
-            <label for="model-index">Model Index</label>
-            <HelpButton header="Enter a value for your trim's model index">
-              This value allows the game to differentiate your trim material from others while rendering. Do note that all
-              0.1 increments from 0.1 to 1.0 (e.g. 0.2, 0.4, and 0.7) are used by vanilla Minecraft.
-            </HelpButton><br />
-            <input
-              id="model-index"
-              type="number"
-              step="0.05"
-              v-model="materialValues.index"
-              required />
+        <div class="box">
+          <h4 class="tight-header"><u>Material Values</u></h4>
+          <div class="flex-options">
+            <div class="option" v-if="ingredientsSeparated">
+              <label for="material-name">Material Name</label>
+              <HelpButton header="Add a name to your trim material">
+                Add a cool name to your trim material and the tool will automatically generate an ID from it.<br />
+                For example, a "Fiend's Flames" trim material will get the ID <code>fiends_flames</code>.
+                <p class="notice">Note: Only alphabetical characters, dashes "-", and underscores "_" will be preserved in
+                  the ID. Spaces will be converted to underscores and any other character type will be stripped from the
+                  ID.</p>
+              </HelpButton><br />
+              <input
+                id="material-name"
+                type="text"
+                placeholder="Insert Name Here"
+                v-model="materialValues.name"
+                required
+              />
+            </div>
+            <div class="option">
+              <label for="material-ingredient">Material Ingredient</label>
+              <HelpButton header="Add the ID of the trim material's ingredient">
+                <p v-show="!ingredientsSeparated">The tool will automatically generate a name and material ID for your
+                  material from the ingredient ID.<br />
+                  For example, an "Echo Shard" trim material with ID <code>echo_shard</code> will be generated from
+                  <code>minecraft:echo_shard</code>.</p>
+                <p>The ID of an item can be found by pressing <kbd>F3+H</kbd> and looking at the bottom of the item tooltip
+                  (or you can just check the <a href="https://minecraft.fandom.com/" target="_blank">wiki</a>). An ID
+                  usually looks something like <code>minecraft:iron_ingot</code>.</p>
+              </HelpButton><br />
+              <input
+                id="material-ingredient"
+                type="text"
+                placeholder="namespace:item_name"
+                v-model="materialValues.ingredient"
+                required
+              />
+            </div>
+            <div class="option">
+              <label for="tooltip-color">Color of Armor Tooltip</label>
+              <HelpButton header="Select a color for the armor trim's tooltip">
+                This is determines the color of text that shows for the trim description.<br />
+                For example, a piece of armor with a redstone trim will have some red text describing what trim it has.
+              </HelpButton><br />
+              <input
+                id="tooltip-color"
+                type="color"
+                v-model="materialValues.color"
+                required
+              />
+            </div>
+            <div class="option">
+              <label for="model-index">Model Index</label>
+              <HelpButton header="Enter a value for your trim's model index">
+                This value allows the game to differentiate your trim material from others while rendering. Do note that all
+                0.1 increments from 0.1 to 1.0 (e.g. 0.2, 0.4, and 0.7) are used by vanilla Minecraft.
+              </HelpButton><br />
+              <input
+                id="model-index"
+                type="number"
+                step="0.05"
+                v-model="materialValues.index"
+                required />
+            </div>
           </div>
         </div>
         <button id="generate-button">
@@ -207,49 +213,55 @@ function closeResourceDialog(): void {
 
     <template v-else>
       <h3 class="tight-header">Trim Pattern</h3>
-      <div class="flex-options">
-        <div class="option">
-          <u>Overwrite vanilla values?</u>
-          <input type="checkbox" v-model="patternValues.overwrite">
-          <HelpButton header="Overwriting vanilla values">By default, Luna's Minecraft Tools will safeguard against
-            using vanilla values to prevent users from accidentally overwriting them. Users may opt to disable this
-            safeguard and allow them to freely overwrite any value.
-            <p>Caution: this behaviour is not fully tested/implemented and I cannot guarantee it will work as intended.</p>
-          </HelpButton>
+      <div class="box">
+        <h4 class="tight-header"><u>Options</u></h4>
+        <div class="flex-options">
+          <div class="option">
+            <u>Overwrite vanilla values?</u>
+            <input type="checkbox" v-model="patternValues.overwrite">
+            <HelpButton header="Overwriting vanilla values">By default, Luna's Minecraft Tools will safeguard against
+              using vanilla values to prevent users from accidentally overwriting them. Users may opt to disable this
+              safeguard and allow them to freely overwrite any value.
+              <p>Caution: this behaviour is not fully tested/implemented and I cannot guarantee it will work as intended.</p>
+            </HelpButton>
+          </div>
         </div>
       </div>
       <form @submit.prevent="generatePatternPacks(patternValues)">
-        <div class="flex-options">
-          <div class="option">
-            <label for="pattern-name">Pattern Name</label>
-            <HelpButton header="Name your trim pattern">
-              Add a fancy name to your trim pattern and the tool will automatically generate an ID from it.<br />
-              For example, a "Polka Dot" trim pattern will get the ID <code>polka_dot</code>.
-              <p class="notice">Note: Only alphabetical characters, dashes "-", and underscores "_" will be preserved in
-                the ID. Spaces will be converted to underscores and any other character type will be stripped from the ID.
-              </p>
-            </HelpButton><br />
-            <input
-              id="pattern-name"
-              type="text"
-              placeholder="namespace:item_name"
-              v-model="patternValues.name"
-              required />
-          </div>
-          <div class="option">
-            <label for="pattern-ingredient">Pattern Ingredient</label>
-            <HelpButton header="Add the ID of the trim pattern's ingredient">
-              The ID of an item can be found by pressing <code>F3+H</code> and looking at the bottom of the item tooltip
-              (or you can just check the <a href="https://minecraft.fandom.com/" target="_blank">wiki</a>). An ID
-              usually looks something like <code>minecraft:iron_ingot</code>.
-            </HelpButton><br />
-            <input
-              id="pattern-ingredient"
-              type="text"
-              placeholder="namespace:item_name"
-              v-model="patternValues.ingredient"
-              required
-            />
+        <div class="box">
+          <h4 class="tight-header"><u>Pattern Values</u></h4>
+          <div class="flex-options">
+            <div class="option">
+              <label for="pattern-name">Pattern Name</label>
+              <HelpButton header="Name your trim pattern">
+                Add a fancy name to your trim pattern and the tool will automatically generate an ID from it.<br />
+                For example, a "Polka Dot" trim pattern will get the ID <code>polka_dot</code>.
+                <p class="notice">Note: Only alphabetical characters, dashes "-", and underscores "_" will be preserved in
+                  the ID. Spaces will be converted to underscores and any other character type will be stripped from the ID.
+                </p>
+              </HelpButton><br />
+              <input
+                id="pattern-name"
+                type="text"
+                placeholder="namespace:item_name"
+                v-model="patternValues.name"
+                required />
+            </div>
+            <div class="option">
+              <label for="pattern-ingredient">Pattern Ingredient</label>
+              <HelpButton header="Add the ID of the trim pattern's ingredient">
+                The ID of an item can be found by pressing <code>F3+H</code> and looking at the bottom of the item tooltip
+                (or you can just check the <a href="https://minecraft.fandom.com/" target="_blank">wiki</a>). An ID
+                usually looks something like <code>minecraft:iron_ingot</code>.
+              </HelpButton><br />
+              <input
+                id="pattern-ingredient"
+                type="text"
+                placeholder="namespace:item_name"
+                v-model="patternValues.ingredient"
+                required
+              />
+            </div>
           </div>
         </div>
         <button class="generate-button">

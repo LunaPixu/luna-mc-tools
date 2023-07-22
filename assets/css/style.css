@@ -134,6 +134,10 @@ dialog .tiny-header {
   box-shadow: 0px 0px 5px black;
   background: #0b0632;
 }
+.box .box {
+  background: #070327;
+  padding: 4px;
+}
 
 .errortext {
   color: red;
