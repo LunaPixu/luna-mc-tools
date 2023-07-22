@@ -260,25 +260,28 @@ function closeResourceDialog(): void {
 
     <hr v-if="packsGenerated || errorText" />
     <p v-if="errorText" class="errortext">{{ errorText }}</p>
-    <div v-else-if="packsGenerated" class="flex-options" id="downloads">
-      <button type="button" class="wide-button" @click="showResourceDialog(); downloadPack(packs.resourcePack)">
-        Download Resource Pack
-      </button>
-      <dialog ref="resourceDialog">
-        <button
-          class="tooltip-button"
-          style="float: right;"
-          type="button"
-          @click="closeResourceDialog()"
-        >X</button>
-        <p class="tiny-header">Downloading Resource Pack...</p>
-        Warning: Resource packs provided by this tool are incomplete and require you to provide textures for them.<br />
-        Please check the README inside your resource pack for more information.
-      </dialog>
-      <button type="button" class="wide-button" @click="downloadPack(packs.dataPack)">
-        Download Data Pack
-      </button>
-    </div>
+    <template v-else-if="packsGenerated">
+      <p class="tight-header"><u>Download both your resource pack and data pack</u></p>
+      <div class="flex-options" id="downloads">
+        <button type="button" class="wide-button" @click="showResourceDialog(); downloadPack(packs.resourcePack)">
+          Download Resource Pack
+        </button>
+        <dialog ref="resourceDialog">
+          <button
+            class="tooltip-button"
+            style="float: right;"
+            type="button"
+            @click="closeResourceDialog()"
+          >X</button>
+          <p class="tiny-header">Downloading Resource Pack...</p>
+          Warning: Resource packs provided by this tool are incomplete and require you to provide textures for them.<br />
+          Please check the README inside your resource pack for more information.
+        </dialog>
+        <button type="button" class="wide-button" @click="downloadPack(packs.dataPack)">
+          Download Data Pack
+        </button>
+      </div>
+    </template>
   </div>
 </template>
 
