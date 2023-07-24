@@ -117,7 +117,7 @@ function closeResourceDialog(): void {
       <div class="box">
         <h4 class="tight-header"><u>Options</u></h4>
         <div class="flex-options" style="justify-content: space-around;">
-          <div class="option"><u>Separate material name from material ingredient?</u>
+          <div class="option"><label for="separator">Separate material name from material ingredient?</label>
             <input type="checkbox" id="separator" v-model="ingredientsSeparated">
             <HelpButton header="Separating name and ingredient">By default, Luna's Minecraft Tools will
               generate a trim material with the same name as its ingredient. This behaviour is intended for users to quickly
@@ -127,8 +127,8 @@ function closeResourceDialog(): void {
                 trim materials like, for example, an "Ocean's Essence" trim material made from a Heart of the Sea.</p>
             </HelpButton>
           </div>
-          <div class="option"><u>Overwrite vanilla values?</u>
-            <input type="checkbox" v-model="materialValues.overwrite">
+          <div class="option"><label for="overwrite">Overwrite vanilla values?</label>
+            <input type="checkbox" id="overwrite" v-model="materialValues.overwrite">
             <HelpButton header="Overwriting vanilla values">By default, Luna's Minecraft Tools will safeguard against
               using vanilla values to prevent users from accidentally overwriting them. Users may opt to disable this
               safeguard and allow them to freely overwrite any value.
@@ -217,8 +217,8 @@ function closeResourceDialog(): void {
         <h4 class="tight-header"><u>Options</u></h4>
         <div class="flex-options">
           <div class="option">
-            <u>Overwrite vanilla values?</u>
-            <input type="checkbox" v-model="patternValues.overwrite">
+            <label for="overwrite">Overwrite vanilla values?</label>
+            <input type="checkbox" id="overwrite" v-model="patternValues.overwrite">
             <HelpButton header="Overwriting vanilla values">By default, Luna's Minecraft Tools will safeguard against
               using vanilla values to prevent users from accidentally overwriting them. Users may opt to disable this
               safeguard and allow them to freely overwrite any value.
