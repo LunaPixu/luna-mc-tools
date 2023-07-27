@@ -1,35 +1,35 @@
 <script setup lang="ts">
 import JSZip from "jszip";
 import { saveAs } from "file-saver";
-import { type MaterialValues, generateMaterial } from "./trim/generateMaterial";
-import { type PatternValues, generatePattern } from "./trim/generatePattern";
+import { Material, Pattern, generatePacks, type InputValues } from "./trim/generatePacks";
 import { type Packs, type Pack } from "./trim/pack";
 
-const materialValues: MaterialValues = reactive({
-  name: "",
-  ingredient: "",
-  color: "#000000",
-  index: 0.55,
-  overwrite: false,
-});
-
-const patternValues: PatternValues = reactive({
-  name: "",
-  ingredient: "",
-  overwrite: false,
-});
-
 const errorText = ref("");
-const ingredientsSeparated = ref(false);
-const generatorToggled = ref(false);
 const packsGenerated = ref(false);
+const overwrite = ref(false);
 
 const mcVersion = "1.20.1"; // TODO Make this dynamic
 
-function toggleGenerator(dest: boolean): void {
-  errorText.value = "";
-  packsGenerated.value = false;
-  generatorToggled.value = dest;
+const inputs = ref<InputValues[]>([]);
+let id = 0;
+
+function addInput(type: string) {
+  switch (type) {
+    case "pattern":
+      inputs.value.push(new Pattern(id));
+      id++;
+      return;
+    case "material":
+      inputs.value.push(new Material(id));
+      id++;
+      return;
+    default:
+      return;
+  }
+}
+
+function removeInput(input: InputValues) {
+  inputs.value = inputs.value.filter((el) => el !== input);
 }
 
 let packs: Packs = {
@@ -43,41 +43,12 @@ let packs: Packs = {
   },
 };
 
-function generateMaterialPacks(values: MaterialValues): void {
-  errorText.value = "";
-  packsGenerated.value = false;
-
-  if (!materialValues.overwrite && values.index <= 1 && !(values.index * 10 % 1)) {
-    errorText.value = "Index number is already used by the vanilla game. Please select a different index number."
-    return;
-  }
-
-  const input: MaterialValues = ingredientsSeparated.value ? values :
-    {
-      ingredient: values.ingredient,
-      color: values.color,
-      index: values.index,
-      overwrite: values.overwrite,
-    };
-
-  try {
-    packs = generateMaterial(input, mcVersion);
-  } catch (err) {
-    if (typeof err === "string") {
-      errorText.value = err;
-      return;
-    }
-    throw (err);
-  }
-  packsGenerated.value = true;
-}
-
-function generatePatternPacks(values: PatternValues): void {
+function submitPacks(values: InputValues[]): void {
   errorText.value = "";
   packsGenerated.value = false;
 
   try {
-    packs = generatePattern(values, mcVersion);
+    packs = generatePacks(values, mcVersion, overwrite.value);
   } catch (err) {
     if (typeof err === "string") {
       errorText.value = err;
@@ -107,42 +78,51 @@ function closeResourceDialog(): void {
 <template>
   <div class="box" id="trimbox">
     <div class="flex-options">
-      <button type="button" class="wide-button" @click="toggleGenerator(false)">Trim Material Generator</button>
-      <button type="button" class="wide-button" @click="toggleGenerator(true)">Trim Pattern Generator</button>
+      <button type="button" class="wide-button" @click="addInput('material')">Add Trim Material</button>
+      <button type="button" class="wide-button" @click="addInput('pattern')">Add Trim Pattern</button>
     </div>
     <hr style="margin: 1em 0" />
-
-    <template v-if="!generatorToggled">
-      <h3 class="tight-header">Trim Material</h3>
-      <div class="box">
-        <h4 class="tight-header"><u>Options</u></h4>
-        <div class="flex-options" style="justify-content: space-around;">
-          <div class="option"><label for="separator">Separate material name from material ingredient?</label>
-            <input type="checkbox" id="separator" v-model="ingredientsSeparated">
-            <HelpButton header="Separating name and ingredient">By default, Luna's Minecraft Tools will
-              generate a trim material with the same name as its ingredient. This behaviour is intended for users to quickly
-              make simple vanilla-like trim materials where the name <b>is</b> the ingredient such as an "Echo Shard" or a
-              "Prismarine" trim.
+    <div class="box" v-if="inputs.length">
+      <h4 class="tight-header"><u>Options</u></h4>
+      <div class="flex-options" style="justify-content: space-around;">
+        <div class="option"><label for="overwrite">Overwrite vanilla values?</label>
+          <input type="checkbox" id="overwrite" v-model="overwrite">
+          <HelpButton header="Overwriting vanilla values">By default, Luna's Minecraft Tools will safeguard against
+            using vanilla values to prevent users from accidentally overwriting them. Users may opt to disable this
+            safeguard and allow them to freely overwrite any value.
+            <p>Caution: this behaviour is not fully tested/implemented and I cannot guarantee it will work as intended.</p>
+          </HelpButton>
+        </div>
+      </div>
+    </div>
+    <div class="box" v-else>
+      <h4 class="tight-header">No materials or patterns have been added</h4>
+      <p><i>To begin generating your custom armor trim data and resource packs, please click either of the above buttons.</i></p>
+    </div>
+    <form @submit.prevent="submitPacks(inputs)">
+      <div
+        class="box"
+        style="margin: 1em 0.5em; position: relative;"
+        v-for="input in inputs"
+        :key="input.id"
+      >
+        <button type="button" class="remove-button" @click="removeInput(input)">X</button>
+        <template v-if="input.type === 'material'">
+          <h3 class="tight-header">Trim Material</h3>
+          <div class="option">
+            <label :for="`separator-${input.id}`">Separate material name from material ingredient?</label>
+            <input type="checkbox" :id="`separator-${input.id}`" v-model="input.separate">
+            <HelpButton header="Separating name and ingredient">
+              By default, Luna's Minecraft Tools will generate a trim material with the same name as its ingredient. This
+              behaviour is intended for users to quickly make simple vanilla-like trim materials where the name <b>is</b>
+              the ingredient such as an "Echo Shard" or a "Prismarine" trim.
               <p>However, users may instead opt to separate the material name and ingredient. This allows for making fancier
                 trim materials like, for example, an "Ocean's Essence" trim material made from a Heart of the Sea.</p>
             </HelpButton>
           </div>
-          <div class="option"><label for="overwrite">Overwrite vanilla values?</label>
-            <input type="checkbox" id="overwrite" v-model="materialValues.overwrite">
-            <HelpButton header="Overwriting vanilla values">By default, Luna's Minecraft Tools will safeguard against
-              using vanilla values to prevent users from accidentally overwriting them. Users may opt to disable this
-              safeguard and allow them to freely overwrite any value.
-              <p>Caution: this behaviour is not fully tested/implemented and I cannot guarantee it will work as intended.</p>
-            </HelpButton>
-          </div>
-        </div>
-      </div>
-      <form @submit.prevent="generateMaterialPacks(materialValues)">
-        <div class="box">
-          <h4 class="tight-header"><u>Material Values</u></h4>
           <div class="flex-options">
-            <div class="option" v-if="ingredientsSeparated">
-              <label for="material-name">Material Name</label>
+            <div class="option" v-if="input.separate">
+              <label :for="`name-${input.id}`">Material Name</label>
               <HelpButton header="Add a name to your trim material">
                 Add a cool name to your trim material and the tool will automatically generate an ID from it.<br />
                 For example, a "Fiend's Flames" trim material will get the ID <code>fiends_flames</code>.
@@ -151,17 +131,17 @@ function closeResourceDialog(): void {
                   ID.</p>
               </HelpButton><br />
               <input
-                id="material-name"
+                :id="`name-${input.id}`"
                 type="text"
                 placeholder="Insert Name Here"
-                v-model="materialValues.name"
+                v-model="input.name"
                 required
               />
             </div>
             <div class="option">
-              <label for="material-ingredient">Material Ingredient</label>
+              <label :for="`ingredient-${input.id}`">Material Ingredient</label>
               <HelpButton header="Add the ID of the trim material's ingredient">
-                <p v-show="!ingredientsSeparated">The tool will automatically generate a name and material ID for your
+                <p v-show="!input.separate">The tool will automatically generate a name and material ID for your
                   material from the ingredient ID.<br />
                   For example, an "Echo Shard" trim material with ID <code>echo_shard</code> will be generated from
                   <code>minecraft:echo_shard</code>.</p>
@@ -170,69 +150,46 @@ function closeResourceDialog(): void {
                   usually looks something like <code>minecraft:iron_ingot</code>.</p>
               </HelpButton><br />
               <input
-                id="material-ingredient"
+                :id="`ingredient-${input.id}`"
                 type="text"
                 placeholder="namespace:item_name"
-                v-model="materialValues.ingredient"
+                v-model="input.ingredient"
                 required
               />
             </div>
             <div class="option">
-              <label for="tooltip-color">Color of Armor Tooltip</label>
+              <label :for="`color-${input.id}`">Color of Armor Tooltip</label>
               <HelpButton header="Select a color for the armor trim's tooltip">
                 This is determines the color of text that shows for the trim description.<br />
                 For example, a piece of armor with a redstone trim will have some red text describing what trim it has.
               </HelpButton><br />
               <input
-                id="tooltip-color"
+                :id="`color-${input.id}`"
                 type="color"
-                v-model="materialValues.color"
+                v-model="input.color"
                 required
               />
             </div>
             <div class="option">
-              <label for="model-index">Model Index</label>
+              <label :for="`index-${input.id}`">Model Index</label>
               <HelpButton header="Enter a value for your trim's model index">
                 This value allows the game to differentiate your trim material from others while rendering. Do note that all
                 0.1 increments from 0.1 to 1.0 (e.g. 0.2, 0.4, and 0.7) are used by vanilla Minecraft.
               </HelpButton><br />
               <input
-                id="model-index"
+                :id="`index-${input.id}`"
                 type="number"
                 step="0.05"
-                v-model="materialValues.index"
+                v-model="input.index"
                 required />
             </div>
           </div>
-        </div>
-        <button id="generate-button">
-          Generate
-        </button>
-      </form>
-    </template>
-
-    <template v-else>
-      <h3 class="tight-header">Trim Pattern</h3>
-      <div class="box">
-        <h4 class="tight-header"><u>Options</u></h4>
-        <div class="flex-options">
-          <div class="option">
-            <label for="overwrite">Overwrite vanilla values?</label>
-            <input type="checkbox" id="overwrite" v-model="patternValues.overwrite">
-            <HelpButton header="Overwriting vanilla values">By default, Luna's Minecraft Tools will safeguard against
-              using vanilla values to prevent users from accidentally overwriting them. Users may opt to disable this
-              safeguard and allow them to freely overwrite any value.
-              <p>Caution: this behaviour is not fully tested/implemented and I cannot guarantee it will work as intended.</p>
-            </HelpButton>
-          </div>
-        </div>
-      </div>
-      <form @submit.prevent="generatePatternPacks(patternValues)">
-        <div class="box">
-          <h4 class="tight-header"><u>Pattern Values</u></h4>
+        </template>
+        <template v-else-if="input.type === 'pattern'">
+          <h3 class="tight-header">Trim Pattern</h3>
           <div class="flex-options">
             <div class="option">
-              <label for="pattern-name">Pattern Name</label>
+              <label :for="`name-${input.id}`">Pattern Name</label>
               <HelpButton header="Name your trim pattern">
                 Add a fancy name to your trim pattern and the tool will automatically generate an ID from it.<br />
                 For example, a "Polka Dot" trim pattern will get the ID <code>polka_dot</code>.
@@ -241,34 +198,34 @@ function closeResourceDialog(): void {
                 </p>
               </HelpButton><br />
               <input
-                id="pattern-name"
+                :id="`name-${input.id}`"
                 type="text"
                 placeholder="namespace:item_name"
-                v-model="patternValues.name"
+                v-model="input.name"
                 required />
             </div>
             <div class="option">
-              <label for="pattern-ingredient">Pattern Ingredient</label>
+              <label :for="`ingredient-${input.id}`">Pattern Ingredient</label>
               <HelpButton header="Add the ID of the trim pattern's ingredient">
                 The ID of an item can be found by pressing <code>F3+H</code> and looking at the bottom of the item tooltip
                 (or you can just check the <a href="https://minecraft.fandom.com/" target="_blank">wiki</a>). An ID
                 usually looks something like <code>minecraft:iron_ingot</code>.
               </HelpButton><br />
               <input
-                id="pattern-ingredient"
+                :id="`ingredient-${input.id}`"
                 type="text"
                 placeholder="namespace:item_name"
-                v-model="patternValues.ingredient"
+                v-model="input.ingredient"
                 required
               />
             </div>
           </div>
-        </div>
-        <button class="generate-button">
-          Generate
-        </button>
-      </form>
-    </template>
+        </template>
+      </div>
+      <button class="generate-button" v-show="inputs.length">
+        Generate
+      </button>
+    </form>
 
     <hr v-if="packsGenerated || errorText" />
     <p v-if="errorText" class="errortext">{{ errorText }}</p>
@@ -302,6 +259,13 @@ function closeResourceDialog(): void {
   margin-bottom: 0;
 
   flex: 45%;
+}
+
+.remove-button {
+  transition: position 0.5s;
+  position: absolute;
+  right: 4px;
+  padding: 4px 6px;
 }
 
 .flex-options {

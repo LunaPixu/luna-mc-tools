@@ -17,9 +17,10 @@ useSeoMeta({
     Minecraft.
   </p>
   <p>
-    At present, this tool only allows you to generate one trim material <i>or</i> one trim pattern. Generating more than one
-    and/or generating both kinds will not work and will require manual editing on your part to work correctly. Support for
-    multiple and mixing-and-matching is coming soon.
+    As I am overhauling this generator, a lot of its core functionality has been disabled while I rework those parts. Until
+    then, incomplete packs will be generated. Please use the
+    <a href="https://luna-minecraft-tools.vercel.app/trimgenerator" target="_blank">live version</a> of the generator in the
+    meantime.
   </p>
   <p class="notice">Note: This tool was made for Minecraft Java Edition version 1.20. This tool will not work for Bedrock.</p>
   <ClientOnly>
