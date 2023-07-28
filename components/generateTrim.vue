@@ -97,7 +97,7 @@ function closeResourceDialog(): void {
     </div>
     <div class="box" v-else>
       <h4 class="tight-header">No materials or patterns have been added</h4>
-      <p><i>To begin generating your custom armor trim data and resource packs, please click either of the above buttons.</i></p>
+      <p>To begin generating your custom armor trim data and resource packs, please click either of the above buttons.</p>
     </div>
     <form @submit.prevent="submitPacks(inputs)">
       <div
@@ -114,7 +114,7 @@ function closeResourceDialog(): void {
             <input type="checkbox" :id="`separator-${input.id}`" v-model="input.separate">
             <HelpButton header="Separating name and ingredient">
               By default, Luna's Minecraft Tools will generate a trim material with the same name as its ingredient. This
-              behaviour is intended for users to quickly make simple vanilla-like trim materials where the name <b>is</b>
+              behaviour is intended for users to quickly make simple vanilla-like trim materials where the name <em>is</em>
               the ingredient such as an "Echo Shard" or a "Prismarine" trim.
               <p>However, users may instead opt to separate the material name and ingredient. This allows for making fancier
                 trim materials like, for example, an "Ocean's Essence" trim material made from a Heart of the Sea.</p>
