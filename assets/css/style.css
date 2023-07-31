@@ -135,8 +135,9 @@ dialog .tiny-header {
   background: #0b0632;
 }
 .box .box {
-  background: #070327;
   padding: 4px 0.5em;
+
+  background: #070327;
 }
 
 .errortext {
@@ -148,11 +149,6 @@ dialog .tiny-header {
   border-radius: 10px;
   padding: 2px 4px;
   margin: 0 4px;
-
-  background-color: #1a1a1a;
-}
-.tooltip-button:hover {
-  background-color: #0e0e0e;
 }
 
 #__nuxt {
@@ -215,13 +211,10 @@ dialog .tiny-header {
     box-shadow: 0px 0px 5px #7e71db;
     background: #a094f5;
   }
+  .box .box {
+    background: #c5befd;
+  }
   .errortext {
     color: rgb(184, 0, 0);
-  }
-  .tooltip-button {
-    background-color: #cdc6ff;
-  }
-  .tooltip-button:hover {
-    background-color: #b9b0f1;
   }
 }
