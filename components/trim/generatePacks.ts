@@ -10,6 +10,7 @@ export class Material {
   color: string;
   index: number;
   separate: boolean;
+  show: boolean;
   id: number;
 
   constructor(id: number) {
@@ -19,6 +20,7 @@ export class Material {
     this.color = "#000000";
     this.index = 0.55;
     this.separate = false;
+    this.show = true;
     this.id = id;
   }
 }
@@ -26,12 +28,14 @@ export class Pattern {
   type: "pattern";
   name: string;
   ingredient: string;
+  show: boolean;
   id: number;
 
   constructor(id: number) {
     this.type = "pattern";
     this.name = "";
     this.ingredient = "";
+    this.show = true;
     this.id = id;
   }
 }
