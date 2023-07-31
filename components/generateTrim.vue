@@ -82,22 +82,24 @@ function closeResourceDialog(): void {
       <button type="button" class="wide-button" @click="addInput('pattern')">Add Trim Pattern</button>
     </div>
     <hr style="margin: 1em 0" />
-    <div class="box" v-if="inputs.length">
-      <h4 class="tight-header"><u>Options</u></h4>
-      <div class="flex-options" style="justify-content: space-around;">
-        <div class="option"><label for="overwrite">Overwrite vanilla values?</label>
-          <input type="checkbox" id="overwrite" v-model="overwrite">
-          <HelpButton header="Overwriting vanilla values">By default, Luna's Minecraft Tools will safeguard against
-            using vanilla values to prevent users from accidentally overwriting them. Users may opt to disable this
-            safeguard and allow them to freely overwrite any value.
-            <p>Caution: this behaviour is not fully tested/implemented and I cannot guarantee it will work as intended.</p>
-          </HelpButton>
+    <div class="box">
+      <template v-if="inputs.length">
+        <h4 class="tight-header"><u>Options</u></h4>
+        <div class="flex-options" style="justify-content: space-around;">
+          <div class="option"><label for="overwrite">Overwrite vanilla values?</label>
+            <input type="checkbox" id="overwrite" v-model="overwrite">
+            <HelpButton header="Overwriting vanilla values">By default, Luna's Minecraft Tools will safeguard against
+              using vanilla values to prevent users from accidentally overwriting them. Users may opt to disable this
+              safeguard and allow them to freely overwrite any value.
+              <p>Caution: this behaviour is not fully tested/implemented and I cannot guarantee it will work as intended.</p>
+            </HelpButton>
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="box" v-else>
-      <h4 class="tight-header">No materials or patterns have been added</h4>
-      <p>To begin generating your custom armor trim data and resource packs, please click either of the above buttons.</p>
+      </template>
+      <template v-else>
+        <h4 class="tight-header">No materials or patterns have been added</h4>
+        <p>To begin generating your custom armor trim data and resource packs, please click either of the above buttons.</p>
+      </template>
     </div>
     <form @submit.prevent="submitPacks(inputs)">
       <TransitionGroup name="trim">
