@@ -51,7 +51,7 @@ const routes = reactive(routeData.routes);
     <template v-for="route in routes" :key="route.id">
       <Transition><NuxtLink :to="route.slug" v-if="!navCollapsed || !isMobileSize"><button class="nav-button">
             <div class="nav-icon"><font-awesome-icon :icon="route.icon" /></div>
-            <Transition><span v-if="!navCollapsed">{{ route.name }}</span></Transition>
+            <Transition><span v-show="!navCollapsed">{{ route.name }}</span></Transition>
           </button></NuxtLink></Transition>
     </template>
   </div>
