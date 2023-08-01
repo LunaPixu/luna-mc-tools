@@ -72,6 +72,8 @@ th {
   background-color: #0b0616;
 }
 tr:hover {
+  transition: background-color 0.25s;
+
   background-color: #1e165e;
 }
 td {
@@ -180,7 +182,7 @@ dialog .tiny-header {
     background-color: #ffffff;
   }
   a {
-    color: #5961fc;
+    color: #3366ff; /* <3 */
   }
   a:hover {
     color: #2a33dd;
@@ -189,30 +191,31 @@ dialog .tiny-header {
     background-color: #f9f9f9;
   }
   table {
-    border-color: #cdc6ff;
+    border-color: #c6d0ff;
+    box-shadow: 0px 0px 5px #7184db;
   }
   th {
-    background-color: #cdc6ff;
+    background-color: #c6d0ff;
   }
   tr:hover {
-    background-color: #8679e7;
+    background-color: #7c83e9;
   }
   code {
-    background-color: #dddddd;
+    background-color: #eeeeee;
   }
   dialog {
-    background-color: #cdc6ff;
-    box-shadow: 0px 0px 10px #7e71db;
+    background-color: #c6d0ff;
+    box-shadow: 0px 0px 10px #7184db;
   }
   .notice {
     color: #6e6e6e;
   }
   .box {
-    box-shadow: 0px 0px 5px #7e71db;
-    background: #a094f5;
+    box-shadow: 0px 0px 5px #7184db;
+    background: #949af5;
   }
   .box .box {
-    background: #c5befd;
+    background: #bec4fd;
   }
   .errortext {
     color: rgb(184, 0, 0);
