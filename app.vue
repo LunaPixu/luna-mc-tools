@@ -1,9 +1,4 @@
 <script setup lang="ts">
-import routeData from "./content/routeData.json";
-
-const route = useRoute();
-const routeList = routeData.routes;
-
 useHeadSafe({
   htmlAttrs: {
     lang: 'en',
