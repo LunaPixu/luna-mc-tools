@@ -30,6 +30,7 @@ function addInput(type: string) {
 
 function removeInput(input: InputValues) {
   inputs.value = inputs.value.filter((el) => el !== input);
+  if (!inputs.value.length) errorText.value = "";
 }
 
 let packs: Packs = {
