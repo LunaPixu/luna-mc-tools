@@ -260,8 +260,8 @@ function checkForOverwrite(input: InputValues): void {
 }
 
 function checkForDupeMaterialProps(materials: Material[]): string {
-  const ingredientValidator = new Set();
-  const indexValidator = new Set();
+  const ingredientValidator: Set<string> = new Set();
+  const indexValidator: Set<number> = new Set();
   const materialNum = materials.length;
 
   materials.forEach((material) => {
@@ -275,8 +275,8 @@ function checkForDupeMaterialProps(materials: Material[]): string {
   return "";
 }
 function checkForDupePatternProps(patterns: Pattern[]): string {
-  const nameValidator = new Set();
-  const ingredientValidator = new Set();
+  const nameValidator: Set<string> = new Set();
+  const ingredientValidator: Set<string> = new Set();
   const patternNum = patterns.length;
 
   patterns.forEach((pattern) => {
