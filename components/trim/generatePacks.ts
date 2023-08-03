@@ -248,7 +248,7 @@ function strip(id: string): string {
   return idParts.groups.name;
 }
 
-function checkForOverwrite(input: InputValues) {
+function checkForOverwrite(input: InputValues): void {
   if (input.type === "pattern") {
     if (existingTemplates.some((el) => el === (input.ingredient.toLowerCase()) || strip(el) === (input.ingredient.toLowerCase()))) {
       throw "One of your pattern ingredients is already used in the vanilla game. Please select a different one.";
@@ -257,6 +257,37 @@ function checkForOverwrite(input: InputValues) {
   if (existingTrimMaterials.some((el) => el === (input.ingredient.toLowerCase()) || strip(el) === (input.ingredient.toLowerCase()))) {
     throw "One of your material ingredients is already used in the vanilla game. Please select a different one.";
   }
+}
+
+function checkForDupeMaterialProps(materials: Material[]): string {
+  const ingredientValidator = new Set();
+  const indexValidator = new Set();
+  const materialNum = materials.length;
+
+  materials.forEach((material) => {
+    ingredientValidator.add(material.ingredient);
+    indexValidator.add(material.index);
+  });
+  
+  if (ingredientValidator.size !== materialNum) return "ingredient";
+  if (indexValidator.size !== materialNum) return "index";
+
+  return "";
+}
+function checkForDupePatternProps(patterns: Pattern[]): string {
+  const nameValidator = new Set();
+  const ingredientValidator = new Set();
+  const patternNum = patterns.length;
+
+  patterns.forEach((pattern) => {
+    nameValidator.add(pattern.name);
+    ingredientValidator.add(pattern.ingredient);
+  });
+  
+  if (nameValidator.size !== patternNum) return "name";
+  if (ingredientValidator.size !== patternNum) return "ingredient";
+
+  return "";
 }
 
 export function generatePacks(inputValues: InputValues[], mcVersion: string, overwrite: boolean): Packs {
@@ -279,6 +310,11 @@ export function generatePacks(inputValues: InputValues[], mcVersion: string, ove
     }
     patternValues.push(values);
   });
+
+  const dupeMaterial = checkForDupeMaterialProps(materialValues);
+  if (dupeMaterial) throw `More than one of your trim materials has the same ${dupeMaterial}. Please double check your trim material values.`;
+  const dupePattern = checkForDupePatternProps(patternValues);
+  if (dupePattern) throw `More than one of your trim patterns has the same ${dupePattern}. Please double check your trim pattern values.`;
 
   let readme = readmeTemplate;
   const materialNum = materialValues.length;
