@@ -101,7 +101,7 @@ function closeResourceDialog(): void {
         <p>To begin generating your custom armor trim data and resource packs, please click either of the above buttons.</p>
       </template>
     </div>
-    <form @submit.prevent="submitPacks(inputs)">
+    <form autocomplete="off" @submit.prevent="submitPacks(inputs)">
       <TransitionGroup name="trim">
         <div
           class="box"
