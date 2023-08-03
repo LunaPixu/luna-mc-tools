@@ -3,40 +3,41 @@ import { ItemParser } from "../itemParser";
 import { PackMCMeta, Packs, PatternData, MaterialData } from "./pack";
 import { TrimAtlas, BlockAtlas } from "./trimAtlases";
 
-export class Material {
-  type: "material";
+class InputEntry {
   name: string;
-  ingredient: string;
-  color: string;
-  index: number;
-  separate: boolean;
   show: boolean;
   id: number;
 
-  constructor(id: number) {
-    this.type = "material";
+  constructor (id: number) {
     this.name = "";
-    this.ingredient = "";
-    this.color = "#000000";
-    this.index = 0.55;
-    this.separate = false;
     this.show = true;
     this.id = id;
   }
 }
-export class Pattern {
-  type: "pattern";
-  name: string;
+export class Material extends InputEntry {
+  type: "material";
   ingredient: string;
-  show: boolean;
-  id: number;
+  color: string;
+  index: number;
+  separate: boolean;
 
   constructor(id: number) {
-    this.type = "pattern";
-    this.name = "";
+    super(id);
+    this.type = "material";
     this.ingredient = "";
-    this.show = true;
-    this.id = id;
+    this.color = "#000000";
+    this.index = 0.55;
+    this.separate = false;
+  }
+}
+export class Pattern extends InputEntry {
+  type: "pattern";
+  ingredient: string;
+
+  constructor(id: number) {
+    super(id);
+    this.type = "pattern";
+    this.ingredient = "";
   }
 }
 export type InputValues = Pattern | Material;
