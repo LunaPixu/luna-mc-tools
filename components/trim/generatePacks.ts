@@ -264,14 +264,13 @@ function checkForDupeMaterialProps(materials: Material[]): string {
   const indexValidator: Set<number> = new Set();
   const materialNum = materials.length;
 
-  materials.forEach((material) => {
-    ingredientValidator.add(material.ingredient);
-    indexValidator.add(material.index);
-  });
+  for (let i = 0; i < materialNum; i++) {
+    ingredientValidator.add(materials[i].ingredient);
+    indexValidator.add(materials[i].index);
+    if (ingredientValidator.size !== i+1) return "ingredient";
+    if (indexValidator.size !== i+1) return "index";
+  };
   
-  if (ingredientValidator.size !== materialNum) return "ingredient";
-  if (indexValidator.size !== materialNum) return "index";
-
   return "";
 }
 function checkForDupePatternProps(patterns: Pattern[]): string {
@@ -279,13 +278,12 @@ function checkForDupePatternProps(patterns: Pattern[]): string {
   const ingredientValidator: Set<string> = new Set();
   const patternNum = patterns.length;
 
-  patterns.forEach((pattern) => {
-    nameValidator.add(pattern.name);
-    ingredientValidator.add(pattern.ingredient);
-  });
-  
-  if (nameValidator.size !== patternNum) return "name";
-  if (ingredientValidator.size !== patternNum) return "ingredient";
+  for (let i = 0; i < patternNum; i++) {
+    nameValidator.add(patterns[i].name);
+    ingredientValidator.add(patterns[i].ingredient); 
+    if (nameValidator.size !== i+1) return "name";
+    if (ingredientValidator.size !== i+1) return "ingredient";
+  };
 
   return "";
 }
