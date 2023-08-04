@@ -42,6 +42,34 @@ export class Pattern extends InputEntry {
 }
 export type InputValues = Pattern | Material;
 
+class MaterialDataObj implements MaterialData {
+  asset_name: string;
+  description: { color: string; translate: string; };
+  ingredient: string;
+  item_model_index: number;
+
+  constructor(material: Material) {
+    this.asset_name = material.separate ? collapse(material.name) : strip(material.ingredient.toLowerCase());
+    this.description = {
+      color: material.color,
+      translate: `trim_material.lunamct.${this.asset_name}`,
+    };
+    this.ingredient = material.ingredient;
+    this.item_model_index = material.index;
+  }
+}
+class PatternDataObj implements PatternData {
+  asset_id: string;
+  description: { translate: string; };
+  template_item: string;
+
+  constructor(pattern: Pattern) {
+    this.asset_id = collapse(pattern.name);
+    this.description = { translate: `trim_pattern.lunamct.${this.asset_id}` };
+    this.template_item = pattern.ingredient;
+  }
+}
+
 const existingTrimMaterials = [
   "minecraft:diamond",
   "minecraft:iron_ingot",
@@ -334,17 +362,7 @@ There will be a .txt file listing all the texture files that need to be added.`;
   const nameValidator: Set<string> = new Set();
   const materialDataObjs: Array<MaterialData> = [];
   materialValues.forEach((material) => {
-    const output: MaterialData = {
-      asset_name: "",
-      description: {
-        color: material.color,
-        translate: "",
-      },
-      ingredient: material.ingredient,
-      item_model_index: material.index,
-    };
-    output.asset_name = material.separate ? collapse(material.name) : strip(material.ingredient.toLowerCase());
-    output.description.translate = `trim_material.lunamct.${output.asset_name}`;
+    const output = new MaterialDataObj(material);
     materialDataObjs.push(output);
     nameValidator.add(output.asset_name);
     if (materialDataObjs.length !== nameValidator.size) {
@@ -354,16 +372,9 @@ There will be a .txt file listing all the texture files that need to be added.`;
     }
   });
 
-  const patternObjs: Array<PatternData> = [];
+  const patternDataObjs: Array<PatternData> = [];
   patternValues.forEach((pattern) => {
-    const assetName = collapse(pattern.name);
-    patternObjs.push({
-      asset_id: assetName,
-      description: {
-        translate: `trim_pattern.lunamct.${assetName}`
-      },
-      template_item: pattern.ingredient,
-    });
+    patternDataObjs.push(new PatternDataObj(pattern));
   });
 
   const dataMCMeta: PackMCMeta = {
