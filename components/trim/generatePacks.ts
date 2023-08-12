@@ -286,6 +286,7 @@ class MaterialTranslations {
   constructor(materials: MaterialData[], materialValues: Material[], parser: ItemParser) {
     materials.forEach((material, i) => {
       this[material.description.translate] = materialValues[i].separate ? materialValues[i].name : parser.parseName({ id: materialValues[i].ingredient });
+      this[material.description.translate] += " Material";
     });
   }
 }
