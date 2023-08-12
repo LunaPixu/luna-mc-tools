@@ -135,12 +135,19 @@ class MaterialModel {
   }
 }
 
-type Override = {
+interface Override {
   model: string;
-  predicate: {
-    trim_type: number;
-  };
-};
+  predicate: { trim_type: number };
+}
+class CustomOverride implements Override {
+  model: string;
+  predicate: { trim_type: number };
+
+  constructor(armorMaterial: string, armorPiece: string, material: MaterialData) {
+    this.model = `lunamct:item/${armorMaterial}_${armorPiece}_${material.asset_name}_trim`;
+    this.predicate = { trim_type: material.item_model_index };
+  }
+}
 class ArmorOverrideModel {
   parent: "minecraft:item/generated";
   overrides: Override[];
@@ -149,7 +156,7 @@ class ArmorOverrideModel {
     layer1?: string;
   };
 
-  constructor(armorMaterial: string, armorPiece: string, materialData: MaterialData) {
+  constructor(armorMaterial: string, armorPiece: string, materialData: MaterialData[]) {
     this.parent = "minecraft:item/generated";
     this.overrides = [
       {
@@ -213,14 +220,9 @@ class ArmorOverrideModel {
         }
       },
     ];
-    this.overrides.push(
-      {
-        model: `lunamct:item/${armorMaterial}_${armorPiece}_${materialData.asset_name}_trim`,
-        predicate: {
-          trim_type: materialData.item_model_index
-        }
-      }
-    );
+    materialData.forEach((material) => {
+      this.overrides.push(new CustomOverride(armorMaterial, armorPiece, material))
+    });
     this.textures = {
       layer0: `minecraft:item/${armorMaterial}_${armorPiece}`
     };
