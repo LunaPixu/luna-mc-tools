@@ -66,6 +66,7 @@ class PatternDataObj implements PatternData {
   constructor(pattern: Pattern) {
     this.asset_id = collapse(pattern.name);
     this.description = { translate: `trim_pattern.lunamct.${this.asset_id}` };
+    this.asset_id = "lunamct:" + this.asset_id;
     this.template_item = pattern.ingredient;
   }
 }
@@ -467,6 +468,16 @@ There will be a .txt file listing all the texture files that need to be added.`;
       })
     });
     resourcePack.file(`assets/minecraft/models/item/turtle_helmet.json`, JSON.stringify(new ArmorOverrideModel("turtle", "helmet", materialDataObjs), null, "  "));
+  }
+
+  if (patternDataObjs.length > 0) {
+    let pleaseAddPatterns = "Please add the following texture files to this folder:";
+    patternDataObjs.forEach((pattern) => {
+      const name = strip(pattern.asset_id);
+      pleaseAddPatterns += `\n\n- ${name}.png`;
+      pleaseAddPatterns += `\n- ${name}_leggings.png`;
+    });
+    resourcePack.file("assets/lunamct/textures/trims/models/armor/add_textures_here.txt", pleaseAddPatterns);
   }
 
   const materialTranslations = new MaterialTranslations(materialDataObjs, materialValues, itemParser);
