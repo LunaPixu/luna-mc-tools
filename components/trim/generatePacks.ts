@@ -221,7 +221,7 @@ class ArmorOverrideModel {
       },
     ];
     materialData.forEach((material) => {
-      this.overrides.push(new CustomOverride(armorMaterial, armorPiece, material))
+      this.overrides.push(new CustomOverride(armorMaterial, armorPiece, material));
     });
     this.textures = {
       layer0: `minecraft:item/${armorMaterial}_${armorPiece}`
@@ -457,6 +457,8 @@ There will be a .txt file listing all the texture files that need to be added.`;
     resourcePack.file(`assets/lunamct/models/item/turtle_helmet_${material.asset_name}_trim.json`, JSON.stringify(new MaterialModel("turtle", "helmet", material.asset_name), null, "  "));
   });
 
+  resourcePack.file(`assets/minecraft/atlases/blocks.json`, JSON.stringify(new BlockAtlas(materialDataObjs), null, "  "));
+  resourcePack.file(`assets/minecraft/atlases/armor_trims.json`, JSON.stringify(new TrimAtlas([...materialDataObjs, ...patternDataObjs]), null, "  "));
   const materialTranslations = new MaterialTranslations(materialDataObjs, materialValues, itemParser);
   const patternTranslations = new PatternTranslations(patternDataObjs, patternValues);
   resourcePack.file("assets/lunamct/lang/en_us.json", JSON.stringify({ ...patternTranslations, ...materialTranslations }, null, "  "));
