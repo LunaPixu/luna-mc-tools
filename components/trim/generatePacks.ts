@@ -299,7 +299,7 @@ class PatternTranslations {
   }
 }
 
-function addTrimModelsToZip(zip: JSZip, armMat: string, armPiece: string, materials: MaterialData[]) {
+function addMaterialModelsToZip(zip: JSZip, armMat: string, armPiece: string, materials: MaterialData[]) {
   materials.forEach((material) => {
     zip.file(`assets/lunamct/models/item/${armMat}_${armPiece}_${material.asset_name}_trim.json`, JSON.stringify(new MaterialModel(armMat, armPiece, material.asset_name), null, "  "));
   });
@@ -464,7 +464,7 @@ There will be a .txt file listing all the texture files that need to be added.`;
     armorMaterials.forEach((armMat) => {
       armorPieces.forEach((armPiece) => {
         resourcePack.file(`assets/minecraft/models/item/${armMat}_${armPiece}.json`, JSON.stringify(new ArmorOverrideModel(armMat, armPiece, materialDataObjs), null, "  "));
-        addTrimModelsToZip(resourcePack, armMat, armPiece, materialDataObjs);
+        addMaterialModelsToZip(resourcePack, armMat, armPiece, materialDataObjs);
       })
     });
     resourcePack.file(`assets/minecraft/models/item/turtle_helmet.json`, JSON.stringify(new ArmorOverrideModel("turtle", "helmet", materialDataObjs), null, "  "));
