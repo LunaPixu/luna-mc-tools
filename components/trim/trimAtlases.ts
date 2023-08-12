@@ -1,4 +1,3 @@
-import { Material, Pattern } from "./generatePacks";
 import { MaterialData, PalettedPermutationAtlas, PatternData } from "./pack";
 
 type TrimData = MaterialData | PatternData;
