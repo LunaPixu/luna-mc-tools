@@ -359,6 +359,8 @@ function checkForDupePatternProps(patterns: Pattern[]): string {
 }
 
 export function generatePacks(inputValues: InputValues[], mcVersion: string, overwrite: boolean): Packs {
+  if (!inputValues.length) throw "No materials or patterns have been provided... somehow. Please contact Luna Pixu if you see this message.";
+
   if (!overwrite) {
     for (let input of inputValues) {
       try {
