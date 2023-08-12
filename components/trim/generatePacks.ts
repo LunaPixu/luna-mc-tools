@@ -441,6 +441,12 @@ There will be a .txt file listing all the texture files that need to be added.`;
   const resourcePack = new JSZip();
   resourcePack.file("pack.mcmeta", JSON.stringify(resourceMCMeta, null, "  "));
   resourcePack.file("readme.txt", readme);
+  
+  const templatePalette = "iVBORw0KGgoAAAANSUhEUgAAAAgAAAABCAMAAADU3h9xAAAABGdBTUEAALGOfPtRkwAAABhQTFRF6+vrlZWVg4ODYGBgUFBQMjIyISEhFxcX911EVwAAABFJREFUCJljYGBkYmZhZWMHAABdAB2tV7ZvAAAAAElFTkSuQmCC";
+
+  materialDataObjs.forEach((material) => {
+    resourcePack.file(`assets/lunamct/textures/trims/color_palettes/${material.asset_name}.png`, templatePalette, { base64: true });
+  });
 
   const materialTranslations = new MaterialTranslations(materialDataObjs, materialValues, itemParser);
   const patternTranslations = new PatternTranslations(patternDataObjs, patternValues);
