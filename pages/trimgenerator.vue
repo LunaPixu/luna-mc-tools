@@ -17,8 +17,8 @@ useSeoMeta({
     Minecraft.
   </p>
   <p>
-    As I am overhauling this generator, a lot of its core functionality has been disabled while I rework those parts. Until
-    then, incomplete packs will be generated. Please use the
+    As I am overhauling this generator, some parts of the generator might not be functioning as intended. Until I am done, 
+    I cannot guarantee that your resource and data packs will function properly. Please use the
     <a href="https://luna-minecraft-tools.vercel.app/trimgenerator" target="_blank">live version</a> of the generator in the
     meantime.
   </p>

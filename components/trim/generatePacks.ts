@@ -435,8 +435,6 @@ There will be a .txt file listing all the texture files that need to be added.`;
     }
   };
 
-  const itemParser = new ItemParser(mcVersion);
-
   const dataPack = new JSZip();
   dataPack.file("pack.mcmeta", JSON.stringify(dataMCMeta, null, "  "));
 
@@ -451,10 +449,15 @@ There will be a .txt file listing all the texture files that need to be added.`;
   resourcePack.file("pack.mcmeta", JSON.stringify(resourceMCMeta, null, "  "));
   resourcePack.file("readme.txt", readme);
   
+  const itemParser = new ItemParser(mcVersion);
+  
   if (materialDataObjs.length > 0) {
     const templatePalette = "iVBORw0KGgoAAAANSUhEUgAAAAgAAAABCAMAAADU3h9xAAAABGdBTUEAALGOfPtRkwAAABhQTFRF6+vrlZWVg4ODYGBgUFBQMjIyISEhFxcX911EVwAAABFJREFUCJljYGBkYmZhZWMHAABdAB2tV7ZvAAAAAElFTkSuQmCC";
 
     materialDataObjs.forEach((material) => {
+      dataPack.file(`data/lunamct/trim_material/${material.asset_name}.json`, JSON.stringify(material, null, "  "));
+      dataPack.file("data/minecraft/tags/items/trim_materials.json", JSON.stringify({values: [material.ingredient]}, null, "  "));
+
       resourcePack.file(`assets/lunamct/textures/trims/color_palettes/${material.asset_name}.png`, templatePalette, { base64: true });
       resourcePack.file(`assets/lunamct/models/item/turtle_helmet_${material.asset_name}_trim.json`, JSON.stringify(new MaterialModel("turtle", "helmet", material.asset_name), null, "  "));
     });
@@ -472,11 +475,19 @@ There will be a .txt file listing all the texture files that need to be added.`;
 
   if (patternDataObjs.length > 0) {
     let pleaseAddPatterns = "Please add the following texture files to this folder:";
+
     patternDataObjs.forEach((pattern) => {
       const name = strip(pattern.asset_id);
+
+      dataPack.file(`data/lunamct/trim_pattern/${name}.json`, JSON.stringify(pattern, null, "  "));
+      dataPack.file(`data/lunamct/recipes/${name}_armor_trim.json`, JSON.stringify(new PatternRecipe(pattern.template_item), null, "  "));
+
       pleaseAddPatterns += `\n\n- ${name}.png`;
       pleaseAddPatterns += `\n- ${name}_leggings.png`;
     });
+
+    dataPack.file("data/minecraft/tags/items/trim_templates.json", JSON.stringify(new PatternTag(patternDataObjs), null, "  "));
+
     resourcePack.file("assets/lunamct/textures/trims/models/armor/add_textures_here.txt", pleaseAddPatterns);
   }
 
