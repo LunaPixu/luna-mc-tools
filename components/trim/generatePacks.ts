@@ -293,7 +293,7 @@ class PatternTranslations {
 
   constructor (patterns: PatternData[], patternValues: Pattern[]) {
     patterns.forEach((pattern, i) => {
-      this[pattern.description.translate] = patternValues[i].name;
+      this[pattern.description.translate] = `${patternValues[i].name} Armor Trim`;
     });
   }
 }
