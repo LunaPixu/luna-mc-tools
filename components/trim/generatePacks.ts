@@ -25,7 +25,7 @@ export class Material extends InputEntry {
     super(id);
     this.type = "material";
     this.ingredient = "";
-    this.color = "#000000";
+    this.color = "#ffffff";
     this.index = 0.55;
     this.separate = false;
   }
