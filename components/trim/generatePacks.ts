@@ -448,22 +448,23 @@ There will be a .txt file listing all the texture files that need to be added.`;
   const resourcePack = new JSZip();
   resourcePack.file("pack.mcmeta", JSON.stringify(resourceMCMeta, null, "  "));
   resourcePack.file("readme.txt", readme);
-  
+
   const itemParser = new ItemParser(mcVersion);
-  
+
   if (materialDataObjs.length > 0) {
     const templatePalette = "iVBORw0KGgoAAAANSUhEUgAAAAgAAAABCAMAAADU3h9xAAAABGdBTUEAALGOfPtRkwAAABhQTFRF6+vrlZWVg4ODYGBgUFBQMjIyISEhFxcX911EVwAAABFJREFUCJljYGBkYmZhZWMHAABdAB2tV7ZvAAAAAElFTkSuQmCC";
 
     materialDataObjs.forEach((material) => {
       dataPack.file(`data/lunamct/trim_material/${material.asset_name}.json`, JSON.stringify(material, null, "  "));
-      dataPack.file("data/minecraft/tags/items/trim_materials.json", JSON.stringify({values: [material.ingredient]}, null, "  "));
 
       resourcePack.file(`assets/lunamct/textures/trims/color_palettes/${material.asset_name}.png`, templatePalette, { base64: true });
       resourcePack.file(`assets/lunamct/models/item/turtle_helmet_${material.asset_name}_trim.json`, JSON.stringify(new MaterialModel("turtle", "helmet", material.asset_name), null, "  "));
     });
 
+    dataPack.file("data/minecraft/tags/items/trim_materials.json", JSON.stringify(new MaterialTag(materialDataObjs), null, "  "));
+
     resourcePack.file(`assets/minecraft/atlases/blocks.json`, JSON.stringify(new BlockAtlas(materialDataObjs), null, "  "));
-    
+
     armorMaterials.forEach((armMat) => {
       armorPieces.forEach((armPiece) => {
         resourcePack.file(`assets/minecraft/models/item/${armMat}_${armPiece}.json`, JSON.stringify(new ArmorOverrideModel(armMat, armPiece, materialDataObjs), null, "  "));
