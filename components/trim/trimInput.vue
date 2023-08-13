@@ -33,7 +33,7 @@ defineProps({
               <HelpButton header="Add a name to your trim material">
                 Add a cool name to your trim material and the tool will automatically generate an ID from it.<br />
                 For example, a "Fiend's Flames" trim material will get the ID <code>fiends_flames</code>.
-                <p class="notice">Note: Only alphabetical characters, dashes "-", and underscores "_" will be preserved in
+                <p class="notice">Note: Only alphanumeric characters, dashes "-", and underscores "_" will be preserved in
                   the ID. Spaces will be converted to underscores and any other character type will be stripped from the
                   ID.</p>
               </HelpButton><br />
@@ -99,7 +99,7 @@ defineProps({
               <HelpButton header="Name your trim pattern">
                 Add a fancy name to your trim pattern and the tool will automatically generate an ID from it.<br />
                 For example, a "Polka Dot" trim pattern will get the ID <code>polka_dot</code>.
-                <p class="notice">Note: Only alphabetical characters, dashes "-", and underscores "_" will be preserved in
+                <p class="notice">Note: Only alphanumeric characters, dashes "-", and underscores "_" will be preserved in
                   the ID. Spaces will be converted to underscores and any other character type will be stripped from the ID.
                 </p>
               </HelpButton><br />
