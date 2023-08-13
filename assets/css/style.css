@@ -153,6 +153,23 @@ dialog .tiny-header {
   margin: 0 4px;
 }
 
+.wide-flex-button {
+  margin-bottom: 0;
+  flex: 45%;
+}
+
+.flex-options {
+  margin-bottom: 0.5em;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+.option {
+  margin: 0.5em 1em;
+
+  flex: 29%;
+}
+
 #__nuxt {
   text-align: center;
   width: 100%;
@@ -169,6 +186,9 @@ dialog .tiny-header {
   dialog {
     max-width: calc(100vw - 5rem);
     left: 0;
+  }
+  .option {
+    flex: 95%;
   }
   #__nuxt {
     margin: 0 auto;
