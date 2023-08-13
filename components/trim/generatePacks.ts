@@ -448,7 +448,7 @@ There will be a .txt file listing all the texture files that need to be added.`;
 
   const resourcePack = new JSZip();
   resourcePack.file("pack.mcmeta", JSON.stringify(resourceMCMeta, null, "  "));
-  resourcePack.file("readme.txt", readme);
+  resourcePack.file("README.txt", readme);
 
   const itemParser = new ItemParser(mcVersion);
 
