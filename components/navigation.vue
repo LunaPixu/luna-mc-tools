@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import routeData from '../content/routeData.json';
 
-const rootStyle = document.querySelector(':root') as HTMLElement;
+const rootStyle = document.querySelector(':root') as HTMLElement | null;
 //This is kinda shoddy and might break stuff
 const baseSidebarWidth: string =
   rootStyle === null
@@ -10,7 +10,7 @@ const baseSidebarWidth: string =
 
 const navCollapsed = ref(false);
 function collapseNav(): void {
-  if (rootStyle === null) return;
+  if (rootStyle === null) throw new Error("Something went terribly wrong. Please contact Luna Pixu if you see this error!");
   if (navCollapsed.value) {
     rootStyle.style.setProperty('--sidebar-width', baseSidebarWidth);
     setTimeout(
@@ -49,10 +49,14 @@ const routes = reactive(routeData.routes);
       <font-awesome-icon icon="fa-solid fa-bars" />
     </button>
     <template v-for="route in routes" :key="route.id">
-      <Transition><NuxtLink :to="route.slug" v-if="!navCollapsed || !isMobileSize"><button class="nav-button">
+      <Transition>
+        <NuxtLink :to="route.slug" v-if="!navCollapsed || !isMobileSize">
+          <button class="nav-button">
             <div class="nav-icon"><font-awesome-icon :icon="route.icon" /></div>
             <Transition><span v-show="!navCollapsed">{{ route.name }}</span></Transition>
-          </button></NuxtLink></Transition>
+          </button>
+        </NuxtLink>
+      </Transition>
     </template>
   </div>
 </template>
