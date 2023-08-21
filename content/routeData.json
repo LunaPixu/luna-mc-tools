@@ -1,19 +1,16 @@
 {
   "routes": [
     {
-      "id": 1,
       "name": "Home",
       "slug": "/",
       "icon": "house"
     },
     {
-      "id": 2,
       "name": "Trade Reader",
       "slug": "tradereader",
       "icon": "comments-dollar"
     },
     {
-      "id": 3,
       "name": "Trim Generator",
       "slug": "trimgenerator",
       "icon": "shield-halved"

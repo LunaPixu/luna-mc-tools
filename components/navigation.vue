@@ -40,7 +40,12 @@ window.addEventListener('resize', () => {
   resizeTimer = window.setTimeout(checkMobileSize, 200);
 });
 
-const routes = reactive(routeData.routes);
+interface Route {
+  name: string;
+  slug: string;
+  icon: string;
+}
+const routes: Route[] = reactive(routeData.routes);
 </script>
 
 <template>
@@ -48,7 +53,7 @@ const routes = reactive(routeData.routes);
     <button id="nav-collapse" @click="collapseNav()" aria-label="Collapse/Expand Navigation">
       <font-awesome-icon icon="fa-solid fa-bars" />
     </button>
-    <template v-for="route in routes" :key="route.id">
+    <template v-for="(route, index) in routes" :key="index">
       <Transition>
         <NuxtLink :to="route.slug" v-if="!navCollapsed || !isMobileSize">
           <button class="nav-button">

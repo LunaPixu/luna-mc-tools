@@ -19,7 +19,6 @@ interface Villager {
   [key: string]: any;
 }
 interface LiteralTrade {
-  id: number;
   buy1: string;
   buy2: string;
   sell: string;
@@ -87,7 +86,6 @@ function parseVillagerTrades(data: string): void {
     let ware = trade.sell ? itemParser.displayStack(trade.sell) : '';
 
     tradeDisplay.trades.push({
-      id: i + 1,
       buy1: firstTrade,
       buy2: secondTrade,
       sell: ware,
@@ -185,7 +183,7 @@ onUnmounted((): void => {
           </tr>
         </thead>
         <tbody>
-          <tr v-for="trade in tradeDisplay.trades" :key="trade.id">
+          <tr v-for="(trade, index) in tradeDisplay.trades" :key="index">
             <td :class="setTradeEntryClass(trade.buy1)">{{ trade.buy1 ? trade.buy1 : 'N/A' }}</td>
             <td :class="setTradeEntryClass(trade.buy2)">{{ trade.buy2 ? trade.buy2 : 'N/A' }}</td>
             <td :class="setTradeEntryClass(trade.sell)">{{ trade.sell ? trade.sell : 'Nothing?!' }}</td>
