@@ -22,7 +22,7 @@ export default defineNuxtConfig({
       globPatterns: ['**/*.{js,css,html,ico,png,svg}']
     },
     manifest: {
-      name: "Luna's Minecraft Tools",
+      name: "Luna's MC Tools",
       short_name: "Luna MCT",
       description: "A collection of miscellaneous Minecraft tools for various Minecraft needs.",
       background_color: "#fff",

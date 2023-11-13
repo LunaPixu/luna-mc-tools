@@ -20,7 +20,7 @@ defineProps({
             <label :for="`separator-${input.id}`">Separate material name from material ingredient?</label>
             <input type="checkbox" :id="`separator-${input.id}`" v-model="input.separate">
             <HelpButton header="Separating name and ingredient">
-              By default, Luna's Minecraft Tools will generate a trim material with the same name as its ingredient. This
+              By default, Luna's MC Tools will generate a trim material with the same name as its ingredient. This
               behaviour is intended for users to quickly make simple vanilla-like trim materials where the name <em>is</em>
               the ingredient such as an "Echo Shard" or a "Prismarine" trim.
               <p>However, users may instead opt to separate the material name and ingredient. This allows for making fancier
@@ -53,7 +53,7 @@ defineProps({
                   For example, an "Echo Shard" trim material with ID <code>echo_shard</code> will be generated from
                   <code>minecraft:echo_shard</code>.</p>
                 <p>The ID of an item can be found by pressing <kbd>F3+H</kbd> and looking at the bottom of the item tooltip
-                  (or you can just check the <a href="https://minecraft.fandom.com/" target="_blank">wiki</a>). An ID
+                  (or you can just check the <a href="https://minecraft.wiki/" target="_blank">wiki</a>). An ID
                   usually looks something like <code>minecraft:iron_ingot</code>.</p>
               </HelpButton><br />
               <input
@@ -114,7 +114,7 @@ defineProps({
               <label :for="`ingredient-${input.id}`">Pattern Ingredient</label>
               <HelpButton header="Add the ID of the trim pattern's ingredient">
                 The ID of an item can be found by pressing <code>F3+H</code> and looking at the bottom of the item tooltip
-                (or you can just check the <a href="https://minecraft.fandom.com/" target="_blank">wiki</a>). An ID
+                (or you can just check the <a href="https://minecraft.wiki/" target="_blank">wiki</a>). An ID
                 usually looks something like <code>minecraft:iron_ingot</code>.
               </HelpButton><br />
               <input

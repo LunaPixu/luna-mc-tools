@@ -89,7 +89,7 @@ function closeResourceDialog(): void {
         <div class="flex-options" style="justify-content: space-around;">
           <div class="option"><label for="overwrite">Overwrite vanilla values?</label>
             <input type="checkbox" id="overwrite" v-model="overwrite">
-            <HelpButton header="Overwriting vanilla values">By default, Luna's Minecraft Tools will safeguard against
+            <HelpButton header="Overwriting vanilla values">By default, Luna's MC Tools will safeguard against
               using vanilla values to prevent users from accidentally overwriting them. Users may opt to disable this
               safeguard and allow them to freely overwrite any value.
               <p>Caution: this behaviour is not fully tested/implemented and I cannot guarantee it will work as intended.</p>

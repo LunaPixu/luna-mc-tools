@@ -19,7 +19,7 @@ useSeoMeta({
   <p>
     As I am overhauling this generator, some parts of the generator might not be functioning as intended. Until I am done, 
     I cannot guarantee that your resource and data packs will function properly. Please use the
-    <a href="https://luna-minecraft-tools.vercel.app/trimgenerator" target="_blank">live version</a> of the generator in the
+    <a href="https://lunamctools.vercel.app/trimgenerator" target="_blank">live version</a> of the generator in the
     meantime.
   </p>
   <p class="notice">Note: This tool was made for Minecraft Java Edition version 1.20. This tool will not work for Bedrock.</p>

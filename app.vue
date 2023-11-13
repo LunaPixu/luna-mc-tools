@@ -5,8 +5,8 @@ useHeadSafe({
   },
   templateParams: {
     site: {
-      name: "Luna's Minecraft Tools",
-      url: "https://luna-minecraft-tools.vercel.app",
+      name: "Luna's MC Tools",
+      url: "https://lunamctools.vercel.app",
       description: "A collection of miscellaneous Minecraft tools for various Minecraft needs.",
     },
     separator: "/"
@@ -53,7 +53,7 @@ useSeoMeta({
             class="icon" /></a>
       </span>
     </div>
-    <h1 style="margin: 0.2em 0">Luna's Minecraft Tools</h1>
+    <h1 style="margin: 0.2em 0">Luna's MC Tools</h1>
     <p style="margin: 0.2em 0">
       <i>Miscellaneous Tools for Miscellaneous Minecraft Needs</i>
     </p>

@@ -9,6 +9,7 @@ lerna-debug.log*
 
 node_modules
 .output
+dist
 .cache
 *.local
 .nitro
@@ -26,4 +27,4 @@ node_modules
 *.sln
 *.sw?
 
-.netlify
+.vercel
