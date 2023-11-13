@@ -1,7 +1,7 @@
-# Luna's Minecraft Tools
-Luna's Minecraft Tools (Luna MCT) is a simple web app created by Luna Pixu to provide various miscellaneous external tools and functions for Minecraft.
+# Luna's MC Tools
+Luna's MC Tools (Luna MCT) is a simple web app created by Luna Pixu to provide various miscellaneous external tools and functions for Minecraft.
 
-Currently located at: https://luna-minecraft-tools.vercel.app/
+Currently located at: https://lunamctools.vercel.app/
 
 ## Contributing / Running Locally
 Luna MCT is created using [Nuxt](https://nuxt.com/) in [TypeScript](https://www.typescriptlang.org/). When contributing, ensure you have [node](https://nodejs.org/) and npm installed, and follow these instructions:
@@ -20,5 +20,5 @@ New tools or features may be suggested (and/or requested to be pulled into Luna 
 1. New tools must be contained within the web app itself. So, no in-game mods or anything that connects to the game client/server.
 2. I will not provide features that are already (or soon to be) provided by [MCStacker](https://mcstacker.net). Features already provided by [misode](https://misode.github.io) will also have a low chance of being accepted.  
 As of writing, I support MCStacker via Patreon and do not believe it's right to rip features from there. *(Besides, whatever I could do, MCStacker can do it better)*.  
-Similarly, I'm an active user of misode's data pack generators so I will ask that any tools that generate data packs must be specialised and ideally provide more than just a data pack (see my [Trim Generator](https://luna-minecraft-tools.vercel.app/trimgenerator) for an example).
-3. The more niche, the better. Luna's Minecraft Tools exists to provide tools that fit specific niches and help streamline them. If there's a specific Minecraft-related task that's just a bit too cumbersome, no matter how specific, I want to ease that burden.
+Similarly, I'm an active user of misode's data pack generators so I will ask that any tools that generate data packs must be specialised and ideally provide more than just a data pack (see my [Trim Generator](https://lunamctools.vercel.app/trimgenerator) for an example).
+3. The more niche, the better. Luna's MC Tools exists to provide tools that fit specific niches and help streamline them. If there's a specific Minecraft-related task that's just a bit too cumbersome, no matter how specific, I want to ease that burden.

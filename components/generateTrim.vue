@@ -119,7 +119,7 @@ function closeResourceDialog(): void {
         <div class="flex-options" style="justify-content: space-around;">
           <div class="option"><label for="separator">Separate material name from material ingredient?</label>
             <input type="checkbox" id="separator" v-model="ingredientsSeparated">
-            <HelpButton header="Separating name and ingredient">By default, Luna's Minecraft Tools will
+            <HelpButton header="Separating name and ingredient">By default, Luna's MC Tools will
               generate a trim material with the same name as its ingredient. This behaviour is intended for users to quickly
               make simple vanilla-like trim materials where the name <b>is</b> the ingredient such as an "Echo Shard" or a
               "Prismarine" trim.
@@ -129,7 +129,7 @@ function closeResourceDialog(): void {
           </div>
           <div class="option"><label for="overwrite">Overwrite vanilla values?</label>
             <input type="checkbox" id="overwrite" v-model="materialValues.overwrite">
-            <HelpButton header="Overwriting vanilla values">By default, Luna's Minecraft Tools will safeguard against
+            <HelpButton header="Overwriting vanilla values">By default, Luna's MC Tools will safeguard against
               using vanilla values to prevent users from accidentally overwriting them. Users may opt to disable this
               safeguard and allow them to freely overwrite any value.
               <p>Caution: this behaviour is not fully tested/implemented and I cannot guarantee it will work as intended.</p>
@@ -166,7 +166,7 @@ function closeResourceDialog(): void {
                   For example, an "Echo Shard" trim material with ID <code>echo_shard</code> will be generated from
                   <code>minecraft:echo_shard</code>.</p>
                 <p>The ID of an item can be found by pressing <kbd>F3+H</kbd> and looking at the bottom of the item tooltip
-                  (or you can just check the <a href="https://minecraft.fandom.com/" target="_blank">wiki</a>). An ID
+                  (or you can just check the <a href="https://minecraft.wiki/" target="_blank">wiki</a>). An ID
                   usually looks something like <code>minecraft:iron_ingot</code>.</p>
               </HelpButton><br />
               <input
@@ -219,7 +219,7 @@ function closeResourceDialog(): void {
           <div class="option">
             <label for="overwrite">Overwrite vanilla values?</label>
             <input type="checkbox" id="overwrite" v-model="patternValues.overwrite">
-            <HelpButton header="Overwriting vanilla values">By default, Luna's Minecraft Tools will safeguard against
+            <HelpButton header="Overwriting vanilla values">By default, Luna's MC Tools will safeguard against
               using vanilla values to prevent users from accidentally overwriting them. Users may opt to disable this
               safeguard and allow them to freely overwrite any value.
               <p>Caution: this behaviour is not fully tested/implemented and I cannot guarantee it will work as intended.</p>
