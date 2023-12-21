@@ -174,7 +174,7 @@ onUnmounted((): void => {
     <p v-if="errorText" class="errortext">{{ errorText }}</p>
     <template v-else-if="tradeDisplay.trades.length > 0">
       <h3>{{ tradeDisplay.name }} - Trades:</h3>
-      <table>
+      <table id="tradetable">
         <thead>
           <tr>
             <th>Buy (1)</th>
@@ -203,5 +203,8 @@ onUnmounted((): void => {
 #tradebox {
   margin: 0.5em auto;
   max-width: 1000px;
+}
+#tradetable {
+  table-layout: fixed;
 }
 </style>
