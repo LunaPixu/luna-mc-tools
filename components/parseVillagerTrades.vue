@@ -18,12 +18,12 @@ interface Villager {
   CustomName?: string;
   [key: string]: any;
 }
-interface LiteralTrade {
+export interface LiteralTrade {
   buy1: string;
   buy2: string;
   sell: string;
 }
-interface TradeDisplay {
+export interface TradeDisplay {
   name: string;
   trades: LiteralTrade[];
 }
@@ -172,25 +172,8 @@ onUnmounted((): void => {
     </form>
     <hr v-if="tradeDisplay.trades.length > 0 || errorText" />
     <p v-if="errorText" class="errortext">{{ errorText }}</p>
-    <template v-else-if="tradeDisplay.trades.length > 0">
-      <h3>{{ tradeDisplay.name }} - Trades:</h3>
-      <table id="tradetable">
-        <thead>
-          <tr>
-            <th>Buy (1)</th>
-            <th>Buy (2)</th>
-            <th>Sell</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(trade, index) in tradeDisplay.trades" :key="index">
-            <td :class="setTradeEntryClass(trade.buy1)">{{ trade.buy1 ? trade.buy1 : 'N/A' }}</td>
-            <td :class="setTradeEntryClass(trade.buy2)">{{ trade.buy2 ? trade.buy2 : 'N/A' }}</td>
-            <td :class="setTradeEntryClass(trade.sell)">{{ trade.sell ? trade.sell : 'Nothing?!' }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </template>
+    <TradeDisplay v-else-if="tradeDisplay.trades.length > 0" :tradeDisplay="tradeDisplay">
+    </TradeDisplay>
   </div>
 </template>
 
@@ -203,8 +186,5 @@ onUnmounted((): void => {
 #tradebox {
   margin: 0.5em auto;
   max-width: 1000px;
-}
-#tradetable {
-  table-layout: fixed;
 }
 </style>
