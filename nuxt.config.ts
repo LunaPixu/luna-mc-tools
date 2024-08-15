@@ -3,6 +3,7 @@ export default defineNuxtConfig({
   modules: [
     "@vite-pwa/nuxt",
   ],
+
   build: {
     transpile: [
       '@fortawesome/vue-fontawesome',
@@ -12,10 +13,12 @@ export default defineNuxtConfig({
       '@fortawesome/free-brands-svg-icons',
     ],
   },
+
   css: [
     '@fortawesome/fontawesome-svg-core/styles.css',
     '/assets/css/style.css',
   ],
+
   pwa: {
     registerType: 'autoUpdate',
     workbox: {
@@ -59,4 +62,6 @@ export default defineNuxtConfig({
       installPrompt: true,
     }
   },
+
+  compatibilityDate: '2024-08-15',
 });
